@@ -1,0 +1,40 @@
+{
+  "name": "brewit",
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "flux": "^2.1.1",
+    "meteor-node-stubs": "~0.2.0",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-router": "^2.0.1"
+  },
+  "version": "0.0.1",
+  "description": "Home brewing app to create recipes",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1dv430/sp222kh-project.git"
+  },
+  "keywords": [
+    "meteor",
+    "flux",
+    "react",
+    "home-brewing",
+    "offline"
+  ],
+  "author": "Simon Palmqvist",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1dv430/sp222kh-project/issues"
+  },
+  "homepage": "https://github.com/1dv430/sp222kh-project#readme",
+  "devDependencies": {
+    "eslint": "^2.5.3",
+    "eslint-plugin-meteor": "^3.4.0",
+    "eslint-plugin-react": "^4.2.3"
+  }
+}
