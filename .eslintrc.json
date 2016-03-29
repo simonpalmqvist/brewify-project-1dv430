@@ -1,11 +1,10 @@
 {
     "env": {
-        "browser": true,
-        "es6": true
+        "es6": true,
+        "meteor": true
     },
     "extends": [
-	"eslint:recommended",
-	"plugin:meteor/guide"
+        "plugin:meteor/guide"
 	],
     "parserOptions": {
         "ecmaFeatures": {
@@ -16,7 +15,7 @@
     },
     "plugins": [
         "react",
-	"meteor"
+        "meteor"
     ],
     "rules": {
         "indent": [
