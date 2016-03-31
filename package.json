@@ -3,14 +3,15 @@
   "private": true,
   "scripts": {
     "lint": "eslint .",
+    "test": "meteor test --driver-package=practicalmeteor:mocha",
     "start": "meteor run"
   },
   "dependencies": {
     "events": "^1.1.0",
     "flux": "^2.1.1",
     "meteor-node-stubs": "~0.2.0",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
+    "react": "^0.14.8",
+    "react-dom": "^0.14.8",
     "react-router": "^2.0.1"
   },
   "version": "0.0.1",
@@ -36,6 +37,8 @@
   "devDependencies": {
     "eslint": "^2.5.3",
     "eslint-plugin-meteor": "^3.4.0",
-    "eslint-plugin-react": "^4.2.3"
+    "eslint-plugin-react": "^4.2.3",
+    "faker": "^3.1.0",
+    "react-addons-test-utils": "^0.14.8"
   }
 }
