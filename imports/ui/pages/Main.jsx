@@ -8,23 +8,17 @@ import Item from  "../components/Item";
 export default class Main extends React.Component {
     constructor() {
         super();
+        this.state = {list: []};
 
-        this.getList = this.getList.bind(this);
-        this.state = {
-            list: ItemStore.getList()
-        };
+        this.updateList = () => this.setState({list: ItemStore.getList()});
     }
 
     componentWillMount() {
-        ItemStore.on("change", this.getList);
+        ItemStore.on("change", this.updateList);
     }
 
     componentWillUnmount() {
-        ItemStore.removeListener("change", this.getList);
-    }
-
-    getList() {
-        this.setState({list: ItemStore.getList()});
+        ItemStore.removeListener("change", this.updateList);
     }
 
     handle(event) {
@@ -45,7 +39,8 @@ export default class Main extends React.Component {
     render() {
         const { list } = this.state;
 
-        const listEl = list.map((item, i) => (<Item key={i} item={item}/>));
+        //Create list items from items list
+        const listEl = list.map((item) => (<Item key={item._id} item={item.text}/>));
 
         return (
             <div>

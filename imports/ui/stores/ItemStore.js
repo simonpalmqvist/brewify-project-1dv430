@@ -1,24 +1,27 @@
+import { Meteor } from "meteor/meteor";
 import { EventEmitter } from "events";
 import Dispatcher from "../dispatcher";
+
+import { Items } from "../../api/items/Items";
 
 class ItemStore extends EventEmitter {
     constructor() {
         super();
 
-        this.list = ["ooh"];
+        //Listen for changes on items
+        Items.find({}).observe({added: () => this.emit("change")});
     }
 
     getList() {
-        return this.list;
+        return Items.find({}).fetch();
     }
 
-    addItem(item) {
-        this.list.push(item);
-
-        this.emit("change");
+    addItem(text) {
+        Meteor.call("items.insert", text, () => this.emit("change"));
     }
 
     handleActions(action) {
+        //Handle actions from dispatcher
         switch (action.type) {
         case "ADD_ITEM":
             this.addItem(action.text);
@@ -27,8 +30,10 @@ class ItemStore extends EventEmitter {
     }
 }
 
+//Create item store
 const itemStore = new ItemStore();
 
+//Register actions
 Dispatcher.register(itemStore.handleActions.bind(itemStore));
 
 export default itemStore;
