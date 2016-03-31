@@ -4,6 +4,8 @@
   "scripts": {
     "lint": "eslint .",
     "test": "meteor test --driver-package=practicalmeteor:mocha",
+    "chimp-test": "chimp --ddp=http://localhost:3000 --mocha --path=tests",
+    "start-test-mode": "meteor test --full-app --driver-package tmeasday:acceptance-test-driver",
     "start": "meteor run"
   },
   "dependencies": {
@@ -35,6 +37,7 @@
   },
   "homepage": "https://github.com/1dv430/sp222kh-project#readme",
   "devDependencies": {
+    "chimp": "^0.31.1",
     "eslint": "^2.5.3",
     "eslint-plugin-meteor": "^3.4.0",
     "eslint-plugin-react": "^4.2.3",

@@ -10,7 +10,7 @@ export default class Main extends React.Component {
         super();
         this.state = {list: []};
 
-        this.updateList = () => this.setState({list: ItemStore.getList()});
+        this.updateList = this.updateList.bind(this);
     }
 
     componentWillMount() {
@@ -19,6 +19,10 @@ export default class Main extends React.Component {
 
     componentWillUnmount() {
         ItemStore.removeListener("change", this.updateList);
+    }
+
+    updateList() {
+        this.setState({list: ItemStore.getList()});
     }
 
     handle(event) {
