@@ -32,7 +32,7 @@ if (Meteor.isClient) {
 
         it("Renders correctly with items", () => {
             const numberOfItems = 3;
-            const items = createItems(3);
+            const items = createItems(numberOfItems);
 
             const main = ReactTestUtils.renderIntoDocument(<Main />);
 

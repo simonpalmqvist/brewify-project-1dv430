@@ -1,11 +1,12 @@
 {
-  "name": "brewit",
+  "name": "brewify",
   "private": true,
   "scripts": {
     "lint": "eslint .",
     "test": "meteor test --driver-package=practicalmeteor:mocha",
     "chimp-test": "chimp --ddp=http://localhost:3000 --mocha --path=tests",
     "start-test-mode": "meteor test --full-app --driver-package tmeasday:acceptance-test-driver",
+    "deploy": "npm prune --production; cd .deploy; mupx deploy; cd ..; npm install",
     "start": "meteor run"
   },
   "dependencies": {
