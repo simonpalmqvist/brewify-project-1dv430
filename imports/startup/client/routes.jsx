@@ -5,10 +5,11 @@ import ReactDOM from "react-dom";
 import { Router, Route, Link, IndexRoute, browserHistory } from "react-router";
 
 
-import { Items } from "../../api/items/Items";
-import AppContainer from "../../ui/layouts/AppContainer.jsx";
-import Main from "../../ui/pages/Main.jsx";
-import NotFound from "../../ui/pages/NotFound.jsx";
+import AppContainer from "../../ui/layouts/AppContainer";
+import Main from "../../ui/pages/Main";
+
+import NotFound from "../../ui/pages/NotFound";
+import Register from "../../ui/components/auth/Register";
 
 Meteor.startup(() => {
     Meteor.subscribe("items");
@@ -17,6 +18,7 @@ Meteor.startup(() => {
         <Router history={browserHistory}>
             <Route path="/" component={AppContainer}>
                 <IndexRoute component={Main}/>
+                <Route path="/register" component={Register}/>
                 <Route path="*" component={NotFound}/>
             </Route>
         </Router>,
