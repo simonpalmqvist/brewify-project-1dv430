@@ -44,7 +44,7 @@ describe("Items UI", () => {
 
             server.call("test.generate-items", numOfItems);
 
-            browser.waitForExist("ul");
+            browser.waitForExist(".list-items li");
 
             const elements = browser.elements(".list-items li");
 
@@ -62,14 +62,10 @@ describe("Items UI", () => {
 
             browser.keys("Enter");
 
+            browser.waitForExist(".list-items li");
+
             expect(browser.getText(".list-items li")).to.equal(newItem);
         });
 
     });
-/*
-
-
-
-
-   */
 });

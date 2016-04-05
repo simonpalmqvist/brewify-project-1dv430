@@ -29,7 +29,7 @@ export default class AuthForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.props.submit.bind(this)}>
+            <form id="auth-form" onSubmit={this.props.submit.bind(this)}>
                 <label htmlFor="email">Email:</label>
                 <input ref="email" type="email" name="email" onChange={this.validate.bind(this)}/>
                 <label htmlFor="password">Password:</label>
