@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 /**
- * @description Integration tests for client side user registration
+ * @description Integration tests for client side user registration flow
  * @author simonpalmqvist
  */
 

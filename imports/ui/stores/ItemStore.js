@@ -23,9 +23,9 @@ class ItemStore extends EventEmitter {
     handleActions(action) {
         //Handle actions from dispatcher
         switch (action.type) {
-        case "ADD_ITEM":
-            this.addItem(action.text);
-            break;
+            case "ADD_ITEM":
+                this.addItem(action.text);
+                break;
         }
     }
 }

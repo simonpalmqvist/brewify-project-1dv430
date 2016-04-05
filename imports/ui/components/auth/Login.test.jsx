@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 /**
- * @description Integration tests for Ccient side user login
+ * @description Integration tests for Client side login flow
  * @author simonpalmqvist
  */
 

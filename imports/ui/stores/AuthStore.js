@@ -33,6 +33,7 @@ class AuthStore extends EventEmitter {
     }
 
     handleActions(action) {
+
         //Handle actions from dispatcher
         switch (action.type) {
             case "LOGIN_USER":
