@@ -9,7 +9,7 @@ import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
 import { createItems, stubItems, restoreCollections } from "../../api/test-utils";
 
-import Main from "./Main";
+import Main from "./Dashboard";
 
 if (Meteor.isClient) {
     describe("Main page", () => {
