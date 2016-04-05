@@ -3,13 +3,31 @@
  * @author simonpalmqvist
  */
 
+//Modules
 import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
 import React from "react";
 import { browserHistory } from "react-router";
-import { Accounts } from "meteor/accounts-base";
+
+//Actions
+import { register } from "../../actions/AuthActions";
+
+//Stores
+import AuthStore from "../../stores/AuthStore";
+
+//Components
 import AuthForm from "./AuthForm";
 
 export default class Register extends React.Component {
+
+    componentWillMount() {
+        this.handleRegistrationAttempt = this.handleRegistrationAttempt.bind(this);
+        AuthStore.on("register", this.handleRegistrationAttempt);
+    }
+
+    componentWillUnmount() {
+        AuthStore.removeListener("register", this.handleRegistrationAttempt);
+    }
 
     register(event) {
         //Prevent form from posting
@@ -18,20 +36,15 @@ export default class Register extends React.Component {
         const email = this.refs.email.value;
         const password = this.refs.password.value;
 
+        register(email, password);
+    }
 
-        const data = {
-            email: email,
-            password: password
-        };
-
-        //Try to create user
-        Accounts.createUser(data, (error) => {
-            if (error) {
-                console.log(error);
-            } else {
-                browserHistory.push("/dashboard");
-            }
-        });
+    handleRegistrationAttempt(error) {
+        if (error) {
+            console.log(error);
+        } else {
+            browserHistory.push("/dashboard");
+        }
     }
 
     render() {

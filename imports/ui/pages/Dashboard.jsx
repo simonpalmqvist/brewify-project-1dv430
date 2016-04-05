@@ -8,7 +8,7 @@ import Item from  "../components/Item";
 export default class Dashboard extends React.Component {
     constructor() {
         super();
-        this.state = {list: []};
+        this.state = {list: ItemStore.getList()};
 
         this.updateList = this.updateList.bind(this);
     }

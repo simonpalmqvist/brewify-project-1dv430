@@ -3,6 +3,7 @@
  * @author simonpalmqvist
  */
 
+//Modules
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { Factory } from "meteor/dburles:factory";
@@ -12,6 +13,7 @@ import faker from "faker";
 import { StubCollections } from "meteor/stub-collections";
 import ReactTestUtils from "react-addons-test-utils";
 
+//Collections
 import { Items } from "../api/items/Items";
 
 //Server test methods
