@@ -1,16 +1,6 @@
-import { Meteor } from "meteor/meteor";
-import { resetDatabase } from "meteor/xolvio:cleaner";
-import { createItems } from "./test-utils";
+/**
+ * @description Init test server calls for acceptance testing
+ * @author simonpalmqvist
+ */
 
-Meteor.startup(() => {
-    if (Meteor.isServer) {
-        Meteor.methods({
-            "test.resetdb": () => resetDatabase(),
-
-            "test.generate-items": (numberOfItems) => {
-                return createItems(numberOfItems);
-            }
-        });
-    }
-});
-
+import "./test-utils";

@@ -1,3 +1,8 @@
+/**
+ * @description Main layout component for application
+ * @author simonpalmqvist
+ */
+
 import React from "react";
 
 export default class AppContainer extends React.Component {

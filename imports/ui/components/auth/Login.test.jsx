@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 /**
- * @description Integration tests for client side user registration
+ * @description Integration tests for Ccient side user login
  * @author simonpalmqvist
  */
 
@@ -12,30 +12,29 @@ import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
 import faker from "faker";
 
-import Register from "./Register";
+import Login from "./Login";
 
 const should = chai.should();
-let register;
+let login;
 let email;
 let password;
 let form;
 
 if (Meteor.isClient) {
-    describe("Register component", () => {
+    describe("Login component", () => {
 
         beforeEach(() => {
-
-            //Reset db
-            const testServer = Meteor.connect(Meteor.absoluteUrl());
-            testServer.call("test.resetdb");
+            //Reset database
+            const server = Meteor.connect(Meteor.absoluteUrl());
+            server.call("test.resetdb");
 
             //Render component
-            register = ReactTestUtils.renderIntoDocument(<Register/>);
+            login = ReactTestUtils.renderIntoDocument(<Login/>);
 
             //get DOM elements
-            email = getElementByName(register, "email");
-            password = getElementByName(register, "password");
-            form = ReactTestUtils.findRenderedDOMComponentWithTag(register, "form");
+            email = getElementByName(login, "email");
+            password = getElementByName(login, "password");
+            form = ReactTestUtils.findRenderedDOMComponentWithTag(login, "form");
         });
 
         afterEach((done) => {
@@ -45,9 +44,9 @@ if (Meteor.isClient) {
         });
 
         describe("User", () => {
-            it("Should not be able to register with already registered email", (done) => {
+            it("Should be able to login with correct credentials", (done) => {
 
-                //Create separate connection to server
+                //Create new connection to server
                 const server = Meteor.connect(Meteor.absoluteUrl());
 
                 //Create a user
@@ -58,23 +57,24 @@ if (Meteor.isClient) {
 
                     //Add credentials
                     email.value = account.email;
-                    password.value = faker.internet.password();
+                    password.value = account.password;
 
                     //Simulate a submit on form
                     ReactTestUtils.Simulate.submit(form);
 
-                    //Listen for a failed registration
-                    Accounts.onLoginFailure(() => {
-                        should.not.exist(Meteor.user());
+                    //Listen for a successful login
+                    Accounts.onLogin(() => {
+                        Meteor.user().should.exist;
                         done();
                     });
 
-                    //Listen for a successful registration
-                    Accounts.onLogin(() => done(new Error("User could register")));
+                    //Listen for a failed login
+                    Accounts.onLoginFailure(() => done(new Error("User could not login")));
                 });
             });
 
-            it("Should be able to register an account and get logged in", (done) => {
+            it("Should not be able to login with wrong credentials", (done) => {
+
                 //Add credentials
                 email.value = faker.internet.email();
                 password.value = faker.internet.password();
@@ -82,15 +82,14 @@ if (Meteor.isClient) {
                 //Simulate a submit on form
                 ReactTestUtils.Simulate.submit(form);
 
-                //Listen for a failed registration
-                Accounts.onLogin(() => {
-                    Meteor.user().should.exist;
+                //Listen for a failed login
+                Accounts.onLoginFailure(() => {
+                    should.not.exist(Meteor.user());
                     done();
                 });
 
-                //Listen for a successful registration
-                Accounts.onLoginFailure(() => done(new Error("User could not register")));
-
+                //Listen for a successful login
+                Accounts.onLogin(() => done(new Error("User could login")));
             });
 
         });
