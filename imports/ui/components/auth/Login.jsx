@@ -28,7 +28,7 @@ export default class Login extends React.Component {
             if (error) {
                 console.log(error);
             } else {
-                browserHistory.push("/");
+                browserHistory.push("/dashboard");
             }
         });
     }

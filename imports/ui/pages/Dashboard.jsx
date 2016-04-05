@@ -5,7 +5,7 @@ import * as ItemActions from "../actions/ItemActions";
 import ItemStore from "../stores/ItemStore";
 import Item from  "../components/Item";
 
-export default class Main extends React.Component {
+export default class Dashboard extends React.Component {
     constructor() {
         super();
         this.state = {list: []};
@@ -50,7 +50,7 @@ export default class Main extends React.Component {
             <div>
                 <h2>This is the home view</h2>
                 <input type="text" onKeyPress={this.handle.bind(this)} />
-                <ul>{listEl}</ul>
+                <ul className="list-items">{listEl}</ul>
             </div>
         );
     }

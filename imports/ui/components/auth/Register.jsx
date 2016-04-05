@@ -29,7 +29,7 @@ export default class Register extends React.Component {
             if (error) {
                 console.log(error);
             } else {
-                browserHistory.push("/");
+                browserHistory.push("/dashboard");
             }
         });
     }

@@ -9,10 +9,10 @@ import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
 import { createItems, stubItems, restoreCollections } from "../../api/test-utils";
 
-import Main from "./Dashboard";
+import Dashboard from "./Dashboard";
 
 if (Meteor.isClient) {
-    describe("Main page", () => {
+    describe("Dashboard page", () => {
         beforeEach(() => {
             stubItems();
 
@@ -34,12 +34,12 @@ if (Meteor.isClient) {
             const numberOfItems = 3;
             const items = createItems(numberOfItems);
 
-            const main = ReactTestUtils.renderIntoDocument(<Main />);
+            const dashboard = ReactTestUtils.renderIntoDocument(<Dashboard />);
 
             //Update state
-            main.updateList();
+            dashboard.updateList();
 
-            const list = ReactTestUtils.findRenderedDOMComponentWithTag(main, "ul");
+            const list = ReactTestUtils.findRenderedDOMComponentWithTag(dashboard, "ul");
 
             const listTexts = _.map(list.children, (el) => el.textContent);
             const itemTexts = _.map(items, (item) => item.text);

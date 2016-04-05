@@ -1,36 +1,75 @@
 /* eslint-env mocha */
-
 // These are Chimp globals
-/* globals browser expect server */
+/* globals browser should server */
 
-describe("Items ui", () => {
+import { login, logout} from "./lib";
+
+let user;
+
+describe("Items UI", () => {
     beforeEach(() => {
-        browser.url("http://localhost:3000");
         server.call("test.resetdb");
     });
 
-    it("Should list items", () => {
-        const numOfItems = 3;
-        //server.call("items.insert","test");
-        server.call("test.generate-items", numOfItems);
-        browser.waitForExist("ul");
+    describe("User not logged in", () => {
+        it("Should be redirected to login", () => {
+            browser.url("http://localhost:3000/dashboard");
+            browser.getUrl().should.equal("http://localhost:3000/login");
+        });
 
-        const elements = browser.elements("li");
-
-        expect(elements.value.length).to.equal(numOfItems);
     });
 
-    it("Should add item", () => {
-        const newItem = "testing";
+    describe("User logged in", () => {
+        beforeEach(() => {
+            //Store user credentials
+            user = server.call("test.create-user");
 
-        browser.waitForExist("input");
+            login(user);
 
-        browser.click("input");
+            //Go to url
+            browser.url("http://localhost:3000/dashboard");
 
-        browser.setValue("input", newItem);
+        });
 
-        browser.keys("Enter");
+        afterEach(() => {
+            logout();
+        });
 
-        expect(browser.getText("li")).to.equal(newItem);
+        it("Should not be redirected to login", () => {
+            browser.getUrl().should.equal("http://localhost:3000/dashboard");
+        });
+
+        it("Should be able to see list of items", () => {
+            const numOfItems = 3;
+
+            server.call("test.generate-items", numOfItems);
+
+            browser.waitForExist("ul");
+
+            const elements = browser.elements(".list-items li");
+
+            elements.value.length.should.equal(numOfItems);
+        });
+
+        it("Should be able to add items", () => {
+            const newItem = "testing";
+
+            browser.waitForExist("input");
+
+            browser.click("input");
+
+            browser.setValue("input", newItem);
+
+            browser.keys("Enter");
+
+            expect(browser.getText(".list-items li")).to.equal(newItem);
+        });
+
     });
+/*
+
+
+
+
+   */
 });
