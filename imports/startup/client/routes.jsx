@@ -26,6 +26,7 @@ import Login from "../../ui/components/auth/Login";
 import Logout from "../../ui/components/auth/Logout";
 
 Meteor.startup(() => {
+    //Subscribe to the data sources
     Meteor.subscribe("items");
 
     ReactDOM.render(
