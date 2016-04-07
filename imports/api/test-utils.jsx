@@ -37,6 +37,10 @@ Meteor.methods({
         Accounts.createUser(data);
 
         return data;
+    },
+
+    "test.set-user-id": () => {
+        return this.setUserId(faker.random.uuid);
     }
 });
 
