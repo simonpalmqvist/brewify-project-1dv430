@@ -1,14 +1,23 @@
 import React from "react";
-import { Link } from "react-router";
+
+import NavigationItem from "./NavigationItem";
 
 export default class NavigationBar extends React.Component {
     render() {
+
+        let links = [
+            {url: "/register", title: "Register"},
+            {url: "/login", title: "Login"}
+        ];
+
+        links = Meteor.userId() ? [{url: "/logout", title: "Logout"}] : links;
+
+        links = links.map((props, i) => (<NavigationItem key={i} {...props}/>));
+
         return (
             <nav id="main-navigation">
                 <ul>
-                    <li><Link to="/register">Register</Link></li>
-                    <li><Link to="/login">Login</Link></li>
-                    <li><Link to="/logout">Logout</Link></li>
+                    {links}
                 </ul>
             </nav>
         );

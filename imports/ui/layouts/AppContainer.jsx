@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import { Link } from "react-router";
 
 import NavigationBar from "../components/navigation/NavigationBar";
 
@@ -12,7 +13,7 @@ export default class AppContainer extends React.Component {
         return (
             <div>
                 <header>
-                    <h1>ooh</h1>
+                    <Link to="/"><h1>ooh</h1></Link>
                     <NavigationBar/>
                 </header>
                 {this.props.children}
