@@ -1,3 +1,8 @@
+/**
+ * @description 404 page for not found urls
+ * @author simonpalmqvist
+ */
+
 import React from "react";
 
 export default class NotFound extends React.Component {

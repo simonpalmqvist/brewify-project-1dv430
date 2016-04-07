@@ -1,3 +1,8 @@
+/**
+ * @description Methods for calling the items API
+ * @author simonpalmqvist
+ */
+
 import { Meteor } from "meteor/meteor";
 import { Items } from "./Items";
 

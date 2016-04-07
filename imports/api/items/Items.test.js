@@ -1,4 +1,9 @@
 /* eslint-env mocha */
+/**
+ * @description Unit tests for collection and collections methods
+ * @author simonpalmqvist
+ */
+
 
 import { Meteor } from "meteor/meteor";
 import { resetDatabase } from "meteor/xolvio:cleaner";

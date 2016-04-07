@@ -1,3 +1,8 @@
+/**
+ * @description Dashboard page, main page for authenticated users
+ * @author simonpalmqvist
+ */
+
 import React from "react";
 import ReactDOM from "react-dom";
 import { createContainer } from "meteor/react-meteor-data";

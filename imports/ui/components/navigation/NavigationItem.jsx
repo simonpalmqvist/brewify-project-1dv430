@@ -1,3 +1,8 @@
+/**
+ * @description Navigation item component
+ * @author simonpalmqvist
+ */
+
 import React from "react";
 import { Link } from "react-router";
 

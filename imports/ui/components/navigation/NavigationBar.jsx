@@ -1,3 +1,8 @@
+/**
+ * @description Navigation header component
+ * @author simonpalmqvist
+ */
+
 import React from "react";
 
 import NavigationItem from "./NavigationItem";

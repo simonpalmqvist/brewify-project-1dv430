@@ -68,25 +68,53 @@ export function restoreCollections() {
     StubCollections.restore();
 }
 
+/**
+ * React helper function to get element by name
+ * @param parentComponent
+ * @param name
+ * @returns {Element}
+ */
 export function getElementByName(parentComponent, name) {
     return ReactTestUtils.findAllInRenderedTree(parentComponent, (el) => el.name === name)[0];
 }
 
+/**
+ * React helper function to get input with type
+ * @param parentComponent
+ * @param type
+ * @returns {Element}
+ */
 export function getInputByType(parentComponent, type) {
     return ReactTestUtils.findAllInRenderedTree(parentComponent, (el) => {
         return el.type === type && el.tagName === "INPUT";
     })[0];
 }
 
+/**
+ * Helper function to render react component with Store
+ * @param component
+ * @returns {Component}
+ */
 export function renderIntoDocument(component) {
     //Render component
     return ReactTestUtils.renderIntoDocument(<Provider store={Store}>{component}</Provider>);
 }
 
+/**
+ * Helper function to render react component with mocked Store
+ * @param component
+ * @param state
+ * @returns {Component}
+ */
 export function renderIntoDocumentWithMockedStore(component, state = {}) {
     return ReactTestUtils.renderIntoDocument(<Provider store={mockedStore(state)}>{component}</Provider>);
 }
 
+/**
+ * Private function to create a mocked store with specified state
+ * @param state
+ * @returns {{subscribe: Function, dispatch: Function, getState: Function}}
+ */
 function mockedStore(state) {
     return {
         subscribe: () => {},

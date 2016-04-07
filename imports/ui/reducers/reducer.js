@@ -1,3 +1,8 @@
+/**
+ * @description Main reducer to merge all reducers together
+ * @author simonpalmqvist
+ */
+
 import { combineReducers } from "redux";
 import itemsAdded from "./itemsAdded";
 //import auth from "./auth";

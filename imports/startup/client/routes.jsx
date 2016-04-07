@@ -1,5 +1,5 @@
 /**
- * @description Initializing react router on startup
+ * @description Initializing react router on startup with redux store
  * @author simonpalmqvist
  */
 
