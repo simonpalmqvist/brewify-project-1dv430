@@ -6,48 +6,52 @@
 
 import { Meteor } from "meteor/meteor";
 import chai from "meteor/practicalmeteor:chai";
-
 import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
+import { renderIntoDocumentWithMockedStore, getElementByName, getInputByType } from "../../../api/test-utils";
 import faker from "faker";
 import AuthForm from "./AuthForm";
 
 const should = chai.should();
+const state = {error: {}};
 
 if (Meteor.isClient) {
+
     describe("AuthForm component", () => {
         it("Should have e-mail and password field", () => {
 
-            const authForm = ReactTestUtils.renderIntoDocument(<AuthForm submit={() => {}}/>);
+            const authForm = renderIntoDocumentWithMockedStore(<AuthForm submit={() => {}}/>, state);
 
             //Check so fields exist
-            authForm.refs.email.should.exist;
-            authForm.refs.password.should.exist;
+            getElementByName(authForm, "email").should.exist;
+            getElementByName(authForm, "password").should.exist;
 
         });
 
         describe("Button", () => {
             it("Should be disabled from start", () => {
 
-                const authForm = ReactTestUtils.renderIntoDocument(<AuthForm submit={() => {}}/>);
+                const authForm = renderIntoDocumentWithMockedStore(<AuthForm submit={() => {}}/>, state);
 
                 //Button should be disabled after auth form is rendered.
-                authForm.refs.button.attributes.disabled.should.exist;
+                getInputByType(authForm, "submit").disabled.should.exist;
             });
 
             it("Should not be disabled if email and password is typed in", () => {
 
-                const authForm = ReactTestUtils.renderIntoDocument(<AuthForm submit={() => {}}/>);
+                const authForm = renderIntoDocumentWithMockedStore(<AuthForm submit={() => {}}/>, state);
+
+                const email = getElementByName(authForm, "email");
 
                 //Add some fake data
-                authForm.refs.email.value = faker.internet.email;
-                authForm.refs.password.value = faker.name.lastName;
+                email.value = faker.internet.email;
+                getElementByName(authForm, "password").value = faker.name.lastName;
 
                 //Simulate field change
-                ReactTestUtils.Simulate.change(authForm.refs.email);
+                ReactTestUtils.Simulate.change(email);
 
                 //Button should not be disabled anymore
-                should.not.exist(authForm.refs.button.attributes.disabled);
+                should.not.exist(getInputByType(authForm, "submit").attributes.disabled);
             });
         });
     });

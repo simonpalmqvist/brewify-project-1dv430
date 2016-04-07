@@ -4,25 +4,56 @@
  */
 
 //Modules
-import Dispatcher from "../dispatcher";
+import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
+import { browserHistory } from "react-router";
+import Store from "../store";
 
-export function login(email, password) {
-    Dispatcher.dispatch({
-        type: "LOGIN_USER",
-        email,
-        password
+function redirect() {
+    browserHistory.push("/dashboard");
+}
+
+function handleError(error) {
+    Store.dispatch({type: "ERROR", error});
+}
+
+export function loginUser(email, password) {
+    Store.dispatch(() => {
+        Meteor.loginWithPassword(email, password, (error) => {
+            if (error) {
+                return handleError(error);
+            }
+            redirect();
+        });
     });
 }
 
-export function register(email, password) {
-    Dispatcher.dispatch({
-        type: "REGISTER_USER",
-        email,
-        password
+export function registerUser(email, password) {
+    Store.dispatch(() => {
+        Accounts.createUser({email, password}, (error) => {
+            if (error) {
+                return handleError(error);
+            }
+            redirect();
+        });
     });
 }
 
-export function logout() {
-    Dispatcher.dispatch({type: "LOGOUT_USER"});
+export function logoutUser() {
+    Store.dispatch(() => {
+        Meteor.logout(() => browserHistory.push("/"));
+    });
 }
 
+export function alreadyLoggedIn(nextState, transition) {
+    //If user already logged in redirect to dashboard
+    if (Meteor.userId()) {
+        transition("/dashboard");
+    }
+}
+
+export function loggedIn(nextState, transition) {
+    if (!Meteor.userId()) {
+        transition("/login");
+    }
+}

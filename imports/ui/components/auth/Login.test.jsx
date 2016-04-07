@@ -5,9 +5,10 @@
  */
 
 import { Meteor } from "meteor/meteor";
+import { Accounts } from "meteor/accounts-base";
 import chai from "meteor/practicalmeteor:chai";
 import { resetDatabase } from "meteor/xolvio:cleaner";
-import { getElementByName } from "../../../api/test-utils";
+import { getElementByName, renderIntoDocument } from "../../../api/test-utils";
 import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
 import faker from "faker";
@@ -29,7 +30,7 @@ if (Meteor.isClient) {
             server.call("test.resetdb");
 
             //Render component
-            login = ReactTestUtils.renderIntoDocument(<Login/>);
+            login = renderIntoDocument(<Login/>);
 
             //get DOM elements
             email = getElementByName(login, "email");

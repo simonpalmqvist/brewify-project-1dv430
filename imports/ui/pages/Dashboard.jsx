@@ -1,39 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createContainer } from "meteor/react-meteor-data";
+import { connect }  from "react-redux";
 
-import * as ItemActions from "../actions/ItemActions";
-import ItemStore from "../stores/ItemStore";
+import { Items } from "../../api/items/Items";
+import { addItem } from "../actions/ItemActions";
+
 import Item from  "../components/Item";
 
-export default class Dashboard extends React.Component {
-    constructor() {
-        super();
-        this.state = {list: ItemStore.getList()};
 
-        this.updateList = this.updateList.bind(this);
-    }
-
-    componentWillMount() {
-        ItemStore.on("change", this.updateList);
-    }
-
-    componentWillUnmount() {
-        ItemStore.removeListener("change", this.updateList);
-    }
-
-    updateList() {
-        this.setState({list: ItemStore.getList()});
-    }
+class Dashboard extends React.Component {
 
     handle(event) {
-        //Get state
-        const list = this.state.list;
         //Find element
         const input = ReactDOM.findDOMNode(event.target);
 
         //Check if enter was pressed
         if (event.key === "Enter" && input.value) {
-            ItemActions.addItem(input.value);
+            addItem(input.value);
 
             //Empty field
             input.value = "";
@@ -41,17 +25,29 @@ export default class Dashboard extends React.Component {
     }
 
     render() {
-        const { list } = this.state;
+        const { items, itemsAdded } = this.props;
 
         //Create list items from items list
-        const listEl = list.map((item) => (<Item key={item._id} item={item.text}/>));
+        const listEl = items.map((item) => (<Item key={item._id} item={item.text}/>));
 
         return (
             <div>
-                <h2>This is the home view</h2>
+                <h2>Items added: {itemsAdded}</h2>
                 <input type="text" onKeyPress={this.handle.bind(this)} />
                 <ul className="list-items">{listEl}</ul>
             </div>
         );
     }
 }
+
+//Creates meteor container to provide subscribed data
+const DashboardContainer = createContainer(() => ({items: Items.find({}).fetch()}), Dashboard);
+
+//Map the current state to the properties in component
+function mappingStateToProps(state) {
+    return {
+        itemsAdded: state.itemsAdded
+    };
+}
+
+export default connect(mappingStateToProps)(DashboardContainer);

@@ -6,32 +6,14 @@
 //Modules
 import { Meteor } from "meteor/meteor";
 import React from "react";
-import { browserHistory } from "react-router";
 
 //Actions
-import { login } from "../../actions/AuthActions";
-
-//Stores
-import AuthStore from "../../stores/AuthStore";
+import { loginUser } from "../../actions/AuthActions";
 
 //Components
 import AuthForm from "./AuthForm";
 
 export default class Login extends React.Component {
-
-    constructor() {
-        super();
-
-        this.handleLoginAttempt = this.handleLoginAttempt.bind(this);
-    }
-
-    componentWillMount() {
-        AuthStore.on("login", this.handleLoginAttempt);
-    }
-
-    componentWillUnmount() {
-        AuthStore.removeListener("login", this.handleLoginAttempt);
-    }
 
     login(event) {
         //Prevent form from posting
@@ -40,15 +22,7 @@ export default class Login extends React.Component {
         const email = this.refs.email.value;
         const password = this.refs.password.value;
 
-        login(email, password);
-    }
-
-    handleLoginAttempt(error) {
-        if (error) {
-            console.log(error);
-        } else {
-            browserHistory.push("/dashboard");
-        }
+        loginUser(email, password);
     }
 
     render() {

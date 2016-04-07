@@ -5,30 +5,15 @@
 
 //Modules
 import { Meteor } from "meteor/meteor";
-import { Accounts } from "meteor/accounts-base";
 import React from "react";
-import { browserHistory } from "react-router";
 
 //Actions
-import { register } from "../../actions/AuthActions";
-
-//Stores
-import AuthStore from "../../stores/AuthStore";
+import { registerUser } from "../../actions/AuthActions";
 
 //Components
 import AuthForm from "./AuthForm";
 
 export default class Register extends React.Component {
-
-    componentWillMount() {
-        this.handleRegistrationAttempt = this.handleRegistrationAttempt.bind(this);
-        AuthStore.on("register", this.handleRegistrationAttempt);
-    }
-
-    componentWillUnmount() {
-        AuthStore.removeListener("register", this.handleRegistrationAttempt);
-    }
-
     register(event) {
         //Prevent form from posting
         event.preventDefault();
@@ -36,15 +21,7 @@ export default class Register extends React.Component {
         const email = this.refs.email.value;
         const password = this.refs.password.value;
 
-        register(email, password);
-    }
-
-    handleRegistrationAttempt(error) {
-        if (error) {
-            console.log(error);
-        } else {
-            browserHistory.push("/dashboard");
-        }
+        registerUser(email, password);
     }
 
     render() {

@@ -11,10 +11,13 @@ import { _ } from "meteor/underscore";
 import { resetDatabase } from "meteor/xolvio:cleaner";
 import faker from "faker";
 import { StubCollections } from "meteor/stub-collections";
+import React from "react";
+import { Provider } from "react-redux";
 import ReactTestUtils from "react-addons-test-utils";
 
 //Collections
 import { Items } from "../api/items/Items";
+import Store from "../ui/store";
 
 //Server test methods
 
@@ -67,4 +70,29 @@ export function restoreCollections() {
 
 export function getElementByName(parentComponent, name) {
     return ReactTestUtils.findAllInRenderedTree(parentComponent, (el) => el.name === name)[0];
+}
+
+export function getInputByType(parentComponent, type) {
+    return ReactTestUtils.findAllInRenderedTree(parentComponent, (el) => {
+        return el.type === type && el.tagName === "INPUT";
+    })[0];
+}
+
+export function renderIntoDocument(component) {
+    //Render component
+    return ReactTestUtils.renderIntoDocument(<Provider store={Store}>{component}</Provider>);
+}
+
+export function renderIntoDocumentWithMockedStore(component, state = {}) {
+    return ReactTestUtils.renderIntoDocument(<Provider store={mockedStore(state)}>{component}</Provider>);
+}
+
+function mockedStore(state) {
+    return {
+        subscribe: () => {},
+        dispatch: () => {},
+        getState: () => {
+            return {...state};
+        }
+    };
 }

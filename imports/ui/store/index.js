@@ -1,0 +1,15 @@
+import { applyMiddleware, createStore } from "redux";
+import createLogger from "redux-logger";
+import ReduxThunk from "redux-thunk";
+
+import rootReducer from "../reducers/rootReducer";
+
+//Use Thunk to be able to dispatch async functions
+const middleware = [ReduxThunk];
+
+if (Meteor.isDevelopment) {
+    middleware.push(createLogger());
+}
+
+//Create store with the root reducer and apply middleware
+export default Store = createStore(rootReducer, {}, applyMiddleware(...middleware));

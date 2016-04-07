@@ -7,7 +7,7 @@ import { _ } from "meteor/underscore";
 import { sinon } from "meteor/practicalmeteor:sinon";
 import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
-import { createItems, stubItems, restoreCollections } from "../../api/test-utils";
+import { createItems, stubItems, restoreCollections, renderIntoDocument } from "../../api/test-utils";
 
 import Dashboard from "./Dashboard";
 
@@ -34,10 +34,7 @@ if (Meteor.isClient) {
             const numberOfItems = 3;
             const items = createItems(numberOfItems);
 
-            const dashboard = ReactTestUtils.renderIntoDocument(<Dashboard />);
-
-            //Update state
-            dashboard.updateList();
+            const dashboard = renderIntoDocument(<Dashboard />);
 
             const list = ReactTestUtils.findRenderedDOMComponentWithTag(dashboard, "ul");
 

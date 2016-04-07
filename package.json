@@ -11,11 +11,16 @@
   },
   "dependencies": {
     "events": "^1.1.0",
-    "flux": "^2.1.1",
     "meteor-node-stubs": "~0.2.0",
     "react": "^0.14.8",
+    "react-addons-pure-render-mixin": "^0.14.8",
     "react-dom": "^0.14.8",
-    "react-router": "^2.0.1"
+    "react-redux": "^4.4.1",
+    "react-router": "^2.0.1",
+    "react-router-redux": "^4.0.1",
+    "redux": "^3.3.1",
+    "redux-logger": "^2.6.1",
+    "redux-thunk": "^2.0.1"
   },
   "version": "0.0.1",
   "description": "Home brewing app to create recipes",
@@ -43,6 +48,7 @@
     "eslint-plugin-meteor": "^3.4.0",
     "eslint-plugin-react": "^4.2.3",
     "faker": "^3.1.0",
-    "react-addons-test-utils": "^0.14.8"
+    "react-addons-test-utils": "^0.14.8",
+    "sinon": "^1.17.3"
   }
 }

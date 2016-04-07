@@ -3,11 +3,15 @@
  * @author simonpalmqvist
  */
 
-import Dispatcher from "../dispatcher";
+import { Meteor } from "meteor/meteor";
+import Store from "../store";
 
 export function addItem(text) {
-    Dispatcher.dispatch({
-        type: "ADD_ITEM",
-        text
+    Store.dispatch(() => {
+        Meteor.call("items.insert", text, () => incrementItem());
     });
+}
+
+function incrementItem() {
+    Store.dispatch({type: "ADDED_ITEMS"});
 }

@@ -3,24 +3,16 @@
  * @author simonpalmqvist
  */
 
+//Modules
 import { Meteor } from "meteor/meteor";
 import React from "react";
-import { browserHistory } from "react-router";
-import AuthStore from "../../stores/AuthStore";
-import { logout } from "../../actions/AuthActions";
+
+//Actions
+import { logoutUser } from "../../actions/AuthActions";
 
 export default class Logout extends React.Component {
     componentWillMount() {
-        logout();
-        AuthStore.on("logout", this.redirectToStart);
-    }
-
-    componentWillUnmount() {
-        AuthStore.removeListener("logout", this.redirectToStart);
-    }
-
-    redirectToStart() {
-        browserHistory.push("/");
+        logoutUser();
     }
 
     render() {

@@ -7,10 +7,13 @@
 import { Meteor } from "meteor/meteor";
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import { Router, Route, Link, IndexRoute, browserHistory } from "react-router";
+import { syncHistoryWithStore} from "react-router-redux";
 
 //Services
-import { alreadyLoggedIn, loggedIn } from "../../ui/services/authorization";
+import { alreadyLoggedIn, loggedIn } from "../../ui/actions/AuthActions.js";
+import Store from "../../ui/store";
 
 //Layouts
 import AppContainer from "../../ui/layouts/AppContainer";
@@ -29,16 +32,22 @@ Meteor.startup(() => {
     //Subscribe to the data sources
     Meteor.subscribe("items");
 
+    //Sync route history with store
+    const hist = syncHistoryWithStore(browserHistory, Store);
+
     ReactDOM.render(
-        <Router history={browserHistory}>
-            <Route path="/" component={AppContainer}>
-                <IndexRoute component={Main} onEnter={alreadyLoggedIn}/>
-                <Route path="/login" component={Login} onEnter={alreadyLoggedIn}/>
-                <Route path="/register" component={Register} onEnter={alreadyLoggedIn}/>
-                <Route path="/logout" component={Logout}/>
-                <Route path="/dashboard" component={Dashboard} onEnter={loggedIn}/>
-                <Route path="*" component={NotFound}/>
-            </Route>
-        </Router>,
-        document.getElementById("app"));
+        <Provider store={Store}>
+            <Router history={hist}>
+                <Route path="/" component={AppContainer}>
+                    <IndexRoute component={Main} onEnter={alreadyLoggedIn}/>
+                    <Route path="/login" component={Login} onEnter={alreadyLoggedIn}/>
+                    <Route path="/register" component={Register} onEnter={alreadyLoggedIn}/>
+                    <Route path="/logout" component={Logout}/>
+                    <Route path="/dashboard" component={Dashboard} onEnter={loggedIn}/>
+                    <Route path="*" component={NotFound}/>
+                </Route>
+            </Router>
+        </Provider>,
+        document.getElementById("app")
+    );
 });
