@@ -20,7 +20,7 @@ const should = chai.should();
 
 
 if (Meteor.isClient) {
-    describe("Logout component", () => {
+    describe("Logout component", function() {
 
         beforeEach((done) => {
             //Reset database
@@ -35,18 +35,14 @@ if (Meteor.isClient) {
 
         });
 
-        describe("User", (done) => {
-            it("Should be able to logout", () => {
+        describe("User", function(done) {
+            it("Should be able to logout", function() {
 
                 Meteor.user().should.exist;
 
                 //Render component
-                logout = ReactTestUtils.renderIntoDocument(<Logout/>);
+                let logout = ReactTestUtils.renderIntoDocument(<Logout/>);
 
-                /*AuthStore.on("logout", () => {
-                    should.not.exist(Meteor.user());
-                    done();
-                });*/
             });
 
         });

@@ -5,10 +5,10 @@
 
 import { combineReducers } from "redux";
 
-import error from "./error";
+import flashMessages from "./flashMessages";
 import { routerReducer } from "react-router-redux";
 
 export default rootReducer = combineReducers({
-    error,
+    flashMessages,
     routing: routerReducer
 });

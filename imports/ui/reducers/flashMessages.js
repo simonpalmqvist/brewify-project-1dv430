@@ -3,10 +3,13 @@
  * @author simonpalmqvist
  */
 
-export default function error(state, action) {
+export default function flashMessages(state, action) {
     switch (action.type) {
+        case "SAVE":
+            return {save: {}};
+            break;
         case "ERROR":
-            return action.error;
+            return {error: action.error};
             break;
         default:
             return {};

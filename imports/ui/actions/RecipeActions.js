@@ -4,7 +4,9 @@
  */
 
 import { Meteor } from "meteor/meteor";
+import { browserHistory } from "react-router";
 import Store from "../store";
+import { Recipes } from "../../api/recipes/Recipes";
 
 /**
  * Action to add a new recipe
@@ -16,7 +18,7 @@ export function addRecipe() {
 
     Store.dispatch(() => {
         Meteor.callPromise("recipes.insert", name, batchSize, boilTime)
-            .then((recipeId) => console.log(recipeId))
+            .then((recipeId) => browserHistory.push(`/recipe/${recipeId}`))
             .catch((error) => Store.dispatch({type: "ERROR", error}));
     });
 }
@@ -30,4 +32,17 @@ export function updateRecipe(id, update) {
             .then(() => Store.dispatch({type: "SAVE"}))
             .catch((error) => Store.dispatch({type: "ERROR", error}));
     });
+}
+
+
+
+/**
+ * Authorization method to redirect user if recipe doesn't belong to user or doesn't exist
+ * @param nextState
+ * @param transition
+ */
+export function recipeExists(nextState, transition) {
+    if(!Recipes.findOne(nextState.params.id)) {
+        transition("/dashboard");
+    }
 }

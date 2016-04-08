@@ -15,12 +15,12 @@ import { Items } from "./Items";
 import "./methods";
 
 if (Meteor.isServer) {
-    describe("Items", () => {
-        describe("methods", () => {
+    describe("Items", function() {
+        describe("methods", function() {
 
             beforeEach(() => resetDatabase());
 
-            it("Should be able to add task", () => {
+            it("Should be able to add task", function() {
                 const insert = Meteor.server.method_handlers["items.insert"];
                 const text = faker.lorem.words();
 
@@ -32,7 +32,7 @@ if (Meteor.isServer) {
                 expect(Items.find({text}).count()).to.equal(1);
             });
 
-            it("Should not be able to add undefined item", () => {
+            it("Should not be able to add undefined item", function() {
                 const insert = Meteor.server.method_handlers["items.insert"];
                 const text = undefined;
 

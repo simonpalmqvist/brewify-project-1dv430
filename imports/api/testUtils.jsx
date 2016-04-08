@@ -6,9 +6,9 @@
 //Modules
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
-import { Factory } from "meteor/dburles:factory";
 import { _ } from "meteor/underscore";
 import { resetDatabase } from "meteor/xolvio:cleaner";
+import { Random } from "meteor/random";
 import faker from "faker";
 import { StubCollections } from "meteor/stub-collections";
 import React from "react";
@@ -16,7 +16,7 @@ import { Provider } from "react-redux";
 import ReactTestUtils from "react-addons-test-utils";
 
 //Collections
-import { Items } from "../api/items/Items";
+import { Recipes } from "../api/recipes/Recipes";
 import Store from "../ui/store";
 
 //Server test methods
@@ -24,8 +24,12 @@ import Store from "../ui/store";
 Meteor.methods({
     "test.resetdb": () => resetDatabase(),
 
-    "test.generate-items": (numberOfItems) => {
-        return createItems(numberOfItems);
+    "test.generate-recipes": (numberOfItems, id) => {
+        return createRecipes(numberOfItems, id);
+    },
+
+    "test.get-recipes": () => {
+        return Recipes.find({}).fetch();
     },
 
     "test.create-user": () => {
@@ -37,32 +41,53 @@ Meteor.methods({
         Accounts.createUser(data);
 
         return data;
-    },
-
-    "test.set-user-id": () => {
-        return this.setUserId(faker.random.uuid);
     }
 });
-
-//Factories for easier adding data to collections
-Factory.define("item", Items, {text: () => faker.lorem.words()});
 
 //Helper functions
 
 /**
- * Client: Creates items for collection
- * @param numberOfItems - number of items that should be created
- * @returns {Array} - array of created items
+ * Client: Creates recipes for collection
+ * @param times - number of recipes that should be created
+ * @param id - user id if none it will take a random one
+ * @returns {Array} - array of created recipes
  */
-export function createItems(numberOfItems) {
-    return _.times(numberOfItems, i => Factory.create("item"));
+export function createRecipes(times, id) {
+    let ids =  _.times(times, i => createRecipe(id));
+    return _.map(ids, id => Recipes.findOne(id));
 }
 
 /**
- * Client: Stubs the Items collection
+ * Client: Creates recipe for collection
+ * @param id - user id if none it will take a random one
+ * @returns {Object} - returns the created recipe
  */
-export function stubItems() {
-    StubCollections.stub(Items);
+export function createRecipe(id) {
+    return Recipes.insert(recipe(id));
+}
+
+export function recipe(id) {
+    return {
+        userId: id || Random.id(),
+        name: faker.lorem.words(),
+        batchSize: faker.random.number({min: 10, max: 1000}),
+        boilTime: faker.random.number({min: 30, max: 1000})
+    }
+}
+
+/**
+ * Client: Stubs collections
+ * @param collections - Array of collections to stub
+ */
+export function stubCollections(collections) {
+    collections.forEach((collection) => StubCollections.stub(collection));
+
+    sinon.stub(Meteor, "subscribe", () => {
+        return {
+            subscriptionId: 0,
+            ready: () => true
+        };
+    });
 }
 
 /**
@@ -70,6 +95,7 @@ export function stubItems() {
  */
 export function restoreCollections() {
     StubCollections.restore();
+    Meteor.subscribe.restore();
 }
 
 /**

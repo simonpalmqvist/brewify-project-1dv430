@@ -60,6 +60,8 @@ describe("Authentication UI", () => {
         it("Should be able to logout", () => {
             login(user);
 
+            browser.url("http://localhost:3000/dashboard");
+
             browser.click("a[href=\"/logout\"]");
 
             browser.pause(1000);

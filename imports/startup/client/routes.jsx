@@ -12,7 +12,8 @@ import { Router, Route, Link, IndexRoute, browserHistory } from "react-router";
 import { syncHistoryWithStore} from "react-router-redux";
 
 //Services
-import { alreadyLoggedIn, loggedIn } from "../../ui/actions/AuthActions.js";
+import { alreadyLoggedIn, loggedIn } from "../../ui/actions/AuthActions";
+import { recipeExists } from "../../ui/actions/RecipeActions";
 import Store from "../../ui/store";
 
 //Layouts
@@ -31,7 +32,6 @@ import Logout from "../../ui/components/auth/Logout";
 
 Meteor.startup(() => {
     //Subscribe to the data sources
-    Meteor.subscribe("items");
     Meteor.subscribe("recipes");
 
     //Sync route history with store
@@ -46,7 +46,7 @@ Meteor.startup(() => {
                     <Route path="/register" component={Register} onEnter={alreadyLoggedIn}/>
                     <Route path="/logout" component={Logout}/>
                     <Route path="/dashboard" component={Dashboard} onEnter={loggedIn}/>
-                    <Route path="/recipe/:id" component={Recipe}/>
+                    <Route path="/recipe/:id" component={Recipe} onEnter={recipeExists}/>
                     <Route path="*" component={NotFound}/>
                 </Route>
             </Router>

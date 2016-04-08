@@ -1,48 +1,43 @@
 /* eslint-env mocha */
 
 import { Meteor } from "meteor/meteor";
-import { expect } from "meteor/practicalmeteor:chai";
+import chai from "meteor/practicalmeteor:chai";
 
 import { _ } from "meteor/underscore";
 import { sinon } from "meteor/practicalmeteor:sinon";
 import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
-import { createItems, stubItems, restoreCollections, renderIntoDocument } from "../../api/testUtils";
+import { createRecipes, stubCollections, restoreCollections, renderIntoDocument } from "../../api/testUtils";
 
+import { Recipes } from "../../api/recipes/Recipes";
 import Dashboard from "./Dashboard";
 
+const should = chai.should();
+
 if (Meteor.isClient) {
-    describe("Dashboard page", () => {
-        beforeEach(() => {
-            stubItems();
-
-            sinon.stub(Meteor, "subscribe", () => {
-                return {
-                    subscriptionId: 0,
-                    ready: () => true
-                };
-            });
+    describe("Dashboard page", function() {
+        beforeEach(function() {
+            stubCollections([Recipes]);
         });
 
-        afterEach(() => {
+        afterEach(function() {
             restoreCollections();
-            Meteor.subscribe.restore();
         });
 
 
-        it("Renders correctly with items", () => {
-            const numberOfItems = 3;
-            const items = createItems(numberOfItems);
+        it("Renders correctly with recipes", function() {
+            const numberOfRecipes = 3;
+            const recipes = createRecipes(numberOfRecipes);
 
             const dashboard = renderIntoDocument(<Dashboard />);
 
             const list = ReactTestUtils.findRenderedDOMComponentWithTag(dashboard, "ul");
 
-            const listTexts = _.map(list.children, (el) => el.textContent);
-            const itemTexts = _.map(items, (item) => item.text);
+            const listNames = _.map(list.children, (el) => el.textContent);
+            const recipeNames = _.map(recipes, (recipe) => recipe.name);
 
-            expect(list.children.length).to.equal(numberOfItems);
-            expect(listTexts).to.deep.equal(itemTexts);
+            list.children.length.should.equal(numberOfRecipes);
+            listNames.should.deep.equal(recipeNames);
         });
     });
 }

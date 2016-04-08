@@ -25,9 +25,9 @@ if (Meteor.isClient) {
 
     const server = Meteor.connect(Meteor.absoluteUrl());
 
-    describe("Login component", () => {
+    describe("Login component", function() {
 
-        beforeEach(() => {
+        beforeEach(function() {
             //Reset database
             server.call("test.resetdb");
 
@@ -40,14 +40,14 @@ if (Meteor.isClient) {
             form = ReactTestUtils.findRenderedDOMComponentWithTag(login, "form");
         });
 
-        afterEach((done) => {
+        afterEach(function(done) {
             Meteor.logout(() => {
                 done();
             });
         });
 
-        describe("User", () => {
-            it("Should be able to login with correct credentials", (done) => {
+        describe("User", function() {
+            it("Should be able to login with correct credentials", function(done) {
 
                 //Create a user
                 server.call("test.create-user", (error, account) => {
@@ -73,7 +73,7 @@ if (Meteor.isClient) {
                 });
             });
 
-            it("Should not be able to login with wrong credentials", (done) => {
+            it("Should not be able to login with wrong credentials", function(done) {
 
                 //Add credentials
                 email.value = faker.internet.email();

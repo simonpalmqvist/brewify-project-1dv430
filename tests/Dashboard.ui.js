@@ -5,6 +5,7 @@
 import { login, logout} from "./lib";
 
 let user;
+let userId;
 
 describe("Items UI", () => {
     beforeEach(() => {
@@ -24,7 +25,7 @@ describe("Items UI", () => {
             //Store user credentials
             user = server.call("test.create-user");
 
-            login(user);
+            userId = login(user);
 
             //Go to url
             browser.url("http://localhost:3000/dashboard");
@@ -39,33 +40,28 @@ describe("Items UI", () => {
             browser.getUrl().should.equal("http://localhost:3000/dashboard");
         });
 
-        it("Should be able to see list of items", () => {
-            const numOfItems = 3;
+        it("Should be able to see list of recipes", () => {
+            const numOfRecipes = 3;
 
-            server.call("test.generate-items", numOfItems);
+            let recipes = server.call("test.generate-recipes", numOfRecipes, userId);
+
+            browser.url("http://localhost:3000/dashboard");
 
             browser.waitForExist(".list-items li");
 
             const elements = browser.elements(".list-items li");
 
-            elements.value.length.should.equal(numOfItems);
+            elements.value.length.should.equal(numOfRecipes);
         });
 
-        it("Should be able to add items", () => {
-            const newItem = "testing";
+        it("Should be able to add recipe", () => {
+            browser.waitForExist("button");
 
-            browser.waitForExist("input");
+            browser.click("button");
 
-            browser.click("input");
+            let recipe = server.call("test.get-recipes")[0];
 
-            browser.setValue("input", newItem);
-
-            browser.keys("Enter");
-
-            browser.waitForExist(".list-items li");
-
-            expect(browser.getText(".list-items li")).to.equal(newItem);
+            browser.getUrl().should.equal(`http://localhost:3000/recipe/${recipe._id}`);
         });
-
     });
 });

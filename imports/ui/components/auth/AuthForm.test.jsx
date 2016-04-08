@@ -13,12 +13,12 @@ import faker from "faker";
 import AuthForm from "./AuthForm";
 
 const should = chai.should();
-const state = {error: {}};
+const state = {flashMessages: {}};
 
 if (Meteor.isClient) {
 
-    describe("AuthForm component", () => {
-        it("Should have e-mail and password field", () => {
+    describe("AuthForm component", function() {
+        it("Should have e-mail and password field", function() {
 
             const authForm = renderIntoDocumentWithMockedStore(<AuthForm submit={() => {}}/>, state);
 
@@ -28,8 +28,8 @@ if (Meteor.isClient) {
 
         });
 
-        describe("Button", () => {
-            it("Should be disabled from start", () => {
+        describe("Button", function() {
+            it("Should be disabled from start", function() {
 
                 const authForm = renderIntoDocumentWithMockedStore(<AuthForm submit={() => {}}/>, state);
 
@@ -37,7 +37,7 @@ if (Meteor.isClient) {
                 getInputByType(authForm, "submit").disabled.should.exist;
             });
 
-            it("Should not be disabled if email and password is typed in", () => {
+            it("Should not be disabled if email and password is typed in", function() {
 
                 const authForm = renderIntoDocumentWithMockedStore(<AuthForm submit={() => {}}/>, state);
 

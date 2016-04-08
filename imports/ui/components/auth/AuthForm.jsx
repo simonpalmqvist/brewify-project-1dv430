@@ -29,9 +29,16 @@ export default class AuthForm extends React.Component {
     }
 
     render() {
+        const { error } = this.props;
+        let reason;
+
+        if (error) {
+            reason = error.reason;
+        }
+
         return (
             <form id="auth-form" onSubmit={this.props.submit.bind(this)}>
-                <p>{this.props.error.reason}</p>
+                <p>{reason}</p>
                 <label htmlFor="email">Email:</label>
                 <input ref="email" type="email" name="email" onChange={this.validate.bind(this)}/>
                 <label htmlFor="password">Password:</label>
@@ -44,7 +51,7 @@ export default class AuthForm extends React.Component {
 
 
 //Map the current state to the properties in component
-export default connect(({error}) => ({error}))(AuthForm);
+export default connect(({flashMessages}) => ({error: flashMessages.error}))(AuthForm);
 
 
 

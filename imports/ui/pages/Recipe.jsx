@@ -38,9 +38,10 @@ class Recipe extends React.Component {
 const RecipeContainer = createContainer(({params}) => ({recipe: Recipes.findOne(params.id)}), Recipe);
 
 //Map the current state to the properties in component
-function mappingStateToProps(state) {
+function mappingStateToProps({ flashMessages }) {
     return {
-        error: state.error
+        save: flashMessages.save,
+        error: flashMessages.error
     };
 }
 

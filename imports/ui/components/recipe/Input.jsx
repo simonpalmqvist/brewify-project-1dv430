@@ -8,6 +8,8 @@ import React from "react";
 export default class Input extends React.Component {
     constructor(props) {
         super(props);
+
+        //Set initial state
         this.state = {value: props.value};
     }
 
@@ -40,6 +42,7 @@ export default class Input extends React.Component {
     }
 
     onEnter(event) {
+        //Blur input on enter
         if (event.key === "Enter") {
             event.target.blur();
         }
@@ -51,6 +54,7 @@ export default class Input extends React.Component {
 
         let label;
 
+        //Write out label if needed
         if (title) {
             label = (<label for={name}>{title}</label>);
         }
