@@ -7,8 +7,8 @@
 import { Meteor } from "meteor/meteor";
 
 //Collections
-import { Recipes } from "./recipes/Recipes";
-import { Items } from "./items/Items";
+import { Recipes } from "../recipes/Recipes";
+import { Items } from "../items/Items";
 
 //Define what should be published to the client (in this case all items for authenticated users)
 Meteor.publish("items", function() {
@@ -22,5 +22,5 @@ Meteor.publish("recipes", function() {
     if (!this.userId) {
         return null;
     }
-    return Recipes.find({owner: this.userId });
+    return Recipes.find({userId: this.userId });
 });

@@ -8,37 +8,28 @@ import ReactDOM from "react-dom";
 import { createContainer } from "meteor/react-meteor-data";
 import { connect }  from "react-redux";
 
-import { Items } from "../../api/items/Items";
-import { addItem } from "../actions/ItemActions";
+import { Recipes } from "../../api/recipes/Recipes";
+import { addRecipe } from "../actions/RecipeActions";
 
-import Item from  "../components/Item";
-
+import { Link } from "react-router";
 
 class Dashboard extends React.Component {
 
-    handle(event) {
-        //Find element
-        const input = ReactDOM.findDOMNode(event.target);
-
-        //Check if enter was pressed
-        if (event.key === "Enter" && input.value) {
-            addItem(input.value);
-
-            //Empty field
-            input.value = "";
-        }
+    handle() {
+        addRecipe();
     }
 
     render() {
-        const { items, itemsAdded } = this.props;
+        const { recipes} = this.props;
 
-        //Create list items from items list
-        const listEl = items.map((item) => (<Item key={item._id} item={item.text}/>));
+        //Create recipes list
+        const listEl = recipes.map((recipe) => {
+            return (<li key={recipe._id}><Link to={`/recipe/${recipe._id}`}>{recipe.name}</Link></li>);
+        });
 
         return (
             <div>
-                <h2>Items added: {itemsAdded}</h2>
-                <input type="text" onKeyPress={this.handle.bind(this)} />
+                <button type="text" onClick={this.handle.bind(this)}>Create recipe</button>
                 <ul className="list-items">{listEl}</ul>
             </div>
         );
@@ -46,12 +37,12 @@ class Dashboard extends React.Component {
 }
 
 //Creates meteor container to provide subscribed data
-const DashboardContainer = createContainer(() => ({items: Items.find({}).fetch()}), Dashboard);
+const DashboardContainer = createContainer(() => ({recipes: Recipes.find({}).fetch()}), Dashboard);
 
 //Map the current state to the properties in component
 function mappingStateToProps(state) {
     return {
-        itemsAdded: state.itemsAdded
+        error: state.error
     };
 }
 

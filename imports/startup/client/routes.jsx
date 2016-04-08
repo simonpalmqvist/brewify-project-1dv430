@@ -21,6 +21,7 @@ import AppContainer from "../../ui/layouts/AppContainer";
 //Pages
 import Main from "../../ui/pages/Main";
 import Dashboard from "../../ui/pages/Dashboard";
+import Recipe from "../../ui/pages/Recipe";
 import NotFound from "../../ui/pages/NotFound";
 
 //Components
@@ -31,6 +32,7 @@ import Logout from "../../ui/components/auth/Logout";
 Meteor.startup(() => {
     //Subscribe to the data sources
     Meteor.subscribe("items");
+    Meteor.subscribe("recipes");
 
     //Sync route history with store
     const hist = syncHistoryWithStore(browserHistory, Store);
@@ -44,6 +46,7 @@ Meteor.startup(() => {
                     <Route path="/register" component={Register} onEnter={alreadyLoggedIn}/>
                     <Route path="/logout" component={Logout}/>
                     <Route path="/dashboard" component={Dashboard} onEnter={loggedIn}/>
+                    <Route path="/recipe/:id" component={Recipe}/>
                     <Route path="*" component={NotFound}/>
                 </Route>
             </Router>

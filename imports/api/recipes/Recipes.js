@@ -7,7 +7,7 @@ import { Meteor } from  "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { SimpleSchema } from "meteor/aldeed:simple-schema";
 
-export const Recipes = new Mongo.Collection("Recipes");
+export const Recipes = new Mongo.Collection("recipes");
 
 //Add schema
 Recipes.schema = new SimpleSchema({

@@ -14,7 +14,7 @@ Meteor.methods({
         const newRecipe = {userId, name, batchSize, boilTime};
 
         //Validate and store it
-        Recipes.insert(newRecipe);
+        return Recipes.insert(newRecipe);
     },
 
     "recipes.update": (id, dataToUpdate) => {
