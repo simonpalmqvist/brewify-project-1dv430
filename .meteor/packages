@@ -28,4 +28,3 @@ react-meteor-data
 jboulhous:dev
 aldeed:collection2
 deanius:promise
-dispatch:mocha-phantomjs
