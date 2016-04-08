@@ -6,7 +6,7 @@
     "test": "meteor test --driver-package=practicalmeteor:mocha",
     "acceptance-test": "chimp --ddp=http://localhost:3000 --mocha --path=tests",
     "acceptance-test-server": "meteor test --full-app --driver-package tmeasday:acceptance-test-driver",
-    "deploy": "npm prune --production; cd .deploy; mupx deploy; cd ..; npm install",
+    "deploy": "cd .deploy; mupx deploy; cd ..;",
     "start": "meteor run"
   },
   "dependencies": {
@@ -22,7 +22,7 @@
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Home brewing app to create recipes",
   "main": "main.js",
   "repository": {
@@ -43,7 +43,6 @@
   },
   "homepage": "https://github.com/1dv430/sp222kh-project#readme",
   "devDependencies": {
-    "chimp": "^0.31.1",
     "eslint": "^2.5.3",
     "eslint-plugin-meteor": "^3.4.0",
     "eslint-plugin-react": "^4.2.3",
