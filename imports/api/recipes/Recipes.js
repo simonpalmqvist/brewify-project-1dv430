@@ -3,15 +3,17 @@
  * @author simonpalmqvist
  */
 
+import { Meteor } from  "meteor/meteor";
 import { Mongo } from "meteor/mongo";
-import simpleSchema from "meteor/aldeed:collection2";
+import { SimpleSchema } from "meteor/aldeed:simple-schema";
 
 export const Recipes = new Mongo.Collection("Recipes");
 
+//Add schema
 Recipes.schema = new SimpleSchema({
-    owner: {
+    userId: {
         type: String,
-        autoValue: function() { return this.userId; }
+        regEx: SimpleSchema.RegEx.Id
     },
     name: {
         type: String,
@@ -27,3 +29,6 @@ Recipes.schema = new SimpleSchema({
         min: 30
     }
 });
+
+//Use schema on writes
+Recipes.attachSchema(Recipes.schema);

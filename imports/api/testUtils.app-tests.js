@@ -3,4 +3,4 @@
  * @author simonpalmqvist
  */
 
-import "./test-utils";
+import "./testUtils";

@@ -8,7 +8,7 @@ import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import chai from "meteor/practicalmeteor:chai";
 import { resetDatabase } from "meteor/xolvio:cleaner";
-import { getElementByName, renderIntoDocument } from "../../../api/test-utils";
+import { getElementByName, renderIntoDocument } from "../../../api/testUtils";
 import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
 import faker from "faker";
@@ -22,11 +22,13 @@ let password;
 let form;
 
 if (Meteor.isClient) {
+
+    const server = Meteor.connect(Meteor.absoluteUrl());
+
     describe("Login component", () => {
 
         beforeEach(() => {
             //Reset database
-            const server = Meteor.connect(Meteor.absoluteUrl());
             server.call("test.resetdb");
 
             //Render component
@@ -46,9 +48,6 @@ if (Meteor.isClient) {
 
         describe("User", () => {
             it("Should be able to login with correct credentials", (done) => {
-
-                //Create new connection to server
-                const server = Meteor.connect(Meteor.absoluteUrl());
 
                 //Create a user
                 server.call("test.create-user", (error, account) => {

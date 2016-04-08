@@ -8,7 +8,7 @@ import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import chai from "meteor/practicalmeteor:chai";
 import { resetDatabase } from "meteor/xolvio:cleaner";
-import { getElementByName, renderIntoDocument } from "../../../api/test-utils";
+import { getElementByName, renderIntoDocument } from "../../../api/testUtils";
 import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
 import faker from "faker";

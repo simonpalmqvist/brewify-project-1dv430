@@ -4,7 +4,7 @@
  */
 
 import { Mongo } from "meteor/mongo";
-import simpleSchema from "meteor/aldeed:simple-schema";
+import { SimpleSchema } from "meteor/aldeed:simple-schema";
 
 export const Items = new Mongo.Collection("items");
 

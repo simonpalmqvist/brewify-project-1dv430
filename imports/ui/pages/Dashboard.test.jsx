@@ -7,7 +7,7 @@ import { _ } from "meteor/underscore";
 import { sinon } from "meteor/practicalmeteor:sinon";
 import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
-import { createItems, stubItems, restoreCollections, renderIntoDocument } from "../../api/test-utils";
+import { createItems, stubItems, restoreCollections, renderIntoDocument } from "../../api/testUtils";
 
 import Dashboard from "./Dashboard";
 

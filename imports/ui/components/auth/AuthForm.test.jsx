@@ -8,7 +8,7 @@ import { Meteor } from "meteor/meteor";
 import chai from "meteor/practicalmeteor:chai";
 import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
-import { renderIntoDocumentWithMockedStore, getElementByName, getInputByType } from "../../../api/test-utils";
+import { renderIntoDocumentWithMockedStore, getElementByName, getInputByType } from "../../../api/testUtils";
 import faker from "faker";
 import AuthForm from "./AuthForm";
 

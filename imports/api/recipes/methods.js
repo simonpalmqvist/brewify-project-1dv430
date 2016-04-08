@@ -5,21 +5,28 @@
 
 import { Meteor } from "meteor/meteor";
 import { Recipes } from "./Recipes";
+import {getUser, belongsToUser} from "../collectionHelpers";
 
 Meteor.methods({
     "recipes.insert": (name, batchSize, boilTime) => {
-        const newRecipe = {name, batchSize, boilTime};
+        let userId = getUser(Recipes);
+
+        const newRecipe = {userId, name, batchSize, boilTime};
 
         //Validate and store it
-        Recipes.schema.validate(newRecipe);
         Recipes.insert(newRecipe);
     },
 
     "recipes.update": (id, dataToUpdate) => {
+
+        belongsToUser(Recipes, id);
+
         Recipes.update(id, {$set: dataToUpdate});
     },
 
     "recipes.remove": (id) => {
+        belongsToUser(Recipes, id);
+
         Recipes.remove(id);
     }
 });
