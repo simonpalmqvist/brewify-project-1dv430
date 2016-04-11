@@ -7,7 +7,7 @@
     "acceptance-test": "chimp --ddp=http://localhost:3000 --mocha --path=tests",
     "acceptance-test-server": "meteor test --full-app --driver-package tmeasday:acceptance-test-driver",
     "deploy": "cd .deploy; mupx deploy; cd ..;",
-    "start": "meteor run"
+    "start": "meteor run --settings ./.deploy/settings.json"
   },
   "dependencies": {
     "events": "^1.1.0",
