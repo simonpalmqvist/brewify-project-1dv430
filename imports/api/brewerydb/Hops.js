@@ -1,5 +1,5 @@
 /**
- * @description Hops collection to store hops data from brewerydb
+ * @description Hops collection to store hops data from breweryDB
  * @author simonpalmqvist
  */
 
