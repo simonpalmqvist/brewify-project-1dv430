@@ -1,5 +1,13 @@
+/**
+ * @description Service to sync data from external API BreweryDB.com
+ * @author simonpalmqvist
+ */
+
+//Modules
 import { Meteor } from "meteor/meteor";
 import { HTTP } from "meteor/http";
+
+//Collections
 import { Hops } from "../brewerydb/Hops";
 import { Fermentables } from "../brewerydb/Fermentables";
 import { Yeasts } from "../brewerydb/Yeasts";
