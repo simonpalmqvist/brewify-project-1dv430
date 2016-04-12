@@ -10,6 +10,7 @@ import { connect }  from "react-redux";
 
 import { updateRecipe } from "../actions/RecipeActions";
 import { Recipes } from "../../api/recipes/Recipes";
+import { RecipeFermentables } from "../../api/recipes/fermentables/RecipeFermentables";
 import { Fermentables } from "../../api/brewerydb/Fermentables";
 
 import Input from "../components/recipe/Input";
@@ -21,13 +22,9 @@ class Recipe extends React.Component {
         updateRecipe(this.props.recipe._id, value);
     }
 
-    addFermentable(error, result) {
-        console.log(error, result);
-    }
-
     render() {
         const update = this.update.bind(this);
-        const recipe = this.props.recipe || {};
+        const { recipe, recipeFermentables } = this.props;
 
         return (
             <div>
@@ -35,18 +32,25 @@ class Recipe extends React.Component {
                 <Input title="Batch size (l)" type="number" name="batchSize" value={recipe.batchSize} updateFun={update}/>
                 <Input title="Boil time (min)" type="number" name="boilTime" value={recipe.boilTime} updateFun={update}/>
                 <FermentablesList
-                    fermentables={[]}
+                    fermentables={recipeFermentables}
                     expectedOG={1.030}
                     totalFermentables={3.000}
-                    addFermentables={this.addFermentable.bind(this)}
-                    updateFermentables={() => {}}/>
+                    recipeId={this.props.recipe._id}/>
             </div>
         );
     }
 }
 
+Recipe.defaultProps = {
+    recipe: {},
+    recipeFermentables: []
+};
+
 //Creates meteor container to provide subscribed data
-const RecipeContainer = createContainer(({params}) => ({recipe: Recipes.findOne(params.id)}), Recipe);
+const RecipeContainer = createContainer(({params}) => ({
+    recipe: Recipes.findOne(params.id),
+    recipeFermentables: RecipeFermentables.find({recipeId: params.id}).fetch()
+}), Recipe);
 
 //Map the current state to the properties in component
 function mappingStateToProps({ flashMessages }) {

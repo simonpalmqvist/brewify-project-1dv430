@@ -36,7 +36,7 @@ RecipeFermentables.schema = new SimpleSchema({
     ebc: {
         type: Number,
         min: 0,
-        max: 140
+        max: 2000
     }
 });
 

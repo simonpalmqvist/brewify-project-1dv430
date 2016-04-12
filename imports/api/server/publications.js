@@ -8,6 +8,7 @@ import { Meteor } from "meteor/meteor";
 
 //Collections
 import { Recipes } from "../recipes/Recipes";
+import { RecipeFermentables } from "../recipes/fermentables/RecipeFermentables";
 import { Hops } from "../brewerydb/Hops";
 import { Fermentables } from "../brewerydb/Fermentables";
 import { Yeasts } from "../brewerydb/Yeasts";
@@ -18,6 +19,14 @@ import { Styles } from "../brewerydb/Styles";
 
 //All recipes that belong to user
 Meteor.publish("recipes", function() {
+    if (!this.userId) {
+        return null;
+    }
+    return RecipeFermentables.find({userId: this.userId });
+});
+
+//All recipes that belong to user
+Meteor.publish("recipes.fermentables", function() {
     if (!this.userId) {
         return null;
     }

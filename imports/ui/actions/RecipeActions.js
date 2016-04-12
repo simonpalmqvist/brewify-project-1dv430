@@ -25,10 +25,41 @@ export function addRecipe() {
 
 /**
  * Action to update a recipe
+ * @param id
+ * @param update
  */
 export function updateRecipe(id, update) {
     Store.dispatch(() => {
         Meteor.callPromise("recipes.update", id, update)
+            .then(() => Store.dispatch({type: "SAVE"}))
+            .catch((error) => Store.dispatch({type: "ERROR", error}));
+    });
+}
+
+/**
+ * Action to add a new recipe fermentable
+ * @param recipeId
+ * @param fermentable
+ */
+export function addRecipeFermentable(recipeId, fermentable) {
+    let extractYield = fermentable.dryYield || 78;
+    let ebc = Math.round((fermentable.srmPrecise || 2) * 1.97);
+
+    Store.dispatch(() => {
+        Meteor.callPromise("recipes.fermentables.insert", recipeId, fermentable.name, extractYield, ebc)
+            .then(() => Store.dispatch({type: "SAVE"}))
+            .catch((error) => Store.dispatch({type: "ERROR", error}));
+    });
+}
+
+/**
+ * Action to update a recipe fermentable
+ * @param id
+ * @param update
+ */
+export function updateRecipeFermentable(id, update) {
+    Store.dispatch(() => {
+        Meteor.callPromise("recipes.fermentables.update", id, update)
             .then(() => Store.dispatch({type: "SAVE"}))
             .catch((error) => Store.dispatch({type: "ERROR", error}));
     });

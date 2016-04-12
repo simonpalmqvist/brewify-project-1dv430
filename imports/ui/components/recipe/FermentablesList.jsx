@@ -5,8 +5,11 @@
 
 import React from "react";
 
+import { addRecipeFermentable } from "../../actions/RecipeActions";
+
 import { Fermentables } from "../../../api/brewerydb/Fermentables";
 
+import FermentableRow from "./FermentableRow";
 import AutoComplete from "../autocomplete/AutoComplete";
 
 export default class FermentablesList extends React.Component {
@@ -18,10 +21,16 @@ export default class FermentablesList extends React.Component {
         };
     }
 
-    add() {
+    showAddInput() {
         this.setState({add: true}, () => {
             this.refs.autocomplete.refs.input.focus();
         });
+    }
+
+    add(error, result) {
+        if (!error) {
+            addRecipeFermentable(this.props.recipeId, result);
+        }
     }
 
     finishedAdding() {
@@ -32,28 +41,21 @@ export default class FermentablesList extends React.Component {
         const {
             fermentables,
             expectedOG,
-            totalFermentables,
-            addFermentables,
-            updateFermentables} = this.props;
+            totalFermentables} = this.props;
 
-        let items = fermentables.map(() => (
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+        let items = fermentables.map((fermentable) => (
+            <FermentableRow key={fermentable._id} fermentable={fermentable} totalFermentables={totalFermentables}/>
         ));
 
-        let addElement = (<button onClick={this.add.bind(this)}>Add fermentable</button>);
+        let addElement = (<button onClick={this.showAddInput.bind(this)}>Add fermentable</button>);
 
+        //Fermentables referenced here are not recipe specific fermentables
         if (this.state.add) {
             addElement = (
                 <AutoComplete
                     ref="autocomplete"
                     data={Fermentables.find({potential: {$exists: true}}).fetch()}
-                    onSelected={addFermentables}
+                    onSelected={this.add.bind(this)}
                     onExit={this.finishedAdding.bind(this)}/>
             );
         }
@@ -66,7 +68,7 @@ export default class FermentablesList extends React.Component {
                             <th>Name</th>
                             <th>Amount (kg)</th>
                             <th>EBC</th>
-                            <th>Potential</th>
+                            <th>Yield</th>
                             <th>Amount (%)</th>
                         </tr>
                     </thead>

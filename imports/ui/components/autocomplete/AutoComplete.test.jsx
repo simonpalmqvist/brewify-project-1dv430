@@ -27,12 +27,12 @@ if (Meteor.isClient) {
 
     describe("AutoComplete component", function() {
 
-        beforeEach(() => {
+        beforeEach(function() {
             fakeData = [];
             _.times(10, pushFakeData);
         });
 
-        it("Should show list with proposals when focusing on input field", () => {
+        it("Should show list with proposals when focusing on input field", function() {
             callback = sinon.spy();
 
             const autoComplete = ReactTestUtils.renderIntoDocument(
@@ -47,7 +47,7 @@ if (Meteor.isClient) {
             autoComplete.refs.list.children.length.should.equal(10);
         });
 
-        it("Should call callback when field has been selected and pressed enter", () => {
+        it("Should call callback when field has been selected and pressed enter", function() {
             callback = sinon.spy();
 
             const autoComplete = ReactTestUtils.renderIntoDocument(
@@ -69,7 +69,7 @@ if (Meteor.isClient) {
             callback.should.be.calledWith(null, childNode.props.obj);
         });
 
-        it("Should be able to navigate with arrows", () => {
+        it("Should be able to navigate with arrows", function() {
             callback = sinon.spy();
 
             const autoComplete = ReactTestUtils.renderIntoDocument(
@@ -106,7 +106,7 @@ if (Meteor.isClient) {
             callback.should.be.calledWith(null, childNode.props.obj);
         });
 
-        it("Should be able to select option in list with the mouse", () => {
+        it("Should be able to select option in list with the mouse", function() {
             callback = sinon.spy();
 
             const autoComplete = ReactTestUtils.renderIntoDocument(
@@ -126,7 +126,7 @@ if (Meteor.isClient) {
             callback.should.be.calledWith(null, obj);
         });
 
-        it("Should be able to exit without triggering callback", () => {
+        it("Should be able to exit without triggering callback", function() {
             callback = sinon.spy();
 
             const autoComplete = ReactTestUtils.renderIntoDocument(
@@ -145,7 +145,7 @@ if (Meteor.isClient) {
             should.not.exist(autoComplete.refs.list);
         });
 
-        it("Should be able to filter list", () => {
+        it("Should be able to filter list", function() {
             callback = sinon.spy();
 
             const autoComplete = ReactTestUtils.renderIntoDocument(
