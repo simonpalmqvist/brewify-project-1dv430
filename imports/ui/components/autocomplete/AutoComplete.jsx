@@ -85,6 +85,7 @@ export default class AutoComplete extends React.Component {
         this._shouldHandleAction = false;
         this._shouldBlur = true;
         this.setState({value, listOpen: false, selected: 0});
+        this.props.onExit();
     }
 
     onClick(field) {
@@ -171,4 +172,4 @@ export default class AutoComplete extends React.Component {
     }
 }
 
-AutoComplete.defaultProps = {onSelected() {}};
+AutoComplete.defaultProps = {onSelected() {}, onExit() {}};

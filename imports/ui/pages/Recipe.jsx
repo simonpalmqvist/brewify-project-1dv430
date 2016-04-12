@@ -13,7 +13,7 @@ import { Recipes } from "../../api/recipes/Recipes";
 import { Fermentables } from "../../api/brewerydb/Fermentables";
 
 import Input from "../components/recipe/Input";
-import AutoComplete from "../components/autocomplete/AutoComplete";
+import FermentablesList from "../components/recipe/FermentablesList";
 
 class Recipe extends React.Component {
 
@@ -21,18 +21,25 @@ class Recipe extends React.Component {
         updateRecipe(this.props.recipe._id, value);
     }
 
+    addFermentable(error, result) {
+        console.log(error, result);
+    }
+
     render() {
         const update = this.update.bind(this);
         const recipe = this.props.recipe || {};
-
-
 
         return (
             <div>
                 <Input type="text" name="name" value={recipe.name} updateFun={update}/>
                 <Input title="Batch size (l)" type="number" name="batchSize" value={recipe.batchSize} updateFun={update}/>
                 <Input title="Boil time (min)" type="number" name="boilTime" value={recipe.boilTime} updateFun={update}/>
-                <AutoComplete data={Fermentables.find().fetch()} path/>
+                <FermentablesList
+                    fermentables={[]}
+                    expectedOG={1.030}
+                    totalFermentables={3.000}
+                    addFermentables={this.addFermentable.bind(this)}
+                    updateFermentables={() => {}}/>
             </div>
         );
     }
