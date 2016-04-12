@@ -1,9 +1,11 @@
 /**
- * @description AutoComplete component for getting value from data source
+ * @description AutoComplete component for getting value from provided data source
  * @author simonpalmqvist
  */
 
 import React from "react";
+
+import AutoCompleteField from "./AutoCompleteField";
 
 export default class AutoComplete extends React.Component {
     constructor(props) {
@@ -13,12 +15,25 @@ export default class AutoComplete extends React.Component {
         this.state = {
             listOpen: props.listOpen || false,
             selected: 0,
-            filter: null,
             value: props.value || ""
         };
 
+        //Private properties to decide whether blur from input and if action should be taken on blur
+        //Used instead of state properties because state might not be updated when information is used
         this._shouldHandleAction = false;
         this._shouldBlur = true;
+    }
+
+    static sortNameAscending(a, b) {
+        let result = 0;
+
+        if (a.name < b.name) {
+            result = -1;
+        } else if (a.name > b.name) {
+            result = 1;
+        }
+
+        return result;
     }
 
     componentWillReceiveProps(props) {
@@ -32,59 +47,51 @@ export default class AutoComplete extends React.Component {
         this.setState({listOpen: true});
     }
 
+
     list() {
         const { data } = this.props;
         const { selected } = this.state;
         const filter = this.state.value.toLowerCase();
-        const selectedClass = (i) => i === selected ? "autocomplete-selected" : "";
-        const selectedStyle = (i) => i === selected ? {backgroundColor: "lightgrey"} : {};
 
-        sorter = (a, b) => {
-            if (a.name < b.name) {
-                return -1;
-            } else if (a.name > b.name) {
-                return 1;
-            } else {
-                return 0;
-            }
 
-        };
-
+        //Filter list based on inputs value, sort list and map values to div
         return data
             .filter(({name}) => name.toLowerCase().includes(filter))
-            .sort(sorter)
-            .map(({id, name}, i) => (
-                <div onClick={this.onClick.bind(this)}
-                     onMouseDown={() => this._shouldBlur = false}
-                     style={selectedStyle(i)}
-                     className={selectedClass(i)}
-                     key={id}>{name}
-                </div>
+            .sort(AutoComplete.sortNameAscending)
+            .map((obj, i) => (
+                <AutoCompleteField
+                    onClick={this.onClick.bind(this)}
+                    onMouseDown={() => this._shouldBlur = false}
+                    selected={i === selected}
+                    ref={`child-${i}`}
+                    key={obj.id}
+                    obj={obj}/>
             ));
     }
 
-    handleAction(item) {
-        const { selected } = this.state;
-        const { children } = this.refs.list;
-
-        item = item || children[selected];
-
+    handleAction(field) {
+        const { onSelected} = this.props;
         let value = this.props.value || "";
 
-        if (item && this._shouldHandleAction) {
-            value = item.textContent;
+        //If field exists and function should handle action update value and run callback
+        if (field && this._shouldHandleAction) {
+            value = field.props.obj.name;
+            onSelected(null, field.props.obj);
+        } else if (this._shouldHandleAction) {
+            onSelected({reason: `'${value}' can't be found`});
         }
 
+        //Reset state and properties when action is done
         this._shouldHandleAction = false;
         this._shouldBlur = true;
         this.setState({value, listOpen: false, selected: 0});
     }
 
-    onClick(event) {
-        event.preventDefault();
-
+    onClick(field) {
+        //Handle action for clicked element
         this._shouldHandleAction = true;
-        this.handleAction(event.target);
+
+        this.handleAction(field);
     }
 
     onChange(event) {
@@ -93,12 +100,17 @@ export default class AutoComplete extends React.Component {
     }
 
     onKeyDown(event) {
+        //Get selected items index and possible max index
         let { selected } = this.state;
         let max = this.refs.list.children.length - 1;
 
+        //Handle key events
         switch(event.key) {
             case "Enter":
                 this._shouldHandleAction = true;
+                event.target.blur();
+                break;
+            case "Escape":
                 event.target.blur();
                 break;
             case "ArrowUp":
@@ -111,8 +123,11 @@ export default class AutoComplete extends React.Component {
     }
 
     onBlur(event) {
+        //If event should not blur (possible mouse events) then prevent default
         if (this._shouldBlur) {
-            this.handleAction();
+            //Find field based on selected value
+            let field = this.refs[`child-${this.state.selected}`];
+            this.handleAction(field);
         } else {
             event.preventDefault();
         }
@@ -122,6 +137,7 @@ export default class AutoComplete extends React.Component {
         const { value, listOpen } = this.state;
         let menu;
 
+        //Component specific styles for list
         let listStyle = {
             border: "1px solid grey",
             position: "fixed",
@@ -129,8 +145,15 @@ export default class AutoComplete extends React.Component {
             maxHeight: "50%"
         };
 
+        //Generate list if list should be shown
         if (listOpen) {
-            menu = (<div ref="list" style={listStyle} className="autocomplete-list">{this.list()}</div>);
+            menu = (
+                <div ref="list"
+                     style={listStyle}
+                     className="autocomplete-list">
+                    {this.list()}
+                </div>
+            );
         }
 
         return (
@@ -147,3 +170,5 @@ export default class AutoComplete extends React.Component {
         );
     }
 }
+
+AutoComplete.defaultProps = {onSelected() {}};

@@ -32,7 +32,7 @@ class Recipe extends React.Component {
                 <Input type="text" name="name" value={recipe.name} updateFun={update}/>
                 <Input title="Batch size (l)" type="number" name="batchSize" value={recipe.batchSize} updateFun={update}/>
                 <Input title="Boil time (min)" type="number" name="boilTime" value={recipe.boilTime} updateFun={update}/>
-                <AutoComplete data={Fermentables.find().fetch()}/>
+                <AutoComplete data={Fermentables.find().fetch()} path/>
             </div>
         );
     }
