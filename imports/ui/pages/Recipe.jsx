@@ -10,8 +10,10 @@ import { connect }  from "react-redux";
 
 import { updateRecipe } from "../actions/RecipeActions";
 import { Recipes } from "../../api/recipes/Recipes";
+import { Fermentables } from "../../api/brewerydb/Fermentables";
 
 import Input from "../components/recipe/Input";
+import AutoComplete from "../components/autocomplete/AutoComplete";
 
 class Recipe extends React.Component {
 
@@ -24,11 +26,13 @@ class Recipe extends React.Component {
         const recipe = this.props.recipe || {};
 
 
+
         return (
             <div>
                 <Input type="text" name="name" value={recipe.name} updateFun={update}/>
-                <Input title="Batch size (l)"type="number" name="batchSize" value={recipe.batchSize} updateFun={update}/>
+                <Input title="Batch size (l)" type="number" name="batchSize" value={recipe.batchSize} updateFun={update}/>
                 <Input title="Boil time (min)" type="number" name="boilTime" value={recipe.boilTime} updateFun={update}/>
+                <AutoComplete data={Fermentables.find().fetch()}/>
             </div>
         );
     }

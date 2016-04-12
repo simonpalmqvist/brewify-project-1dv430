@@ -14,7 +14,7 @@ export default class Input extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        //If updates to the prop comes from the server, set new value
+        //If updates to the prop comes from the server, set new state value
         if (props.value !== this.state.value) {
             this.setState({ value: props.value});
         }
@@ -41,7 +41,7 @@ export default class Input extends React.Component {
         this.setState({value: event.target.value});
     }
 
-    onEnter(event) {
+    onEnterKeyPress(event) {
         //Blur input on enter
         if (event.key === "Enter") {
             event.target.blur();
@@ -56,18 +56,18 @@ export default class Input extends React.Component {
 
         //Write out label if needed
         if (title) {
-            label = (<label for={name}>{title}</label>);
+            label = (<label htmlFor={name}>{title}</label>);
         }
 
         return (
             <div>
-                {title}
+                {label}
                 <input ref="input"
-                       name="name"
+                       name={name}
                        type={type}
                        value={value}
                        onChange={this.onChange.bind(this)}
-                       onKeyPress={this.onEnter.bind(this)}
+                       onKeyPress={this.onEnterKeyPress.bind(this)}
                        onBlur={this.finishedEditing.bind(this)}/>
             </div>
         );

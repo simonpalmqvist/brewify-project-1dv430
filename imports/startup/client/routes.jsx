@@ -33,6 +33,7 @@ import Logout from "../../ui/components/auth/Logout";
 Meteor.startup(() => {
     //Subscribe to the data sources
     Meteor.subscribe("recipes");
+    Meteor.subscribe("fermentables");
 
     //Sync route history with store
     const hist = syncHistoryWithStore(browserHistory, Store);
