@@ -13,6 +13,8 @@ import { Recipes } from "../../api/recipes/Recipes";
 import { RecipeFermentables } from "../../api/recipes/fermentables/RecipeFermentables";
 import { Fermentables } from "../../api/brewerydb/Fermentables";
 
+import { calcExpectedOg, calcFermentableWeight } from "../helpers/beerCalc";
+
 import Input from "../components/recipe/Input";
 import FermentablesList from "../components/recipe/FermentablesList";
 
@@ -53,8 +55,8 @@ class Recipe extends React.Component {
                        onUpdate={update}/>
                 <FermentablesList
                     fermentables={recipeFermentables}
-                    expectedOG={1.030}
-                    totalFermentables={recipeFermentables.reduce((sum, {amount}) => sum + amount, 0)}
+                    expectedOG={calcExpectedOg(recipeFermentables, recipe)}
+                    fermentableWeight={calcFermentableWeight(recipeFermentables)}
                     recipeId={this.props.recipe._id}/>
             </div>
         );

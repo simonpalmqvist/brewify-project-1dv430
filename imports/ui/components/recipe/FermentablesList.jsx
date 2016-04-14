@@ -12,6 +12,7 @@ import { Fermentables } from "../../../api/brewerydb/Fermentables";
 
 import FermentableRow from "./FermentableRow";
 import AutoComplete from "../autocomplete/AutoComplete";
+import Input from "./Input";
 
 export default class FermentablesList extends React.Component {
     constructor(props) {
@@ -44,11 +45,11 @@ export default class FermentablesList extends React.Component {
         const {
             fermentables,
             expectedOG,
-            totalFermentables} = this.props;
+            fermentableWeight} = this.props;
 
         //Map fermentables to fermentable rows
         let items = fermentables.map((fermentable) => (
-            <FermentableRow key={fermentable._id} fermentable={fermentable} totalFermentables={totalFermentables}/>
+            <FermentableRow key={fermentable._id} fermentable={fermentable} totalFermentables={fermentableWeight}/>
         ));
 
         //Show button until pressed then show autocomplete input to add fermentable
@@ -81,12 +82,18 @@ export default class FermentablesList extends React.Component {
                     <tfoot>
                     <tr>
                         <td colSpan="4">Total amount (kg)</td>
-                        <td>{totalFermentables}</td>
+                        <td>
+                            <Input attr={{type: "number", disabled: true}} fixedDecimals={3}
+                                   name="fermentableWeight" value={fermentableWeight} />
+                        </td>
                         <td/>
                     </tr>
                     <tr>
                         <td colSpan="4">Expected OG</td>
-                        <td>{expectedOG}</td>
+                        <td>
+                            <Input attr={{type: "number", disabled: true}} fixedDecimals={3}
+                                   name="expextedOG" value={expectedOG} />
+                        </td>
                         <td/>
                     </tr>
                     </tfoot>
