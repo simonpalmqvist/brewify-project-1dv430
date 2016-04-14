@@ -15,7 +15,7 @@ export default class AutoComplete extends React.Component {
         this.state = {
             listOpen: props.listOpen || false,
             selected: 0,
-            value: props.value || ""
+            value: props.value
         };
 
         //Private properties to decide whether blur from input and if action should be taken on blur
@@ -47,6 +47,10 @@ export default class AutoComplete extends React.Component {
         this.setState({listOpen: true});
     }
 
+    scrollIntoView(i) {
+        this.refs.list.children[i].scrollIntoView();
+    }
+
 
     list() {
         const { data } = this.props;
@@ -70,15 +74,15 @@ export default class AutoComplete extends React.Component {
     }
 
     handleAction(field) {
-        const { onSelected} = this.props;
-        let value = this.props.value || "";
+        const { onSelected } = this.props;
+        let value = this.props.value;
 
         //If field exists and function should handle action update value and run callback
-        if (field && this._shouldHandleAction) {
+        if(!field && this._shouldHandleAction) {
+            onSelected({reason: `'${this.refs.input.value}' can't be found`});
+        } else if (field.props.obj.name !== value && this._shouldHandleAction) {
             value = field.props.obj.name;
             onSelected(null, field.props.obj);
-        } else if (this._shouldHandleAction) {
-            onSelected({reason: `'${this.refs.input.value}' can't be found`});
         }
 
         //Reset state and properties when action is done
@@ -103,10 +107,16 @@ export default class AutoComplete extends React.Component {
     onKeyDown(event) {
         //Get selected items index and possible max index
         let { selected } = this.state;
+        let newSelected;
         let max = this.refs.list.children.length - 1;
 
         //Handle key events
         switch(event.key) {
+            case "Tab":
+                //Hide list otherwise tab function won't work
+                this.refs.list.style.display = "none";
+                this._shouldHandleAction = true;
+                break;
             case "Enter":
                 this._shouldHandleAction = true;
                 event.target.blur();
@@ -115,10 +125,14 @@ export default class AutoComplete extends React.Component {
                 event.target.blur();
                 break;
             case "ArrowUp":
-                this.setState({selected: selected === 0 ? 0 : selected - 1});
+                newSelected = selected === 0 ? 0 : selected - 1;
+                this.setState({selected: newSelected});
+                this.scrollIntoView(newSelected);
                 break;
             case "ArrowDown":
-                this.setState({selected: selected === max ? max : selected + 1});
+                newSelected = selected === max ? max : selected + 1;
+                this.setState({selected: newSelected});
+                this.scrollIntoView(selected);
                 break;
         }
     }
@@ -140,7 +154,9 @@ export default class AutoComplete extends React.Component {
 
         //Component specific styles for list
         let listStyle = {
+            borderRadius: "3px",
             border: "1px solid grey",
+            backgroundColor: "white",
             position: "fixed",
             overflow: "auto",
             maxHeight: "50%"
@@ -172,4 +188,4 @@ export default class AutoComplete extends React.Component {
     }
 }
 
-AutoComplete.defaultProps = {onSelected() {}, onExit() {}};
+AutoComplete.defaultProps = {onSelected() {}, onExit() {}, value: ""};

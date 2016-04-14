@@ -72,16 +72,19 @@ export default class FermentablesList extends React.Component {
                             <th>EBC</th>
                             <th>Yield (%)</th>
                             <th>Amount (%)</th>
+                            <th/>
                         </tr>
                     </thead>
                     <tfoot>
                     <tr>
                         <td colSpan="4">Total amount (kg)</td>
                         <td>{totalFermentables}</td>
+                        <td/>
                     </tr>
                     <tr>
                         <td colSpan="4">Expected OG</td>
                         <td>{expectedOG}</td>
+                        <td/>
                     </tr>
                     </tfoot>
                     <tbody>

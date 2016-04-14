@@ -44,7 +44,7 @@ export default class Input extends React.Component {
         const { attr, fixedDecimals } = this.props;
 
         //If attribute type is number the set to fixed (default 0)
-        if (attr.type === "number") {
+        if (value !== "" && attr.type === "number") {
             value = value.toFixed(fixedDecimals);
         }
         return value;
@@ -63,13 +63,14 @@ export default class Input extends React.Component {
 
     onChange(event) {
         let { value } = event.target;
+        let checkValue;
         const {validate, name} = this.props;
 
-        value = this.maybeParseFloat(value);
+        checkValue = this.maybeParseFloat(value);
 
-        if (!value || validate(name, value)) {
+        if (!value || validate(name, checkValue)) {
             //Just update the state when changing the input
-            this.setState({value: this.maybeToFixed(value)});
+            this.setState({value});
         }
     }
 

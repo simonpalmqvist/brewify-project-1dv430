@@ -5,7 +5,7 @@
 
 import React from "react";
 
-import { updateRecipeFermentable } from "../../actions/RecipeActions";
+import { updateRecipeFermentable, deleteRecipeFermentable } from "../../actions/RecipeActions";
 import { errorAction } from "../../actions/statusActions";
 
 import { srmToEbc } from "../../helpers/beerCalc";
@@ -47,6 +47,11 @@ export default class FermentableRow extends React.Component {
         this.update(updates);
     }
 
+    maybeDelete() {
+        deleteRecipeFermentable(this.props.fermentable._id);
+    }
+
+
     render() {
         const updateFun = this.update.bind(this);
 
@@ -61,7 +66,7 @@ export default class FermentableRow extends React.Component {
                         value={fermentable.name}/>
                 </td>
                 <td>
-                    <Input attr={{type: "number", step: "0.01"}} fixedDecimals={3}
+                    <Input attr={{type: "number", step: "0.1"}} fixedDecimals={3}
                            name="amount" validate={this.validateOne}
                            value={fermentable.amount} onUpdate={updateFun}/>
                 </td>
@@ -78,6 +83,9 @@ export default class FermentableRow extends React.Component {
                 <td>
                     <Input attr={{type: "number", disabled: true}} fixedDecimals={2}
                            name="totalFermentables" value={(fermentable.amount / totalFermentables) * 100} />
+                </td>
+                <td>
+                    <button onClick={this.maybeDelete.bind(this)}>Delete</button>
                 </td>
             </tr>
         );

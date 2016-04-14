@@ -13,7 +13,7 @@ export default class AppContainer extends React.Component {
         return (
             <div>
                 <header>
-                    <Link to="/"><h1>ooh</h1></Link>
+                    <Link to="/"><h1>Brewify</h1></Link>
                     <NavigationBar/>
                 </header>
                 {this.props.children}

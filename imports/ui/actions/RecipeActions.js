@@ -58,12 +58,24 @@ export function addRecipeFermentable(recipeId, fermentable) {
 
 /**
  * Action to update a recipe fermentable
- * @param id
- * @param update
+ * @param id - RecipeFermentable id
+ * @param update object with key value pairs on what should update
  */
 export function updateRecipeFermentable(id, update) {
     Store.dispatch(() => {
         Meteor.callPromise("recipes.fermentables.update", id, update)
+            .then(saveAction)
+            .catch(errorAction);
+    });
+}
+
+/**
+ * Action to delete a recipe fermentable
+ * @param id - RecipeFermentable id
+ */
+export function deleteRecipeFermentable(id) {
+    Store.dispatch(() => {
+        Meteor.callPromise("recipes.fermentables.remove", id)
             .then(saveAction)
             .catch(errorAction);
     });
