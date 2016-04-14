@@ -1,4 +1,8 @@
 /* eslint-env mocha */
+/**
+ * @description Unit tests for AutoComplete and AutoComplete field components
+ * @author simonpalmqvist
+ */
 
 import { Meteor } from "meteor/meteor";
 import { resetDatabase } from "meteor/xolvio:cleaner";

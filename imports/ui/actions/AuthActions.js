@@ -8,7 +8,7 @@ import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { browserHistory } from "react-router";
 import Store from "../store";
-import { errorAction } from "./statusActions";
+import { errorAction } from "./StatusActions";
 
 /**
  * Redirect to dashboard for logged in users

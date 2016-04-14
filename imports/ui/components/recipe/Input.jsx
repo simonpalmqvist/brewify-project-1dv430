@@ -61,16 +61,19 @@ export default class Input extends React.Component {
         return value;
     }
 
-    onChange(event) {
+    handleChange(event) {
         let { value } = event.target;
         let checkValue;
-        const {validate, name} = this.props;
+        const {onChange, validate, name} = this.props;
 
+        //Maybe parse value before running validation
         checkValue = this.maybeParseFloat(value);
 
         if (!value || validate(name, checkValue)) {
             //Just update the state when changing the input
             this.setState({value});
+            //call onChange callback
+            onChange(checkValue);
         }
     }
 
@@ -99,7 +102,7 @@ export default class Input extends React.Component {
                        name={name}
                        value={value}
                        {...attr}
-                       onChange={this.onChange.bind(this)}
+                       onChange={this.handleChange.bind(this)}
                        onKeyPress={this.onEnterKeyPress.bind(this)}
                        onBlur={this.finishedEditing.bind(this)}/>
             </div>
@@ -108,6 +111,7 @@ export default class Input extends React.Component {
 }
 
 Input.defaultProps = {
+    onChange() {},
     onUpdate() {},
     validate() {return true;},
     attr: {},

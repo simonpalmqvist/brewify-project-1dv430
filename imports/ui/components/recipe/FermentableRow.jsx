@@ -6,7 +6,7 @@
 import React from "react";
 
 import { updateRecipeFermentable, deleteRecipeFermentable } from "../../actions/RecipeActions";
-import { errorAction } from "../../actions/statusActions";
+import { errorAction } from "../../actions/StatusActions";
 
 import { srmToEbc } from "../../helpers/beerCalc";
 import { YIELD, SRM} from "../../helpers/recipeStandards";

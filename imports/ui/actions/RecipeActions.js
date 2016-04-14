@@ -6,7 +6,7 @@
 import { Meteor } from "meteor/meteor";
 import { browserHistory } from "react-router";
 import Store from "../store";
-import { saveAction, errorAction } from "./statusActions";
+import { saveAction, errorAction } from "./StatusActions";
 import { Recipes } from "../../api/recipes/Recipes";
 
 import { srmToEbc } from "../helpers/beerCalc";

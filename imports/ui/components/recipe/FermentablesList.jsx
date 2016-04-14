@@ -6,7 +6,7 @@
 import React from "react";
 
 import { addRecipeFermentable } from "../../actions/RecipeActions";
-import { errorAction } from "../../actions/statusActions";
+import { errorAction } from "../../actions/StatusActions";
 
 import { Fermentables } from "../../../api/brewerydb/Fermentables";
 
@@ -23,6 +23,7 @@ export default class FermentablesList extends React.Component {
     }
 
     showAddInput() {
+        //Show input field and set focus on it when rendered
         this.setState({add: true}, () => {
             this.refs.autocomplete.refs.input.focus();
         });
@@ -45,10 +46,12 @@ export default class FermentablesList extends React.Component {
             expectedOG,
             totalFermentables} = this.props;
 
+        //Map fermentables to fermentable rows
         let items = fermentables.map((fermentable) => (
             <FermentableRow key={fermentable._id} fermentable={fermentable} totalFermentables={totalFermentables}/>
         ));
 
+        //Show button until pressed then show autocomplete input to add fermentable
         let addElement = (<button onClick={this.showAddInput.bind(this)}>Add fermentable</button>);
 
         //Fermentables referenced here are not recipe specific fermentables
