@@ -22,19 +22,39 @@ class Recipe extends React.Component {
         updateRecipe(this.props.recipe._id, value);
     }
 
+    recipeValidateOne(key, value) {
+        let obj = {};
+        obj[key] = value;
+        return Recipes.schema.newContext().validateOne(obj, key);
+    }
+
     render() {
         const update = this.update.bind(this);
         const { recipe, recipeFermentables } = this.props;
 
         return (
             <div>
-                <Input type="text" name="name" value={recipe.name} updateFun={update}/>
-                <Input title="Batch size (l)" type="number" name="batchSize" value={recipe.batchSize} updateFun={update}/>
-                <Input title="Boil time (min)" type="number" name="boilTime" value={recipe.boilTime} updateFun={update}/>
+                <Input name="name"
+                       value={recipe.name}
+                       attr={{type: "text"}}
+                       validate={this.recipeValidateOne}
+                       onUpdate={update}/>
+                <Input label="Batch size (l)"
+                       attr={{type: "number"}}
+                       name="batchSize"
+                       value={recipe.batchSize}
+                       validate={this.recipeValidateOne}
+                       onUpdate={update}/>
+                <Input name="boilTime"
+                       label="Boil time (min)"
+                       attr={{type: "number"}}
+                       value={recipe.boilTime}
+                       validate={this.recipeValidateOne}
+                       onUpdate={update}/>
                 <FermentablesList
                     fermentables={recipeFermentables}
                     expectedOG={1.030}
-                    totalFermentables={3.000}
+                    totalFermentables={recipeFermentables.reduce((sum, {amount}) => sum + amount, 0)}
                     recipeId={this.props.recipe._id}/>
             </div>
         );

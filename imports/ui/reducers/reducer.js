@@ -6,9 +6,11 @@
 import { combineReducers } from "redux";
 
 import flashMessages from "./flashMessages";
+import loading from "./loading";
 import { routerReducer } from "react-router-redux";
 
 export default rootReducer = combineReducers({
+    loading,
     flashMessages,
     routing: routerReducer
 });

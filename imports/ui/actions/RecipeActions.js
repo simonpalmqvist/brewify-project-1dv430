@@ -6,20 +6,24 @@
 import { Meteor } from "meteor/meteor";
 import { browserHistory } from "react-router";
 import Store from "../store";
+import { saveAction, errorAction } from "./statusActions";
 import { Recipes } from "../../api/recipes/Recipes";
+
+import { srmToEbc } from "../helpers/beerCalc";
+import { BATCHSIZE, BOILTIME, YIELD, SRM} from "../helpers/recipeStandards";
 
 /**
  * Action to add a new recipe
  */
 export function addRecipe() {
     let name = "Recipe";
-    let batchSize = 20;
-    let boilTime = 60;
+    let batchSize = BATCHSIZE;
+    let boilTime = BOILTIME;
 
     Store.dispatch(() => {
         Meteor.callPromise("recipes.insert", name, batchSize, boilTime)
             .then((recipeId) => browserHistory.push(`/recipe/${recipeId}`))
-            .catch((error) => Store.dispatch({type: "ERROR", error}));
+            .catch(errorAction);
     });
 }
 
@@ -31,8 +35,8 @@ export function addRecipe() {
 export function updateRecipe(id, update) {
     Store.dispatch(() => {
         Meteor.callPromise("recipes.update", id, update)
-            .then(() => Store.dispatch({type: "SAVE"}))
-            .catch((error) => Store.dispatch({type: "ERROR", error}));
+            .then(saveAction)
+            .catch(errorAction);
     });
 }
 
@@ -42,13 +46,13 @@ export function updateRecipe(id, update) {
  * @param fermentable
  */
 export function addRecipeFermentable(recipeId, fermentable) {
-    let extractYield = fermentable.dryYield || 78;
-    let ebc = Math.round((fermentable.srmPrecise || 2) * 1.97);
+    let extractYield = fermentable.dryYield || YIELD;
+    let ebc = srmToEbc(fermentable.srmPrecise || SRM);
 
     Store.dispatch(() => {
         Meteor.callPromise("recipes.fermentables.insert", recipeId, fermentable.name, extractYield, ebc)
-            .then(() => Store.dispatch({type: "SAVE"}))
-            .catch((error) => Store.dispatch({type: "ERROR", error}));
+            .then(saveAction)
+            .catch(errorAction);
     });
 }
 
@@ -60,12 +64,10 @@ export function addRecipeFermentable(recipeId, fermentable) {
 export function updateRecipeFermentable(id, update) {
     Store.dispatch(() => {
         Meteor.callPromise("recipes.fermentables.update", id, update)
-            .then(() => Store.dispatch({type: "SAVE"}))
-            .catch((error) => Store.dispatch({type: "ERROR", error}));
+            .then(saveAction)
+            .catch(errorAction);
     });
 }
-
-
 
 /**
  * Authorization method to redirect user if recipe doesn't belong to user or doesn't exist

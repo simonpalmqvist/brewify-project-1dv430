@@ -6,6 +6,7 @@
 import React from "react";
 
 import { addRecipeFermentable } from "../../actions/RecipeActions";
+import { errorAction } from "../../actions/statusActions";
 
 import { Fermentables } from "../../../api/brewerydb/Fermentables";
 
@@ -28,9 +29,10 @@ export default class FermentablesList extends React.Component {
     }
 
     add(error, result) {
-        if (!error) {
-            addRecipeFermentable(this.props.recipeId, result);
+        if (error) {
+            return errorAction(error);
         }
+        addRecipeFermentable(this.props.recipeId, result);
     }
 
     finishedAdding() {
@@ -68,7 +70,7 @@ export default class FermentablesList extends React.Component {
                             <th>Name</th>
                             <th>Amount (kg)</th>
                             <th>EBC</th>
-                            <th>Yield</th>
+                            <th>Yield (%)</th>
                             <th>Amount (%)</th>
                         </tr>
                     </thead>

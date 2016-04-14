@@ -21,12 +21,12 @@ Recipes.schema = new SimpleSchema({
     },
     batchSize: {
         type: Number,
-        min: 5,
+        min: 0,
         decimal: true
     },
     boilTime: {
         type: Number,
-        min: 30
+        min: 0
     }
 });
 

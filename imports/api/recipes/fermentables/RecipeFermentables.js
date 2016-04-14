@@ -31,7 +31,8 @@ RecipeFermentables.schema = new SimpleSchema({
     extractYield: {
         type: Number,
         min: 0,
-        max: 100
+        max: 100,
+        decimal: true
     },
     ebc: {
         type: Number,

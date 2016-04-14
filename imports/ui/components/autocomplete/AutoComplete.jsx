@@ -78,7 +78,7 @@ export default class AutoComplete extends React.Component {
             value = field.props.obj.name;
             onSelected(null, field.props.obj);
         } else if (this._shouldHandleAction) {
-            onSelected({reason: `'${value}' can't be found`});
+            onSelected({reason: `'${this.refs.input.value}' can't be found`});
         }
 
         //Reset state and properties when action is done

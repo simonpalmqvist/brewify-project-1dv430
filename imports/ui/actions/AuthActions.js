@@ -8,20 +8,13 @@ import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { browserHistory } from "react-router";
 import Store from "../store";
+import { errorAction } from "./statusActions";
 
 /**
  * Redirect to dashboard for logged in users
  */
 function redirect() {
     browserHistory.push("/dashboard");
-}
-
-/**
- * Dispatches action error with specified error
- * @param error
- */
-function handleError(error) {
-    Store.dispatch({type: "ERROR", error});
 }
 
 /**
@@ -33,7 +26,7 @@ export function loginUser(email, password) {
     Store.dispatch(() => {
         Meteor.loginWithPassword(email, password, (error) => {
             if (error) {
-                return handleError(error);
+                return errorAction(error);
             }
             redirect();
         });
@@ -49,7 +42,7 @@ export function registerUser(email, password) {
     Store.dispatch(() => {
         Accounts.createUser({email, password}, (error) => {
             if (error) {
-                return handleError(error);
+                return errorAction(error);
             }
             redirect();
         });
