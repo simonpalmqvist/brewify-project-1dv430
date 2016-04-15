@@ -32,7 +32,7 @@ class Recipe extends React.Component {
 
     render() {
         const update = this.update.bind(this);
-        const { recipe, recipeFermentables } = this.props;
+        const { recipe, recipeFermentables, fermentables } = this.props;
 
         return (
             <div>
@@ -54,7 +54,8 @@ class Recipe extends React.Component {
                        validate={this.recipeValidateOne}
                        onUpdate={update}/>
                 <FermentablesList
-                    fermentables={recipeFermentables}
+                    fermentables={fermentables}
+                    recipeFermentables={recipeFermentables}
                     expectedOG={calcExpectedOg(recipeFermentables, recipe)}
                     fermentableWeight={calcFermentableWeight(recipeFermentables)}
                     recipeId={this.props.recipe._id}/>
@@ -71,7 +72,8 @@ Recipe.defaultProps = {
 //Creates meteor container to provide subscribed data
 const RecipeContainer = createContainer(({params}) => ({
     recipe: Recipes.findOne(params.id),
-    recipeFermentables: RecipeFermentables.find({recipeId: params.id}).fetch()
+    recipeFermentables: RecipeFermentables.find({recipeId: params.id}).fetch(),
+    fermentables: Fermentables.find({dryYield: {$exists: true}}).fetch()
 }), Recipe);
 
 //Map the current state to the properties in component

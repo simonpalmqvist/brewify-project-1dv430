@@ -85,9 +85,20 @@ export function deleteRecipeFermentable(id) {
  * Authorization method to redirect user if recipe doesn't belong to user or doesn't exist
  * @param nextState
  * @param transition
+ * @param callback
  */
-export function recipeExists(nextState, transition) {
-    if(!Recipes.findOne(nextState.params.id)) {
-        transition("/dashboard");
+export function recipeExists(nextState, transition, callback) {
+    if (!Meteor.userId()) {
+        transition("/login");
+        callback();
     }
+
+    Store.getState().subscriptions.recipes.readyPromise()
+        .then(() => {
+            if(!Recipes.findOne(nextState.params.id)) {
+                transition("/dashboard");
+            }
+            callback();
+        })
+        .catch(() => transition("/dashboard"));
 }

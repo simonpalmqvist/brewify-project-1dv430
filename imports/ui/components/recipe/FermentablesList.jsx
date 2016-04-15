@@ -8,8 +8,6 @@ import React from "react";
 import { addRecipeFermentable } from "../../actions/RecipeActions";
 import { errorAction } from "../../actions/StatusActions";
 
-import { Fermentables } from "../../../api/brewerydb/Fermentables";
-
 import FermentableRow from "./FermentableRow";
 import AutoComplete from "../autocomplete/AutoComplete";
 import Input from "./Input";
@@ -44,11 +42,12 @@ export default class FermentablesList extends React.Component {
     render() {
         const {
             fermentables,
+            recipeFermentables,
             expectedOG,
             fermentableWeight} = this.props;
 
         //Map fermentables to fermentable rows
-        let items = fermentables.map((fermentable) => (
+        let items = recipeFermentables.map((fermentable) => (
             <FermentableRow key={fermentable._id} fermentable={fermentable} totalFermentables={fermentableWeight}/>
         ));
 
@@ -62,7 +61,7 @@ export default class FermentablesList extends React.Component {
                 <AutoComplete
                     className="add-fermentable"
                     ref="autocomplete"
-                    data={Fermentables.find({potential: {$exists: true}}).fetch()}
+                    data={fermentables}
                     onSelected={this.add.bind(this)}
                     onExit={this.finishedAdding.bind(this)}/>
             );
@@ -70,7 +69,7 @@ export default class FermentablesList extends React.Component {
 
         return (
             <div>
-                <table>
+                <table className="recipe-fermentables">
                     <thead>
                         <tr>
                             <th>Name</th>

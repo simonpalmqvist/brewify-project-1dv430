@@ -7,7 +7,7 @@ import { login, logout} from "./lib";
 let user;
 let userId;
 
-describe("Items UI", () => {
+describe("Dashboard UI", () => {
     beforeEach(() => {
         server.call("test.resetdb");
     });
