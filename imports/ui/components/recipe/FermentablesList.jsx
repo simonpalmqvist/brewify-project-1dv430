@@ -53,12 +53,14 @@ export default class FermentablesList extends React.Component {
         ));
 
         //Show button until pressed then show autocomplete input to add fermentable
-        let addElement = (<button onClick={this.showAddInput.bind(this)}>Add fermentable</button>);
+        let addElement = (<button className="add-fermentable"
+                                  onClick={this.showAddInput.bind(this)}>Add fermentable</button>);
 
         //Fermentables referenced here are not recipe specific fermentables
         if (this.state.add) {
             addElement = (
                 <AutoComplete
+                    className="add-fermentable"
                     ref="autocomplete"
                     data={Fermentables.find({potential: {$exists: true}}).fetch()}
                     onSelected={this.add.bind(this)}
@@ -97,7 +99,7 @@ export default class FermentablesList extends React.Component {
                         <td/>
                     </tr>
                     </tfoot>
-                    <tbody>
+                    <tbody className="fermentable-body">
                         {items}
                     </tbody>
                 </table>

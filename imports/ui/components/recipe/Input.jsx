@@ -32,7 +32,7 @@ export default class Input extends React.Component {
         } else if (newValue !== value) {
             //Connect the value to key
             let update = {};
-            update[name] = this.state.value;
+            update[name] = newValue;
 
             //Update recipe with this value
             onUpdate(update);

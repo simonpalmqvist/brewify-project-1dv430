@@ -150,6 +150,7 @@ export default class AutoComplete extends React.Component {
 
     render() {
         const { value, listOpen } = this.state;
+        const { className } = this.props;
         let menu;
 
         //Component specific styles for list
@@ -177,6 +178,7 @@ export default class AutoComplete extends React.Component {
             <div>
                 <input ref="input"
                        type="text"
+                       className={className}
                        value={value}
                        onFocus={this.showList.bind(this)}
                        onChange={this.onChange.bind(this)}

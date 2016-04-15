@@ -9,6 +9,7 @@ import { Accounts } from "meteor/accounts-base";
 import { _ } from "meteor/underscore";
 import { resetDatabase } from "meteor/xolvio:cleaner";
 import { Random } from "meteor/random";
+import { sinon } from "meteor/practicalmeteor:sinon";
 import faker from "faker";
 import { StubCollections } from "meteor/stub-collections";
 import React from "react";
@@ -17,7 +18,10 @@ import ReactTestUtils from "react-addons-test-utils";
 
 //Collections
 import { Recipes } from "../api/recipes/Recipes";
+import { Fermentables } from "../api/brewerydb/Fermentables";
+import { RecipeFermentables } from "../api/recipes/fermentables/RecipeFermentables";
 import Store from "../ui/store";
+
 
 //Server test methods
 
@@ -26,6 +30,10 @@ Meteor.methods({
 
     "test.generate-recipes": (numberOfItems, id) => {
         return createRecipes(numberOfItems, id);
+    },
+
+    "test.generate-fermentables": (numberOfItems) => {
+        return createFermentables(numberOfItems);
     },
 
     "test.get-recipes": () => {
@@ -41,38 +49,86 @@ Meteor.methods({
         Accounts.createUser(data);
 
         return data;
+    },
+
+    "test.stub-user-id": (userId) => {
+        sinon.stub(Meteor, "userId", () => userId);
+    },
+
+    "test.restore-user-id": () => {
+        Meteor.userId.restore();
     }
 });
 
 //Helper functions
 
 /**
- * Client: Creates recipes for collection
+ * Server: Creates recipes and inserts them in collection
  * @param times - number of recipes that should be created
  * @param id - user id if none it will take a random one
  * @returns {Array} - array of created recipes
  */
 export function createRecipes(times, id) {
-    let ids =  _.times(times, i => createRecipe(id));
+    let ids = _.times(times, i => _createRecipe(id));
     return _.map(ids, id => Recipes.findOne(id));
 }
 
 /**
- * Client: Creates recipe for collection
+ * Function creates recipe for collection
  * @param id - user id if none it will take a random one
  * @returns {Object} - returns the created recipe
+ * @private
  */
-export function createRecipe(id) {
-    return Recipes.insert(recipe(id));
+function _createRecipe(id) {
+    return Recipes.insert(_recipe(id));
 }
 
-export function recipe(id) {
+/**
+ * Function to generate recipe obj with fake data
+ * @param id - userId
+ * @returns {{userId: String, name: String, batchSize: Number, boilTime: Number}}
+ * @private
+ */
+function _recipe(id) {
     return {
         userId: id || Random.id(),
         name: faker.lorem.words(),
         batchSize: faker.random.number({min: 10, max: 1000}),
         boilTime: faker.random.number({min: 30, max: 1000})
-    }
+    };
+}
+
+/**
+ * Server: Creates fermentables and inserts them in collection
+ * @param times - number of fermentables that should be created
+ * @returns {Array} - array of created fermentables
+ */
+export function createFermentables(times) {
+    let ids = _.times(times, i => _createFermentable());
+    return _.map(ids, id => Fermentables.findOne(id));
+}
+
+/**
+ * Function to insert fermentable into collection
+ * @returns {Object}
+ * @private
+ */
+function _createFermentable() {
+    return Fermentables.insert(_fermentable());
+}
+
+/**
+ * Function to generate fermentable obj with fake data
+ * @returns {{id: String, name: String, srmPrecise: Number, dryYield: Number}}
+ * @private
+ */
+function _fermentable() {
+    return {
+        id: faker.random.number({min: 1, max: 1000}),
+        name: faker.lorem.words(),
+        srmPrecise: faker.random.number({min: 2, max: 1000}),
+        dryYield: faker.random.number({min: 0, max: 100})
+    };
 }
 
 /**
@@ -118,6 +174,22 @@ export function getInputByType(parentComponent, type) {
     return ReactTestUtils.findAllInRenderedTree(parentComponent, (el) => {
         return el.type === type && el.tagName === "INPUT";
     })[0];
+}
+
+function _matchFun(match) {
+    return  (val) =>  match ? match === val : true;
+}
+
+function _regexpFind(str,regex) {
+    let result = str.match(regex);
+
+    if(result) {
+        result = result[1];
+    }
+
+    console.log(result);
+
+    return result;
 }
 
 /**

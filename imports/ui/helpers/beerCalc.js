@@ -24,9 +24,11 @@ export function calcExpectedOg(fermentables, recipe) {
     const efficiency = 0.80;
     const waterAfterBoil = recipe.batchSize + 0.5 + 2; // + recipe.lossFermentation + recipe.lossKettle
 
-    return fermentables
+    let result = fermentables
         .map(({amount, extractYield}) => (oechsleKG * (extractYield/100) * amount * efficiency / waterAfterBoil) / 1000)
         .reduce(sum, 1);
+
+    return round(result, 3);
 }
 
 /**
@@ -42,4 +44,10 @@ export function calcFermentableWeight(fermentables) {
 
 function sum(a,b) {
     return a + b;
+}
+
+function round(value, decimals) {
+    const x = Math.pow(10, decimals);
+
+    return Math.round(value * x)/x;
 }

@@ -1,4 +1,8 @@
 /* eslint-env mocha */
+/**
+ * @description Integration tests for dashboard page and child components
+ * @author simonpalmqvist
+ */
 
 import { Meteor } from "meteor/meteor";
 import chai from "meteor/practicalmeteor:chai";

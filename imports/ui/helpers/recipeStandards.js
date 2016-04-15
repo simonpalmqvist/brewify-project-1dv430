@@ -1,4 +1,7 @@
-
+/**
+ * @description recipe standard values to be used when data is missing from external API
+ * @author simonpalmqvist
+ */
 
 export const YIELD = 78;
 
