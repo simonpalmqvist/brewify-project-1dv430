@@ -10,7 +10,7 @@ import { saveAction, errorAction } from "./StatusActions";
 import { Recipes } from "../../api/recipes/Recipes";
 
 import { srmToEbc } from "../helpers/beerCalc";
-import { BATCHSIZE, BOILTIME, YIELD, SRM} from "../helpers/recipeStandards";
+import { BATCHSIZE, BOILTIME } from "../helpers/recipeStandards";
 
 /**
  * Action to add a new recipe
@@ -46,11 +46,11 @@ export function updateRecipe(id, update) {
  * @param fermentable
  */
 export function addRecipeFermentable(recipeId, fermentable) {
-    let extractYield = fermentable.dryYield || YIELD;
-    let ebc = srmToEbc(fermentable.srmPrecise || SRM);
+    let potential = fermentable.potential || 1;
+    let ebc = srmToEbc(fermentable.srmPrecise || 0);
 
     Store.dispatch(() => {
-        Meteor.callPromise("recipes.fermentables.insert", recipeId, fermentable.name, extractYield, ebc)
+        Meteor.callPromise("recipes.fermentables.insert", recipeId, fermentable.name, potential, ebc)
             .then(saveAction)
             .catch(errorAction);
     });

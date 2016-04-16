@@ -127,7 +127,7 @@ function _fermentable() {
         id: faker.random.number({min: 1, max: 1000}),
         name: faker.lorem.words(),
         srmPrecise: faker.random.number({min: 2, max: 1000}),
-        dryYield: faker.random.number({min: 0, max: 100})
+        potential: faker.random.number({min: 1.000, max: 1.060, precision: 0.001})
     };
 }
 

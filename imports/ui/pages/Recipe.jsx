@@ -73,7 +73,7 @@ Recipe.defaultProps = {
 const RecipeContainer = createContainer(({params}) => ({
     recipe: Recipes.findOne(params.id),
     recipeFermentables: RecipeFermentables.find({recipeId: params.id}).fetch(),
-    fermentables: Fermentables.find({dryYield: {$exists: true}}).fetch()
+    fermentables: Fermentables.find().fetch()
 }), Recipe);
 
 //Map the current state to the properties in component

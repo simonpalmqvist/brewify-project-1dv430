@@ -9,13 +9,13 @@ import { RecipeFermentables } from "./RecipeFermentables";
 import {getUser, belongsToUser} from "../../collectionHelpers";
 
 Meteor.methods({
-    "recipes.fermentables.insert": (recipeId, name, extractYield, ebc) => {
+    "recipes.fermentables.insert": (recipeId, name, potential, ebc) => {
         let userId = getUser(RecipeFermentables);
         let amount = 0;
 
         belongsToUser(Recipes, recipeId);
 
-        const newFermentable = {userId, recipeId, name, amount, extractYield, ebc};
+        const newFermentable = {userId, recipeId, name, amount, potential, ebc};
 
         //Validate and store it
         return RecipeFermentables.insert(newFermentable);

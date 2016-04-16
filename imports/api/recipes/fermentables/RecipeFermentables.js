@@ -28,16 +28,17 @@ RecipeFermentables.schema = new SimpleSchema({
         min: 0,
         decimal: true
     },
-    extractYield: {
+    potential: {
         type: Number,
-        min: 0,
-        max: 100,
+        min: 1,
+        max: 2,
         decimal: true
     },
     ebc: {
         type: Number,
         min: 0,
-        max: 2000
+        max: 2000,
+        decimal: true
     }
 });
 

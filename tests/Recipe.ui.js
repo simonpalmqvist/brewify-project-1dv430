@@ -60,6 +60,8 @@ describe("Recipe UI", function() {
 
         browser.keys(["Enter"]);
 
+        browser.waitForExist(".recipe-fermentables tbody tr");
+
         const elements = browser.elements(".recipe-fermentables tbody tr");
 
         //Should have one new fermentable

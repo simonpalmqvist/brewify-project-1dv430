@@ -23,12 +23,12 @@ if (Meteor.isClient) {
 
         it("Should be able to give an expected OG", function() {
             const fermentables = [
-                {amount: 1.9, extractYield: 76},
-                {amount: 0.1, extractYield: 75}
+                {amount: 1.9, potential: 1.036},
+                {amount: 0.1, potential: 1.033}
             ];
-            const recipe = {batchSize: 20};
+            const recipe = {batchSize: 8};
 
-            calcExpectedOg(fermentables, recipe).should.equal(1.022);
+            calcExpectedOg(fermentables, recipe).should.equal(1.046);
         });
 
         it("Should be able to give an expected OG", function() {

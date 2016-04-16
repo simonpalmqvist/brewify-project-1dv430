@@ -9,7 +9,6 @@ import { updateRecipeFermentable, deleteRecipeFermentable } from "../../actions/
 import { errorAction } from "../../actions/StatusActions";
 
 import { srmToEbc } from "../../helpers/beerCalc";
-import { YIELD, SRM} from "../../helpers/recipeStandards";
 
 import { Fermentables } from "../../../api/brewerydb/Fermentables";
 import { RecipeFermentables } from "../../../api/recipes/fermentables/RecipeFermentables";
@@ -40,8 +39,8 @@ export default class FermentableRow extends React.Component {
 
         let updates = {
             name: fermentable.name,
-            extractYield: fermentable.dryYield || YIELD,
-            ebc: srmToEbc(fermentable.srmPrecise || SRM)
+            potential: fermentable.potential || 1,
+            ebc: srmToEbc(fermentable.srmPrecise || 0)
         };
 
         this.update(updates);
@@ -76,8 +75,8 @@ export default class FermentableRow extends React.Component {
                            validate={this.validateOne} onUpdate={updateFun}/>
                 </td>
                 <td>
-                    <Input attr={{type: "number"}} fixedDecimals={2}
-                           name="extractYield" value={fermentable.extractYield}
+                    <Input attr={{type: "number", step: "0.001"}} fixedDecimals={3}
+                           name="potential" value={fermentable.potential}
                            validate={this.validateOne} onUpdate={updateFun}/>
                 </td>
                 <td>
