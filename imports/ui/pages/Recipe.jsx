@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import Radium from "radium";
 import ReactDOM from "react-dom";
 import { createContainer } from "meteor/react-meteor-data";
 import { connect }  from "react-redux";
@@ -79,7 +80,7 @@ const RecipeContainer = createContainer(({params}) => ({
     recipe: Recipes.findOne(params.id),
     recipeFermentables: RecipeFermentables.find({recipeId: params.id}).fetch(),
     fermentables: Fermentables.find().fetch()
-}), Recipe);
+}), Radium(Recipe));
 
 //Map the current state to the properties in component
 function mappingStateToProps({ flashMessages }) {

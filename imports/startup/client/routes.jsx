@@ -19,6 +19,7 @@ import { subscribeAction } from "../../ui/actions/SubscribeActions";
 
 //Layouts
 import AppContainer from "../../ui/layouts/AppContainer";
+import AuthContainer from "../../ui/layouts/AuthContainer";
 
 //Pages
 import Main from "../../ui/pages/Main";
@@ -43,10 +44,12 @@ Meteor.startup(() => {
     ReactDOM.render(
         <Provider store={Store}>
             <Router history={hist}>
-                <Route path="/" component={AppContainer}>
-                    <IndexRoute component={Main} onEnter={alreadyLoggedIn}/>
+                <Route component={AuthContainer}>
                     <Route path="/login" component={Login} onEnter={alreadyLoggedIn}/>
                     <Route path="/register" component={Register} onEnter={alreadyLoggedIn}/>
+                </Route>
+                <Route path="/" component={AppContainer}>
+                    <IndexRoute component={Main} onEnter={alreadyLoggedIn}/>
                     <Route path="/logout" component={Logout}/>
                     <Route path="/dashboard" component={Dashboard} onEnter={loggedIn}/>
                     <Route path="/recipe/:id" component={Recipe} onEnter={recipeExists}/>
