@@ -20,7 +20,7 @@ export default class NavigationBar extends React.Component {
         links = links.map((props, i) => (<NavigationItem key={i} {...props}/>));
 
         return (
-            <nav id="main-navigation">
+            <nav style={{float: "right"}}>
                 <ul>
                     {links}
                 </ul>

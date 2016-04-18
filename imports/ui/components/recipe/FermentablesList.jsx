@@ -11,6 +11,7 @@ import { errorAction } from "../../actions/StatusActions";
 import FermentableRow from "./FermentableRow";
 import AutoComplete from "../autocomplete/AutoComplete";
 import Input from "./Input";
+import { styles } from "../../layouts/styles";
 
 export default class FermentablesList extends React.Component {
     constructor(props) {
@@ -69,6 +70,7 @@ export default class FermentablesList extends React.Component {
 
         return (
             <div>
+                <h2 style={styles.headerWithImage("/extract.png")}>Fermentables</h2>
                 <table className="recipe-fermentables">
                     <thead>
                         <tr>

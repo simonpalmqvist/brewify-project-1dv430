@@ -11,6 +11,7 @@ import { connect }  from "react-redux";
 import { Recipes } from "../../api/recipes/Recipes";
 import { addRecipe } from "../actions/RecipeActions";
 
+import { styles } from "../layouts/styles";
 import { Link } from "react-router";
 
 class Dashboard extends React.Component {
@@ -28,8 +29,8 @@ class Dashboard extends React.Component {
         });
 
         return (
-            <div>
-                <button type="text" onClick={this.handle.bind(this)}>Create recipe</button>
+            <div style={styles.contentBox}>
+                <button style={styles.mainButton} type="text" onClick={this.handle.bind(this)}>Create recipe</button>
                 <ul className="list-items">{listEl}</ul>
             </div>
         );

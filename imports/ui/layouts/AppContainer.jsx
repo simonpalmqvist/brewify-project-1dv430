@@ -6,17 +6,23 @@
 import React from "react";
 import { Link } from "react-router";
 
+import { styles } from "./styles";
 import NavigationBar from "../components/navigation/NavigationBar";
 
 export default class AppContainer extends React.Component {
+
     render() {
         return (
             <div>
-                <header>
-                    <Link to="/"><h1>Brewify</h1></Link>
-                    <NavigationBar/>
+                <header style={styles.header}>
+                    <div style={styles.wrapper}>
+                        <Link to="/"><img style={styles.logo} src="/logo.png" alt="Brewify"/></Link>
+                        <NavigationBar/>
+                    </div>
                 </header>
-                {this.props.children}
+                <div style={styles.wrapper}>
+                    {this.props.children}
+                </div>
             </div>
         );
     }

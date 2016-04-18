@@ -12,6 +12,7 @@ import { updateRecipe } from "../actions/RecipeActions";
 import { Recipes } from "../../api/recipes/Recipes";
 import { RecipeFermentables } from "../../api/recipes/fermentables/RecipeFermentables";
 import { Fermentables } from "../../api/brewerydb/Fermentables";
+import { styles } from "../layouts/styles";
 
 import { calcExpectedOg, calcFermentableWeight } from "../helpers/beerCalc";
 
@@ -36,29 +37,33 @@ class Recipe extends React.Component {
 
         return (
             <div>
-                <Input name="name"
-                       value={recipe.name}
-                       attr={{type: "text"}}
-                       validate={this.recipeValidateOne}
-                       onUpdate={update}/>
-                <Input label="Batch size (l)"
-                       attr={{type: "number"}}
-                       name="batchSize"
-                       value={recipe.batchSize}
-                       validate={this.recipeValidateOne}
-                       onUpdate={update}/>
-                <Input name="boilTime"
-                       label="Boil time (min)"
-                       attr={{type: "number"}}
-                       value={recipe.boilTime}
-                       validate={this.recipeValidateOne}
-                       onUpdate={update}/>
-                <FermentablesList
-                    fermentables={fermentables}
-                    recipeFermentables={recipeFermentables}
-                    expectedOG={calcExpectedOg(recipeFermentables, recipe)}
-                    fermentableWeight={calcFermentableWeight(recipeFermentables)}
-                    recipeId={this.props.recipe._id}/>
+                <div style={styles.contentBox}>
+                    <Input name="name"
+                           value={recipe.name}
+                           attr={{type: "text"}}
+                           validate={this.recipeValidateOne}
+                           onUpdate={update}/>
+                    <Input label="Batch size (l)"
+                           attr={{type: "number"}}
+                           name="batchSize"
+                           value={recipe.batchSize}
+                           validate={this.recipeValidateOne}
+                           onUpdate={update}/>
+                    <Input name="boilTime"
+                           label="Boil time (min)"
+                           attr={{type: "number"}}
+                           value={recipe.boilTime}
+                           validate={this.recipeValidateOne}
+                           onUpdate={update}/>
+                </div>
+                <div style={styles.contentBox}>
+                    <FermentablesList
+                        fermentables={fermentables}
+                        recipeFermentables={recipeFermentables}
+                        expectedOG={calcExpectedOg(recipeFermentables, recipe)}
+                        fermentableWeight={calcFermentableWeight(recipeFermentables)}
+                        recipeId={this.props.recipe._id}/>
+                </div>
             </div>
         );
     }
