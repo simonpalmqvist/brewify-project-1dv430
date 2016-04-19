@@ -43,7 +43,7 @@ class Recipe extends React.Component {
                            value={recipe.name}
                            attr={{type: "text"}}
                            validate={this.recipeValidateOne}
-                           style={styles.input}
+                           style={[styles.input, styles.h2]}
                            onUpdate={update}/>
                     <Input label="Batch size (l)"
                            attr={{type: "number"}}

@@ -67,15 +67,6 @@ export default class FermentableRow extends React.Component {
                         value={fermentable.name}/>
                 </td>
                 <td>
-                    <Input attr={{type: "number", step: "0.1"}}
-                           fixedDecimals={3}
-                           style={styles.input}
-                           name="amount"
-                           validate={this.validateOne}
-                           value={fermentable.amount}
-                           onUpdate={updateFun}/>
-                </td>
-                <td>
                     <Input attr={{type: "number"}}
                            style={styles.input}
                            name="ebc"
@@ -90,6 +81,15 @@ export default class FermentableRow extends React.Component {
                            name="potential"
                            value={fermentable.potential}
                            validate={this.validateOne}
+                           onUpdate={updateFun}/>
+                </td>
+                <td>
+                    <Input attr={{type: "number", step: "0.1"}}
+                           fixedDecimals={3}
+                           style={styles.input}
+                           name="amount"
+                           validate={this.validateOne}
+                           value={fermentable.amount}
                            onUpdate={updateFun}/>
                 </td>
                 <td>

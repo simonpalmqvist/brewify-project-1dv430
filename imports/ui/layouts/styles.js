@@ -11,6 +11,10 @@ const whiteColor = "#FFF";
 const spacing = "20px";
 const borderRadius = "6px";
 
+const h2Size = "24px";
+
+const mobileMaxWidth = 930;
+
 
 const button = {
     cursor: "pointer",
@@ -27,7 +31,7 @@ const button = {
 export const styles = {
     mainColor,
     whiteColor,
-
+    mobileMaxWidth,
 
     wrapper: {
         maxWidth: "1140px",
@@ -133,9 +137,13 @@ export const styles = {
         marginBottom: "-10px"
     },
 
+    h2: {
+        fontSize: h2Size
+    },
+
     headerWithImage(img) {
         return {
-            fontSize: "24px",
+            fontSize: h2Size,
             backgroundImage: `url(${img})`,
             backgroundSize: "auto 40px",
             backgroundRepeat: "no-repeat",
