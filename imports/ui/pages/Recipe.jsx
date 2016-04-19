@@ -15,6 +15,8 @@ import { RecipeFermentables } from "../../api/recipes/fermentables/RecipeFerment
 import { Fermentables } from "../../api/brewerydb/Fermentables";
 import { styles } from "../layouts/styles";
 
+import Table from "../components/responsive/Table";
+
 import { calcExpectedOg, calcFermentableWeight } from "../helpers/beerCalc";
 
 import Input from "../components/recipe/Input";
@@ -34,7 +36,7 @@ class Recipe extends React.Component {
 
     render() {
         const update = this.update.bind(this);
-        const { recipe, recipeFermentables, fermentables } = this.props;
+        const { recipe, recipeFermentables, fermentables, mobile } = this.props;
 
         return (
             <div>
@@ -68,6 +70,13 @@ class Recipe extends React.Component {
                         fermentableWeight={calcFermentableWeight(recipeFermentables)}
                         recipeId={this.props.recipe._id}/>
                 </div>
+
+                <div style={styles.contentBox}>
+                    <Table
+                        headerRow={["test","test2", "test3"]}
+                        bodyRows={[["ok11", "ok2", "ok3"], [undefined, "ok12", undefined]]}
+                        mobile={mobile}/>
+                </div>
             </div>
         );
     }
@@ -89,10 +98,11 @@ const RecipeContainer = createContainer(({params}) => ({
 }), StyleRecipe);
 
 //Map the current state to the properties in component
-function mappingStateToProps({ flashMessages }) {
+function mappingStateToProps({ flashMessages, browser }) {
     return {
         save: flashMessages.save,
-        error: flashMessages.error
+        error: flashMessages.error,
+        mobile: browser.mobile
     };
 }
 
