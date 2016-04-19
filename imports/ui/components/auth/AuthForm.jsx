@@ -33,6 +33,10 @@ class AuthForm extends React.Component {
     render() {
         const { error, submit, buttonTitle } = this.props;
         const { disabled } = this.state;
+        const buttonStyle = [
+            disabled ? styles.disabledButton : styles.mainButton,
+            {width:"100%"}
+        ];
         let reason;
 
         if (error) {
@@ -60,12 +64,7 @@ class AuthForm extends React.Component {
                        onChange={this.validate.bind(this)}/>
                 <input ref="button"
                        type="submit"
-                       style={
-                                [
-                                    disabled ? styles.disabledButton : styles.mainButton,
-                                    {width:"100%"}
-                                ]
-                             }
+                       style={buttonStyle}
                        value={buttonTitle}
                        disabled={disabled}/>
             </form>

@@ -53,8 +53,10 @@ export default class FermentablesList extends React.Component {
         ));
 
         //Show button until pressed then show autocomplete input to add fermentable
-        let addElement = (<button className="add-fermentable"
-                                  onClick={this.showAddInput.bind(this)}>Add fermentable</button>);
+        let addElement = (
+            <button className="add-fermentable"
+                    onClick={this.showAddInput.bind(this)}>Add fermentable</button>
+        );
 
         //Fermentables referenced here are not recipe specific fermentables
         if (this.state.add) {
@@ -75,29 +77,35 @@ export default class FermentablesList extends React.Component {
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Amount (kg)</th>
                             <th>EBC</th>
                             <th>Potential</th>
+                            <th>Amount (kg)</th>
                             <th>Amount (%)</th>
                             <th/>
                         </tr>
                     </thead>
                     <tfoot>
                     <tr>
-                        <td colSpan="4">Total amount (kg)</td>
+                        <td colSpan="3">Total amount (kg)</td>
                         <td>
-                            <Input attr={{type: "number", disabled: true}} fixedDecimals={3}
-                                   name="fermentableWeight" value={fermentableWeight} />
+                            <Input attr={{type: "number", disabled: true}}
+                                   fixedDecimals={3}
+                                   name="fermentableWeight"
+                                   style={[styles.disabledInput, {fontWeight: "700"}]}
+                                   value={fermentableWeight} />
                         </td>
-                        <td/>
+                        <td colSpan="2"/>
                     </tr>
                     <tr>
-                        <td colSpan="4">Expected OG</td>
+                        <td colSpan="3">Expected OG</td>
                         <td>
-                            <Input attr={{type: "number", disabled: true}} fixedDecimals={3}
-                                   name="expextedOG" value={expectedOG} />
+                            <Input attr={{type: "number", disabled: true}}
+                                   fixedDecimals={3}
+                                   name="expextedOG"
+                                   style={[styles.disabledInput, {fontWeight: "700"}]}
+                                   value={expectedOG} />
                         </td>
-                        <td/>
+                        <td colSpan="2"/>
                     </tr>
                     </tfoot>
                     <tbody className="fermentable-body">

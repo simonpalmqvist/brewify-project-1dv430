@@ -5,6 +5,7 @@
 
 const mainColor = "#54BE68";
 const greyColor = "#EBEBEB";
+const darkGrey = "#969696";
 const whiteColor = "#FFF";
 
 const spacing = "20px";
@@ -97,8 +98,34 @@ export const styles = {
         transition: "box-shadow 0.3s",
 
         ":focus": {
-            boxShadow: "0 0 4px 0px #969696"
+            boxShadow: `0 0 4px 0px ${darkGrey}`
         }
+    },
+
+    input: {
+        boxSizing: "border-box",
+        padding: "4px",
+        backgroundColor: whiteColor,
+        display: "block",
+        borderRadius: "2px",
+        border: "dashed 1px transparent",
+        transition: "border 0.2s",
+
+        ":hover": {
+            border: `dashed 1px ${darkGrey}`
+        },
+
+        ":focus": {
+            border: `solid 1px ${darkGrey}`
+        }
+    },
+
+    disabledInput: {
+        boxSizing: "border-box",
+        padding: "4px",
+        backgroundColor: whiteColor,
+        color: darkGrey,
+        display: "block"
     },
 
     logo: {
@@ -110,9 +137,9 @@ export const styles = {
         return {
             fontSize: "24px",
             backgroundImage: `url(${img})`,
-            backgroundSize: "auto 34px",
+            backgroundSize: "auto 40px",
             backgroundRepeat: "no-repeat",
-            padding: "8px 0px 30px 40px",
+            padding: "8px 0px 30px 50px",
             display: "block"
         };
     }

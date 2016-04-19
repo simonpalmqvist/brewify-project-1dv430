@@ -43,18 +43,21 @@ class Recipe extends React.Component {
                            value={recipe.name}
                            attr={{type: "text"}}
                            validate={this.recipeValidateOne}
+                           style={styles.input}
                            onUpdate={update}/>
                     <Input label="Batch size (l)"
                            attr={{type: "number"}}
                            name="batchSize"
                            value={recipe.batchSize}
                            validate={this.recipeValidateOne}
+                           style={styles.input}
                            onUpdate={update}/>
                     <Input name="boilTime"
                            label="Boil time (min)"
                            attr={{type: "number"}}
                            value={recipe.boilTime}
                            validate={this.recipeValidateOne}
+                           style={styles.input}
                            onUpdate={update}/>
                 </div>
                 <div style={styles.contentBox}>
@@ -75,12 +78,15 @@ Recipe.defaultProps = {
     recipeFermentables: []
 };
 
+//Applying radium to handle styles
+const StyleRecipe = Radium(Recipe);
+
 //Creates meteor container to provide subscribed data
 const RecipeContainer = createContainer(({params}) => ({
     recipe: Recipes.findOne(params.id),
     recipeFermentables: RecipeFermentables.find({recipeId: params.id}).fetch(),
     fermentables: Fermentables.find().fetch()
-}), Radium(Recipe));
+}), StyleRecipe);
 
 //Map the current state to the properties in component
 function mappingStateToProps({ flashMessages }) {

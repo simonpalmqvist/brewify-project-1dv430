@@ -38,8 +38,12 @@ class Dashboard extends React.Component {
     }
 }
 
+const StyleDashboard = Radium(Dashboard);
+
 //Creates meteor container to provide subscribed data
-const DashboardContainer = createContainer(() => ({recipes: Recipes.find({}).fetch()}), Radium(Dashboard));
+const DashboardContainer = createContainer(() => ({
+    recipes: Recipes.find({}).fetch()
+}), StyleDashboard);
 
 //Map the current state to the properties in component
 function mappingStateToProps(state) {

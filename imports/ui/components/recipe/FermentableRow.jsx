@@ -13,6 +13,8 @@ import { srmToEbc } from "../../helpers/beerCalc";
 import { Fermentables } from "../../../api/brewerydb/Fermentables";
 import { RecipeFermentables } from "../../../api/recipes/fermentables/RecipeFermentables";
 
+import { styles } from "../../layouts/styles";
+
 import AutoComplete from "../autocomplete/AutoComplete";
 import Input from "./Input";
 
@@ -60,28 +62,42 @@ export default class FermentableRow extends React.Component {
             <tr key={fermentable._id}>
                 <td>
                     <AutoComplete
-                        data={Fermentables.find({potential: {$exists: true}}).fetch()}
+                        data={Fermentables.find().fetch()}
                         onSelected={this.autoUpdate.bind(this)}
                         value={fermentable.name}/>
                 </td>
                 <td>
-                    <Input attr={{type: "number", step: "0.1"}} fixedDecimals={3}
-                           name="amount" validate={this.validateOne}
-                           value={fermentable.amount} onUpdate={updateFun}/>
+                    <Input attr={{type: "number", step: "0.1"}}
+                           fixedDecimals={3}
+                           style={styles.input}
+                           name="amount"
+                           validate={this.validateOne}
+                           value={fermentable.amount}
+                           onUpdate={updateFun}/>
                 </td>
                 <td>
                     <Input attr={{type: "number"}}
-                           name="ebc" value={fermentable.ebc}
-                           validate={this.validateOne} onUpdate={updateFun}/>
+                           style={styles.input}
+                           name="ebc"
+                           value={fermentable.ebc}
+                           validate={this.validateOne}
+                           onUpdate={updateFun}/>
                 </td>
                 <td>
-                    <Input attr={{type: "number", step: "0.001"}} fixedDecimals={3}
-                           name="potential" value={fermentable.potential}
-                           validate={this.validateOne} onUpdate={updateFun}/>
+                    <Input attr={{type: "number", step: "0.001"}}
+                           fixedDecimals={3}
+                           style={styles.input}
+                           name="potential"
+                           value={fermentable.potential}
+                           validate={this.validateOne}
+                           onUpdate={updateFun}/>
                 </td>
                 <td>
-                    <Input attr={{type: "number", disabled: true}} fixedDecimals={2}
-                           name="totalFermentables" value={(fermentable.amount / totalFermentables) * 100} />
+                    <Input attr={{type: "number", disabled: true}}
+                           fixedDecimals={2}
+                           style={styles.disabledInput}
+                           name="totalFermentables"
+                           value={(fermentable.amount / totalFermentables) * 100 || 0} />
                 </td>
                 <td>
                     <button onClick={this.maybeDelete.bind(this)}>Delete</button>

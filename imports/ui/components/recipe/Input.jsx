@@ -4,8 +4,9 @@
  */
 
 import React from "react";
+import Radium from "radium";
 
-export default class Input extends React.Component {
+class Input extends React.Component {
     constructor(props) {
         super(props);
 
@@ -85,14 +86,14 @@ export default class Input extends React.Component {
     }
 
     render() {
-        const { label, name, attr} = this.props;
+        const { label, name, attr, style} = this.props;
         const { value } = this.state;
 
         let labelEl;
 
         //Write out label if needed
         if (label) {
-            labelEl = (<label>{label}</label>);
+            labelEl = (<label>{label} </label>);
         }
 
         return (
@@ -101,6 +102,7 @@ export default class Input extends React.Component {
                 <input ref="input"
                        name={name}
                        value={value}
+                       style={style}
                        {...attr}
                        onChange={this.handleChange.bind(this)}
                        onKeyPress={this.onEnterKeyPress.bind(this)}
@@ -118,3 +120,5 @@ Input.defaultProps = {
     value: "",
     fixedDecimals: 0
 };
+
+export default Radium(Input);
