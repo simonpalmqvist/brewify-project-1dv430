@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-
+import classNames from "classNames";
 
 class Table extends React.Component {
 
@@ -16,11 +16,17 @@ class Table extends React.Component {
         const { headerRow } = this.props;
 
         let result;
+        const headerIndex = i % headerRow.length;
 
+        //Set specific class on first column for each "row"
+        const classes = classNames("mobile-row", {"mobile-first-row": headerIndex === 0});
+
+        //Skip row if no content is present and print header column on same row as content
         if (content) {
+            //i % headerRow.length gets the correct header based on index of content
             result = (
-                <tr key={i}>
-                    <td>{headerRow[i % headerRow.length]}</td>
+                <tr key={i} className={classes}>
+                    <th>{headerRow[headerIndex]}</th>
                     <td>{content}</td>
                 </tr>
             );
@@ -35,6 +41,7 @@ class Table extends React.Component {
         let footer;
         let body;
 
+        //Handle table different if it's mobile or not
         if (mobile) {
             body = bodyRows
                 .reduce((a,b) => a.concat(b),[])
@@ -45,10 +52,8 @@ class Table extends React.Component {
             body = bodyRows.map((row, i) => (<tr key={i}>{row.map(this.toColumn)}</tr>));
         }
 
-        console.log(header,footer,body);
-
         return (
-            <table>
+            <table className="c-table">
                 <thead><tr>{header}</tr></thead>
                 <tfoot>{footer}</tfoot>
                 <tbody>{body}</tbody>

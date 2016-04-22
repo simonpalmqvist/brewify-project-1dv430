@@ -1,0 +1,146 @@
+//Colors
+$main: #54BE68;
+$grey: #EBEBEB;
+$dark-grey: #969696;
+$white: #FFF;
+
+//Dimensions
+$spacing: 20px;
+$border-radius: 6px;
+
+$mobile: "(max-width: 400px)";
+//!!!!!! If changed then update width in browserActions.js as well !!!!!//
+$tablet: "(max-width: 930px)";
+$desktop: 1140px;
+
+//Fonts
+$font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+$h1-size: 36px;
+$h2-size: 24px;
+$text-size: 14px;
+$button-size: 18px;
+$line-height: 1.4em;
+
+//Mixins
+
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+
+
+
+//Base styles
+
+html, body, button, input {
+    background-color: $grey;
+    font-family: $font-family;
+    font-size: $text-size;
+    line-height: $line-height;
+}
+
+label {
+    display: none;
+}
+
+table {
+
+}
+
+
+header.main-header {
+    background-color: $main;
+
+    a {
+        color: $white;
+    }
+}
+
+
+.logo {
+    width: 200px;
+    margin-bottom: -10px;
+}
+
+div.wrapper {
+    max-width: $desktop;
+    margin: 0 auto;
+    padding: $spacing;
+}
+
+div.modal-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    &.auth {
+        background-color: $main;
+    }
+
+    > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    img.logo {
+        @extend .logo;
+        margin-bottom: $spacing;
+    }
+}
+
+.content-box {
+    background-color: $white;
+    border-radius: $border-radius;
+    padding: $spacing;
+    margin-bottom: $spacing;
+
+    /*@media #{$tablet} {
+
+    }*/
+
+    @media #{$mobile} {
+        padding: $spacing / 2  0  0  $spacing / 2;
+        margin-left: - $spacing;
+        margin-right: - $spacing;
+        border-radius: 0;
+    }
+}
+
+
+.button {
+    cursor: pointer;
+    font-size: $button-size;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 10px 40px;
+    margin: 10px 0;
+    border-radius: $border-radius;
+    display: block;
+}
+
+.input-header {
+    font-size: $h2-size;
+}
+
+.main-button {
+    @extend .button;
+
+    background-color: $main;
+    color: $white;
+
+    @include transition(background-color 0.3s);
+
+    &:hover {
+        background-color: darken($main, 10%);
+    }
+
+    &:active {
+        background-color: $main;
+    }
+}

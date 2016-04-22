@@ -1,0 +1,42 @@
+@import "../../layouts/base";
+
+$width: 300px;
+
+form#auth-form {
+
+    width: $width;
+    display: block;
+
+    input {
+        box-sizing: border-box;
+        padding: $spacing / 2;
+        margin-bottom: 6px;
+        border: solid 1px $grey;
+        border-radius: $border-radius;
+        background-color: $white;
+        text-align: center;
+        display: block;
+        width: 100%;
+        max-width: $width;
+        @include transition(box-shadow 0.3s);
+
+        &:focus {
+            box-shadow: 0 0 2px 0 rgba($dark-grey,0.7);
+        }
+
+
+    }
+
+    input[type=submit] {
+        @extend .main-button;
+
+        max-width: $width;
+        margin-top:20px;
+
+        &[disabled] {
+            cursor: auto;
+            background-color: $main;
+            opacity: 0.3;
+        }
+    }
+}

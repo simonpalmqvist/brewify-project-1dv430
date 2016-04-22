@@ -4,22 +4,18 @@
  */
 
 import React from "react";
-import Radium from "radium";
 import { Link } from "react-router";
 
-import { styles } from "./styles";
-
-@Radium
-class AuthContainer extends React.Component {
+export default class AuthContainer extends React.Component {
 
     render() {
         return (
-            <div style={styles.authWrapper}>
-                <div style={styles.center}>
+            <div className="modal-wrapper auth">
+                <div>
                     <Link to="/">
-                        <img style={[styles.logo,{paddingBottom: "40px"}]} src="/logo.png" alt="Brewify"/>
+                        <img className="logo" src="/logo.png" alt="Brewify"/>
                     </Link>
-                    <div style={styles.contentBox}>
+                    <div className="content-box">
                         {this.props.children}
                     </div>
                 </div>
@@ -27,5 +23,3 @@ class AuthContainer extends React.Component {
         );
     }
 }
-
-export default Radium(AuthContainer);

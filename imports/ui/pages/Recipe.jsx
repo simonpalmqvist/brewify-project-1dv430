@@ -4,7 +4,6 @@
  */
 
 import React from "react";
-import Radium from "radium";
 import ReactDOM from "react-dom";
 import { createContainer } from "meteor/react-meteor-data";
 import { connect }  from "react-redux";
@@ -13,7 +12,6 @@ import { updateRecipe } from "../actions/RecipeActions";
 import { Recipes } from "../../api/recipes/Recipes";
 import { RecipeFermentables } from "../../api/recipes/fermentables/RecipeFermentables";
 import { Fermentables } from "../../api/brewerydb/Fermentables";
-import { styles } from "../layouts/styles";
 
 import Table from "../components/responsive/Table";
 
@@ -40,29 +38,27 @@ class Recipe extends React.Component {
 
         return (
             <div>
-                <div style={styles.contentBox}>
+                <div className="content-box">
                     <Input name="name"
                            value={recipe.name}
+                           className="input-header"
                            attr={{type: "text"}}
                            validate={this.recipeValidateOne}
-                           style={[styles.input, styles.h2]}
                            onUpdate={update}/>
                     <Input label="Batch size (l)"
                            attr={{type: "number"}}
                            name="batchSize"
                            value={recipe.batchSize}
                            validate={this.recipeValidateOne}
-                           style={styles.input}
                            onUpdate={update}/>
                     <Input name="boilTime"
                            label="Boil time (min)"
                            attr={{type: "number"}}
                            value={recipe.boilTime}
                            validate={this.recipeValidateOne}
-                           style={styles.input}
                            onUpdate={update}/>
                 </div>
-                <div style={styles.contentBox}>
+                <div className="content-box">
                     <FermentablesList
                         fermentables={fermentables}
                         recipeFermentables={recipeFermentables}
@@ -71,7 +67,7 @@ class Recipe extends React.Component {
                         recipeId={this.props.recipe._id}/>
                 </div>
 
-                <div style={styles.contentBox}>
+                <div className="content-box">
                     <Table
                         headerRow={["test","test2", "test3"]}
                         bodyRows={[["ok11", "ok2", "ok3"], [undefined, "ok12", undefined]]}
@@ -87,15 +83,12 @@ Recipe.defaultProps = {
     recipeFermentables: []
 };
 
-//Applying radium to handle styles
-const StyleRecipe = Radium(Recipe);
-
 //Creates meteor container to provide subscribed data
 const RecipeContainer = createContainer(({params}) => ({
     recipe: Recipes.findOne(params.id),
     recipeFermentables: RecipeFermentables.find({recipeId: params.id}).fetch(),
     fermentables: Fermentables.find().fetch()
-}), StyleRecipe);
+}), Recipe);
 
 //Map the current state to the properties in component
 function mappingStateToProps({ flashMessages, browser }) {

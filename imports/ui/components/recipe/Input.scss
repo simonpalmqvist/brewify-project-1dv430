@@ -1,0 +1,24 @@
+@import "../../layouts/base";
+
+input.c-input {
+    box-sizing: border-box;
+    padding: 4px;
+    background-color: $white;
+    display: block;
+    border-radius: 2px;
+    border: dashed 1px transparent;
+    @include transition(border 0.3s);
+
+    &:hover {
+        border: dashed 1px $dark-grey;
+    }
+
+    &:focus {
+        border: solid 1px $dark-grey;
+    }
+
+    &[disabled] {
+        color: $dark-grey;
+        border: solid 1px transparent;
+    }
+}

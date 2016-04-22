@@ -30,20 +30,18 @@ class Dashboard extends React.Component {
         });
 
         return (
-            <div style={styles.contentBox}>
-                <button style={styles.mainButton} type="text" onClick={this.handle.bind(this)}>Create recipe</button>
+            <div className="content-box">
+                <button className="main-button" type="text" onClick={this.handle.bind(this)}>Create recipe</button>
                 <ul className="list-items">{listEl}</ul>
             </div>
         );
     }
 }
 
-const StyleDashboard = Radium(Dashboard);
-
 //Creates meteor container to provide subscribed data
 const DashboardContainer = createContainer(() => ({
     recipes: Recipes.find({}).fetch()
-}), StyleDashboard);
+}), Dashboard);
 
 //Map the current state to the properties in component
 function mappingStateToProps(state) {
