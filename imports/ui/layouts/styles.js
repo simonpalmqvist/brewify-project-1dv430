@@ -13,7 +13,7 @@ const borderRadius = "6px";
 
 const h2Size = "24px";
 
-const mobileMaxWidth = 930;
+const mobileMaxWidth = 780;
 
 
 const button = {

@@ -1,16 +1,18 @@
 //Colors
 $main: #54BE68;
+$text-color: #262626;
 $grey: #EBEBEB;
 $dark-grey: #969696;
 $white: #FFF;
 
 //Dimensions
 $spacing: 20px;
+$input-spacing: 4px;
 $border-radius: 6px;
 
 $mobile: "(max-width: 400px)";
 //!!!!!! If changed then update width in browserActions.js as well !!!!!//
-$tablet: "(max-width: 930px)";
+$tablet: "(max-width: 780px)";
 $desktop: 1140px;
 
 //Fonts
@@ -124,8 +126,16 @@ div.modal-wrapper {
     display: block;
 }
 
-.input-header {
+h2, .input-header {
     font-size: $h2-size;
+}
+
+h2.extract-header {
+    background-image: url("/extract.png");
+    background-size: auto 40px;
+    background-repeat: no-repeat;
+    padding: 8px 0 30px 50px;
+    display: block;
 }
 
 .main-button {

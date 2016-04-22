@@ -5,6 +5,8 @@
 
 import React from "react";
 
+import classNames from "classNames";
+
 import AutoCompleteField from "./AutoCompleteField";
 
 export default class AutoComplete extends React.Component {
@@ -158,7 +160,7 @@ export default class AutoComplete extends React.Component {
             borderRadius: "3px",
             border: "1px solid grey",
             backgroundColor: "white",
-            position: "fixed",
+            position: "absolute",
             overflow: "auto",
             maxHeight: "50%"
         };
@@ -168,7 +170,7 @@ export default class AutoComplete extends React.Component {
             menu = (
                 <div ref="list"
                      style={listStyle}
-                     className="autocomplete-list">
+                     className="c-autocomplete-list">
                     {this.list()}
                 </div>
             );
@@ -178,7 +180,7 @@ export default class AutoComplete extends React.Component {
             <div>
                 <input ref="input"
                        type="text"
-                       className={className}
+                       className={classNames("c-autocomplete", className)}
                        value={value}
                        onFocus={this.showList.bind(this)}
                        onChange={this.onChange.bind(this)}

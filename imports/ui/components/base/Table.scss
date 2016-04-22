@@ -1,0 +1,61 @@
+@import "../../layouts/base";
+
+table.c-table {
+    width: 100%;
+
+    tr {
+        td, th {
+            text-align: left;
+        }
+
+        th {
+            padding: $input-spacing;
+        }
+    }
+
+    tfoot {
+        border-top: solid 1px $grey;
+    }
+
+    th, tfoot td, tfoot th, tfoot input {
+        font-weight: bold;
+    }
+
+    tr.mobile-row {
+
+        border-top-width: 1px;
+        border-color: $grey;
+        border-style: solid;
+
+        th {
+            position:absolute;
+            padding: 0;
+            margin: 10px 10px 10px 0;
+            font-weight: normal;
+        }
+
+        td {
+            text-align: right;
+            width: 100%;
+
+            input {
+
+                padding: 10px 10px 10px 0;
+                width: 100%;
+                text-align: right;
+            }
+        }
+    }
+
+    tfoot tr.mobile-row {
+        border-top-color: $dark-grey;
+
+        th {
+            font-weight: bold;
+        }
+    }
+
+    tr.mobile-first-row {
+        border-top-color: $dark-grey;
+    }
+}

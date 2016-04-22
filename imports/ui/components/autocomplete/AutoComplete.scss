@@ -1,0 +1,44 @@
+@import "../../layouts/base";
+@import "../base/Input";
+
+input.c-autocomplete {
+    @extend input.c-input;
+    min-width: 250px;
+}
+
+
+div.c-autocomplete-list {
+    box-sizing: border-box;
+    background-color: white;
+    width: 400px;
+
+
+    a.c-autocomplete-field div {
+        padding: $input-spacing;
+        color: $text-color;
+        text-decoration: none;
+        border-top: solid 1px $grey;
+
+        &:hover {
+            background-color: rgba($main, 0.6);
+        }
+    }
+
+    a.c-autocomplete-selected div {
+        background-color: $main;
+    }
+
+    @media #{$mobile} {
+        left: 0;
+        width: 100%;
+        z-index:300;
+
+        a.c-autocomplete-field div {
+            text-align: center;
+            padding: $spacing / 2;
+        }
+    }
+
+
+
+}

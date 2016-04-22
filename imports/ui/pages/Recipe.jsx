@@ -13,11 +13,11 @@ import { Recipes } from "../../api/recipes/Recipes";
 import { RecipeFermentables } from "../../api/recipes/fermentables/RecipeFermentables";
 import { Fermentables } from "../../api/brewerydb/Fermentables";
 
-import Table from "../components/responsive/Table";
+import Table from "../components/base/Table";
 
 import { calcExpectedOg, calcFermentableWeight } from "../helpers/beerCalc";
 
-import Input from "../components/recipe/Input";
+import Input from "../components/base/Input";
 import FermentablesList from "../components/recipe/FermentablesList";
 
 class Recipe extends React.Component {
@@ -57,21 +57,18 @@ class Recipe extends React.Component {
                            value={recipe.boilTime}
                            validate={this.recipeValidateOne}
                            onUpdate={update}/>
+                    <Input attr={{type: "number", disabled: true}}
+                           fixedDecimals={3}
+                           name="expextedOG"
+                           value={calcExpectedOg(recipeFermentables, recipe)} />
                 </div>
                 <div className="content-box">
                     <FermentablesList
+                        mobile={mobile}
                         fermentables={fermentables}
                         recipeFermentables={recipeFermentables}
-                        expectedOG={calcExpectedOg(recipeFermentables, recipe)}
                         fermentableWeight={calcFermentableWeight(recipeFermentables)}
                         recipeId={this.props.recipe._id}/>
-                </div>
-
-                <div className="content-box">
-                    <Table
-                        headerRow={["test","test2", "test3"]}
-                        bodyRows={[["ok11", "ok2", "ok3"], [undefined, "ok12", undefined]]}
-                        mobile={mobile}/>
                 </div>
             </div>
         );

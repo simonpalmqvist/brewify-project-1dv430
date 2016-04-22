@@ -23,11 +23,11 @@ export default class AutoComplete extends React.Component {
     render() {
         const { obj, onMouseDown, selected } = this.props;
 
-        let className = "autocomplete-field";
+        let className = "c-autocomplete-field";
         let style = {display: "block"};
 
         if (selected) {
-            className += " autocomplete-selected";
+            className += " c-autocomplete-selected";
             style.backgroundColor = "lightgrey";
         }
 

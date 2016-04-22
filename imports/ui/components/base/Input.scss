@@ -2,19 +2,31 @@
 
 input.c-input {
     box-sizing: border-box;
-    padding: 4px;
+    padding: $input-spacing;
     background-color: $white;
     display: block;
     border-radius: 2px;
     border: dashed 1px transparent;
     @include transition(border 0.3s);
 
+    &[type=text] {
+        width: 100%;
+    }
+
+    &[type=number] {
+        width: 100px;
+    }
+
     &:hover {
         border: dashed 1px $dark-grey;
+        @media #{$mobile} {
+            border-color: transparent;
+        }
     }
 
     &:focus {
         border: solid 1px $dark-grey;
+        z-index: 300;
     }
 
     &[disabled] {

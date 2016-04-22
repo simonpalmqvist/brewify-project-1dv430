@@ -13,7 +13,7 @@ import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
 import faker from "faker";
 
-import Input from "./Input";
+import Input from "./../base/Input";
 
 if (Meteor.isClient) {
     describe("Recipe Input component", function() {

@@ -4,7 +4,6 @@
  */
 
 import React from "react";
-import Radium from "radium";
 import ReactDOM from "react-dom";
 import { createContainer } from "meteor/react-meteor-data";
 import { connect }  from "react-redux";

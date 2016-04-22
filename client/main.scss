@@ -3,5 +3,6 @@
 @import "../imports/ui/layouts/reset";
 @import "../imports/ui/layouts/base";
 @import "../imports/ui/components/auth/AuthForm";
-@import "../imports/ui/components/recipe/Input";
-@import "../imports/ui/components/responsive/Table";
+@import "../imports/ui/components/base/Input";
+@import "../imports/ui/components/autocomplete/AutoComplete";
+@import "../imports/ui/components/base/Table";

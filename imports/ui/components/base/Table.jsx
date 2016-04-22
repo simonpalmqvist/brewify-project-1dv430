@@ -46,9 +46,10 @@ class Table extends React.Component {
             body = bodyRows
                 .reduce((a,b) => a.concat(b),[])
                 .map(this.toMobileRow.bind(this));
+            footer = footerRow.map(this.toMobileRow.bind(this));
         } else {
             header = headerRow.map((content, i) => (<th key={i}>{content}</th>));
-            footer = footerRow.map(this.toColumn);
+            footer = (<tr>{footerRow.map(this.toColumn)}</tr>);
             body = bodyRows.map((row, i) => (<tr key={i}>{row.map(this.toColumn)}</tr>));
         }
 

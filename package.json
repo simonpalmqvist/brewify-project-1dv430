@@ -13,7 +13,6 @@
     "classnames": "^2.2.3",
     "events": "^1.1.0",
     "meteor-node-stubs": "~0.2.0",
-    "radium": "^0.17.1",
     "react": "^0.14.8",
     "react-addons-pure-render-mixin": "^0.14.8",
     "react-dom": "^0.14.8",
