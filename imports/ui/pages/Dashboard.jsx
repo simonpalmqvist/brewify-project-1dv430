@@ -11,7 +11,6 @@ import { connect }  from "react-redux";
 import { Recipes } from "../../api/recipes/Recipes";
 import { addRecipe } from "../actions/RecipeActions";
 
-import { styles } from "../layouts/styles";
 import { Link } from "react-router";
 
 class Dashboard extends React.Component {

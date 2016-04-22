@@ -6,15 +6,12 @@ table.c-table {
     tr {
         td, th {
             text-align: left;
+            vertical-align: middle;
         }
 
         th {
             padding: $input-spacing;
         }
-    }
-
-    tfoot {
-        border-top: solid 1px $grey;
     }
 
     th, tfoot td, tfoot th, tfoot input {

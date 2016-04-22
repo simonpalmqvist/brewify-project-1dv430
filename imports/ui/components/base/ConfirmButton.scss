@@ -1,0 +1,23 @@
+@import "../../layouts/base";
+
+button.c-confirm-button {
+    margin: $input-spacing / 2 0;
+    border-radius: $input-spacing * 5;
+    padding: $input-spacing / 2 $input-spacing * 1.7;
+    width: auto;
+    max-width:30px;
+    font-weight: bold;
+    overflow:hidden;
+    float:right;
+
+    @include transition(max-width 0.3s);
+
+    &.delete {
+        background-color: red;
+        color: $white;
+    }
+
+    &.show {
+        max-width: 100%;
+    }
+}

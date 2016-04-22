@@ -5,15 +5,14 @@
 
 //Modules
 import Store from "../store";
-import { styles } from "../layouts/styles";
 
 /**
  * Dispatches action error with specified error
  * @param width
  */
 export function windowResize(width) {
-    //Dispatch window resize and if new size is mobile
-    Store.dispatch({type: "WINDOW_RESIZE", mobile: width <= styles.mobileMaxWidth });
+    //Dispatch window resize and if new size is mobile/tablet (less or equal with 780px)
+    Store.dispatch({type: "WINDOW_RESIZE", mobile: width <= 780 });
 }
 
 /**

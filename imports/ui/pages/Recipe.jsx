@@ -36,31 +36,37 @@ class Recipe extends React.Component {
         const update = this.update.bind(this);
         const { recipe, recipeFermentables, fermentables, mobile } = this.props;
 
+
+        const bodyRow = [[
+            (<Input name="batchSize"
+                    attr={{type: "number"}}
+                    value={recipe.batchSize}
+                    validate={this.recipeValidateOne}
+                    onUpdate={update}/>),
+            (<Input name="boilTime"
+                    attr={{type: "number"}}
+                    value={recipe.boilTime}
+                    validate={this.recipeValidateOne}
+                    onUpdate={update}/>),
+            (<Input attr={{type: "number", disabled: true}}
+                    fixedDecimals={3}
+                    name="expextedOG"
+                    value={calcExpectedOg(recipeFermentables, recipe)} />)
+        ]];
+
         return (
             <div>
                 <div className="content-box">
                     <Input name="name"
                            value={recipe.name}
-                           className="input-header"
+                           className={["input-header", "glass"]}
                            attr={{type: "text"}}
                            validate={this.recipeValidateOne}
                            onUpdate={update}/>
-                    <Input label="Batch size (l)"
-                           attr={{type: "number"}}
-                           name="batchSize"
-                           value={recipe.batchSize}
-                           validate={this.recipeValidateOne}
-                           onUpdate={update}/>
-                    <Input name="boilTime"
-                           label="Boil time (min)"
-                           attr={{type: "number"}}
-                           value={recipe.boilTime}
-                           validate={this.recipeValidateOne}
-                           onUpdate={update}/>
-                    <Input attr={{type: "number", disabled: true}}
-                           fixedDecimals={3}
-                           name="expextedOG"
-                           value={calcExpectedOg(recipeFermentables, recipe)} />
+
+                    <Table
+                        headerRow={["Batch size (l)", "Boil time (min)", "OG"]}
+                        bodyRows={bodyRow} mobile={mobile}/>
                 </div>
                 <div className="content-box">
                     <FermentablesList

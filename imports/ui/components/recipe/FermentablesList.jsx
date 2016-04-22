@@ -12,9 +12,9 @@ import { srmToEbc } from "../../helpers/beerCalc";
 
 import { RecipeFermentables } from "../../../api/recipes/fermentables/RecipeFermentables";
 
-import FermentableRow from "./FermentableRow";
 import AutoComplete from "../autocomplete/AutoComplete";
 import Input from "./../base/Input";
+import ConfirmButton from "./../base/ConfirmButton";
 
 import Table from "../base/Table";
 
@@ -127,7 +127,7 @@ export default class FermentablesList extends React.Component {
                         fixedDecimals={2}
                         name="totalFermentables"
                         value={(fermentable.amount / fermentableWeight) * 100 || 0} />),
-                (<button onClick={deleteFun}>Delete</button>)
+                (<ConfirmButton text="Delete" symbol="×" className="delete" action={deleteFun}/>)
             ];
         });
 
@@ -157,53 +157,8 @@ export default class FermentablesList extends React.Component {
                        bodyRows={bodyRows}
                        mobile={mobile}/>
                 {addElement}
+
             </div>
         );
-
-        /*return (
-            <div>
-                <h2 style={styles.headerWithImage("/extract.png")}>Fermentables</h2>
-                <table className="recipe-fermentables">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>EBC</th>
-                            <th>Potential</th>
-                            <th>Amount (kg)</th>
-                            <th>Amount (%)</th>
-                            <th/>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                    <tr>
-                        <td colSpan="3">Total amount (kg)</td>
-                        <td>
-                            <Input attr={{type: "number", disabled: true}}
-                                   fixedDecimals={3}
-                                   name="fermentableWeight"
-                                   style={[styles.disabledInput, {fontWeight: "700"}]}
-                                   value={fermentableWeight} />
-                        </td>
-                        <td colSpan="2"/>
-                    </tr>
-                    <tr>
-                        <td colSpan="3">Expected OG</td>
-                        <td>
-                            <Input attr={{type: "number", disabled: true}}
-                                   fixedDecimals={3}
-                                   name="expextedOG"
-                                   style={[styles.disabledInput, {fontWeight: "700"}]}
-                                   value={expectedOG} />
-                        </td>
-                        <td colSpan="2"/>
-                    </tr>
-                    </tfoot>
-                    <tbody className="fermentable-body">
-                        {items}
-                    </tbody>
-                </table>
-                {addElement}
-            </div>
-        );*/
     }
 }
