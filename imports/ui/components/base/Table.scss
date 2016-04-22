@@ -1,5 +1,4 @@
 @import "../../layouts/base";
-
 table.c-table {
     width: 100%;
 
@@ -12,6 +11,7 @@ table.c-table {
         th {
             padding: $input-spacing;
         }
+
     }
 
     th, tfoot td, tfoot th, tfoot input {
@@ -26,8 +26,7 @@ table.c-table {
 
         th {
             position:absolute;
-            padding: 0;
-            margin: 10px 10px 10px 0;
+            padding: 12px 0;
             font-weight: normal;
         }
 
@@ -55,4 +54,28 @@ table.c-table {
     tr.mobile-first-row {
         border-top-color: $dark-grey;
     }
+}
+
+
+//React transition group names for handling animations on enter, appear and leave of elements
+.c-table-tbody-enter {
+    opacity: 0.01;
+    transform:translateY(-10px);
+}
+
+.c-table-tbody-enter.c-table-tbody-enter-active {
+    opacity: 1;
+    transform:translateY(0);
+    @include transition(transform 0.5s, opacity 0.5s);
+}
+
+.c-table-tbody-leave {
+    opacity: 1;
+    transform:translateY(0);
+}
+
+.c-table-tbody-leave.c-table-tbody-leave-active {
+    opacity: 0.01;
+    transform:translateY(-10px);
+    @include transition(transform 0.5s, opacity 0.5s);
 }

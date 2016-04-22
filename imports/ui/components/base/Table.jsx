@@ -6,6 +6,8 @@
 import React from "react";
 import classNames from "classNames";
 
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+
 class Table extends React.Component {
 
     toColumn(content, i) {
@@ -25,10 +27,10 @@ class Table extends React.Component {
         if (content) {
             //i % headerRow.length gets the correct header based on index of content
             result = (
-                <tr key={i} className={classes}>
-                    <th>{headerRow[headerIndex]}</th>
-                    <td>{content}</td>
-                </tr>
+                    <tr key={i} className={classes}>
+                        <th>{headerRow[headerIndex]}</th>
+                        <td>{content}</td>
+                    </tr>
             );
         }
         return result;
@@ -57,7 +59,14 @@ class Table extends React.Component {
             <table className="c-table">
                 <thead><tr>{header}</tr></thead>
                 <tfoot>{footer}</tfoot>
-                <tbody>{body}</tbody>
+
+                <ReactCSSTransitionGroup
+                    component="tbody"
+                    transitionName="c-table-tbody"
+                    transitionEnterTimeout={500}
+                    transitionLeaveTimeout={500}>
+                    {body}
+                </ReactCSSTransitionGroup>
             </table>
         );
     }

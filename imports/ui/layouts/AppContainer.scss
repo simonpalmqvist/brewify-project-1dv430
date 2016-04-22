@@ -1,0 +1,32 @@
+@import "./base";
+
+
+.app-right-leave.app-right-leave-active,
+.app-left-enter {
+    transform: translate3d(102%,0,0);
+}
+
+.app-left-enter.app-left-enter-active,
+.app-right-enter.app-right-enter-active,
+.app-left-leave,
+.app-right-leave {
+    transform: translate3d(0,0,0);
+}
+
+.app-left-leave.app-left-leave-active,
+.app-right-enter {
+    transform: translate3d(-102%,0,0);
+}
+
+.app-left-enter,
+.app-left-leave,
+.app-right-enter,
+.app-right-leave {
+    position: absolute;
+    left: 0;
+    right: 0;
+    transition: transform 0.5s ease-in-out;
+}
+
+
+

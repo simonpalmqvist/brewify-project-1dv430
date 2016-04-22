@@ -66,12 +66,17 @@ header.main-header {
 .logo {
     width: 200px;
     margin-bottom: -10px;
+
+    @media #{$mobile} {
+        width: 130px;
+    }
 }
 
 div.wrapper {
     max-width: $desktop;
     margin: 0 auto;
     padding: $spacing;
+    position:relative;
 }
 
 div.modal-wrapper {
@@ -103,15 +108,13 @@ div.modal-wrapper {
     padding: $spacing;
     margin-bottom: $spacing;
 
-    /*@media #{$tablet} {
-
-    }*/
-
     @media #{$mobile} {
-        padding: $spacing  0  0  $spacing / 2;
-        margin-left: - $spacing;
-        margin-right: - $spacing;
-        border-radius: 0;
+        &.full-width-mobile {
+            padding: $spacing  0  0  $spacing / 2;
+            margin-left: - $spacing;
+            margin-right: - $spacing;
+            border-radius: 0;
+        }
     }
 }
 

@@ -47,10 +47,10 @@ Meteor.startup(() => {
                 <Route component={AuthContainer}>
                     <Route path="/login" component={Login} onEnter={alreadyLoggedIn}/>
                     <Route path="/register" component={Register} onEnter={alreadyLoggedIn}/>
+                    <Route path="/logout" component={Logout}/>
                 </Route>
                 <Route path="/" component={AppContainer}>
                     <IndexRoute component={Main} onEnter={alreadyLoggedIn}/>
-                    <Route path="/logout" component={Logout}/>
                     <Route path="/dashboard" component={Dashboard} onEnter={loggedIn}/>
                     <Route path="/recipe/:id" component={Recipe} onEnter={recipeExists}/>
                     <Route path="*" component={NotFound}/>

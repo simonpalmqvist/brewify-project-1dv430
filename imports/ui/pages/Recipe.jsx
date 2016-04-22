@@ -56,7 +56,7 @@ class Recipe extends React.Component {
 
         return (
             <div>
-                <div className="content-box">
+                <div className="content-box full-width-mobile">
                     <Input name="name"
                            value={recipe.name}
                            className={["input-header", "glass"]}
@@ -68,7 +68,7 @@ class Recipe extends React.Component {
                         headerRow={["Batch size (l)", "Boil time (min)", "OG"]}
                         bodyRows={bodyRow} mobile={mobile}/>
                 </div>
-                <div className="content-box">
+                <div className="content-box full-width-mobile">
                     <FermentablesList
                         mobile={mobile}
                         fermentables={fermentables}

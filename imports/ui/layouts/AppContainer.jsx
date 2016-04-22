@@ -5,6 +5,7 @@
 
 import React from "react";
 import { Link } from "react-router";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import { windowResize } from "../actions/browserActions";
 import NavigationBar from "../components/navigation/NavigationBar";
@@ -26,6 +27,11 @@ export default class AppContainer extends React.Component {
     }
 
     render() {
+
+        //Decide in which direction to pageslide
+        const pathname = this.props.location.pathname;
+        const transitionName = pathname === "/" || pathname === "/dashboard" ? "app-right" : "app-left";
+
         return (
             <div>
                 <header className="main-header">
@@ -35,7 +41,15 @@ export default class AppContainer extends React.Component {
                     </div>
                 </header>
                 <div className="wrapper">
-                    {this.props.children}
+                    <ReactCSSTransitionGroup
+                        component="div"
+                        transitionName={transitionName}
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={500}>
+                        {React.cloneElement(this.props.children, {
+                            key: this.props.location.pathname
+                        })}
+                    </ReactCSSTransitionGroup>
                 </div>
             </div>
         );

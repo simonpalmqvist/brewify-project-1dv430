@@ -3,7 +3,7 @@
 button.c-confirm-button {
     margin: $input-spacing / 2 0;
     border-radius: $input-spacing * 5;
-    padding: $input-spacing / 2 $input-spacing * 1.7;
+    padding: $input-spacing / 2 $input-spacing * 2;
     width: auto;
     max-width:30px;
     font-weight: bold;
@@ -17,7 +17,9 @@ button.c-confirm-button {
         position:relative;
         left: 50%;
         transform: translateX(-50%);
-        margin: 8px 0;
+        margin: 10px 0;
+        font-size: 18px;
+        padding: $input-spacing / 4 $input-spacing * 2;
     }
 
     &.delete {
