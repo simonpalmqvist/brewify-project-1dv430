@@ -16,7 +16,7 @@ export default class AutoComplete extends React.Component {
         //Set initial state
         this.state = {
             listOpen: props.listOpen || false,
-            selected: 0,
+            selected: null,
             value: props.value
         };
 
@@ -38,6 +38,11 @@ export default class AutoComplete extends React.Component {
         return result;
     }
 
+    componentDidMount() {
+        //Scroll into view for mobile
+        this.refs.input.scrollIntoView();
+    }
+
     componentWillReceiveProps(props) {
         //If updates to the prop comes from the server, set new state value
         if (props.value !== this.state.value) {
@@ -50,7 +55,14 @@ export default class AutoComplete extends React.Component {
     }
 
     scrollIntoView(i) {
-        this.refs.list.children[i].scrollIntoView();
+        const item = this.refs.list.children[i];
+        let selected = null;
+
+        if (item) {
+            item.scrollIntoView();
+            selected = i;
+        }
+        this.setState({selected});
     }
 
 
@@ -79,18 +91,18 @@ export default class AutoComplete extends React.Component {
         const { onSelected } = this.props;
         let value = this.props.value;
 
+        let newObj = field ? field.props.obj : {name: this.refs.input.value};
+
         //If field exists and function should handle action update value and run callback
-        if(!field && this._shouldHandleAction) {
-            onSelected({reason: `'${this.refs.input.value}' can't be found`});
-        } else if (field.props.obj.name !== value && this._shouldHandleAction) {
-            value = field.props.obj.name;
-            onSelected(null, field.props.obj);
+        if(this._shouldHandleAction && newObj.name !== value) {
+            onSelected(newObj);
+            value = newObj.name;
         }
 
         //Reset state and properties when action is done
         this._shouldHandleAction = false;
         this._shouldBlur = true;
-        this.setState({value, listOpen: false, selected: 0});
+        this.setState({value, listOpen: false, selected: null});
         this.props.onExit();
     }
 
@@ -103,7 +115,7 @@ export default class AutoComplete extends React.Component {
 
     onChange(event) {
         //Just update the state when changing the input
-        this.setState({value: event.target.value, selected: 0});
+        this.setState({value: event.target.value, selected: null});
     }
 
     onKeyDown(event) {
@@ -127,14 +139,14 @@ export default class AutoComplete extends React.Component {
                 event.target.blur();
                 break;
             case "ArrowUp":
+                selected = selected === null ? max +1 : selected;
                 newSelected = selected === 0 ? 0 : selected - 1;
-                this.setState({selected: newSelected});
                 this.scrollIntoView(newSelected);
                 break;
             case "ArrowDown":
+                selected = selected === null ? -1 : selected;
                 newSelected = selected === max ? max : selected + 1;
-                this.setState({selected: newSelected});
-                this.scrollIntoView(selected);
+                this.scrollIntoView(newSelected);
                 break;
         }
     }
@@ -142,7 +154,7 @@ export default class AutoComplete extends React.Component {
     onBlur(event) {
         //If event should not blur (possible mouse events) then prevent default
         if (this._shouldBlur) {
-            //Find field based on selected value
+            //Try to find field based on selected value
             let field = this.refs[`child-${this.state.selected}`];
             this.handleAction(field);
         } else {
@@ -177,9 +189,10 @@ export default class AutoComplete extends React.Component {
         }
 
         return (
-            <div>
+            <form action="#">
                 <input ref="input"
                        type="text"
+                       autoCorrect="off"
                        className={classNames("c-autocomplete", className)}
                        value={value}
                        onFocus={this.showList.bind(this)}
@@ -187,7 +200,7 @@ export default class AutoComplete extends React.Component {
                        onKeyDown={this.onKeyDown.bind(this)}
                        onBlur={this.onBlur.bind(this)}/>
                 {menu}
-            </div>
+            </form>
         );
     }
 }

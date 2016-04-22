@@ -6,7 +6,6 @@
 import React from "react";
 
 import { addRecipeFermentable, updateRecipeFermentable, deleteRecipeFermentable } from "../../actions/RecipeActions";
-import { errorAction } from "../../actions/StatusActions";
 
 import { srmToEbc } from "../../helpers/beerCalc";
 
@@ -37,11 +36,7 @@ export default class FermentablesList extends React.Component {
         updateRecipeFermentable(id, value);
     }
 
-    autoUpdateFermentable(error, fermentable, id) {
-        if (error) {
-            return errorAction(error);
-        }
-
+    autoUpdateFermentable(fermentable, id) {
         let updates = {
             name: fermentable.name,
             potential: fermentable.potential || 1,
@@ -58,10 +53,7 @@ export default class FermentablesList extends React.Component {
         });
     }
 
-    add(error, result) {
-        if (error) {
-            return errorAction(error);
-        }
+    add(result) {
         addRecipeFermentable(this.props.recipeId, result);
     }
 
