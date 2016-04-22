@@ -82,7 +82,7 @@ export default class AutoComplete extends React.Component {
                     onMouseDown={() => this._shouldBlur = false}
                     selected={i === selected}
                     ref={`child-${i}`}
-                    key={obj.id}
+                    key={obj.id || obj._id}
                     obj={obj}/>
             ));
     }

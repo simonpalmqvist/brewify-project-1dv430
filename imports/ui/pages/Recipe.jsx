@@ -89,7 +89,7 @@ Recipe.defaultProps = {
 //Creates meteor container to provide subscribed data
 const RecipeContainer = createContainer(({params}) => ({
     recipe: Recipes.findOne(params.id),
-    recipeFermentables: RecipeFermentables.find({recipeId: params.id}).fetch(),
+    recipeFermentables: RecipeFermentables.find().fetch(),
     fermentables: Fermentables.find().fetch()
 }), Recipe);
 
