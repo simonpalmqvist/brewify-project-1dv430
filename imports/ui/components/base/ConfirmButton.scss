@@ -12,8 +12,16 @@ button.c-confirm-button {
 
     @include transition(max-width 0.3s);
 
+    @media #{$tablet} {
+        float:left;
+        position:relative;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 8px 0;
+    }
+
     &.delete {
-        background-color: red;
+        background-color: $warning;
         color: $white;
     }
 
