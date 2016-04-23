@@ -13,7 +13,6 @@ import NavigationBar from "../components/navigation/NavigationBar";
 export default class AppContainer extends React.Component {
 
     handleWindowChange() {
-        console.log(window.innerWidth);
         windowResize(window.innerWidth);
     }
 

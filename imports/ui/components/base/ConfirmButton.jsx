@@ -18,11 +18,12 @@ export default class ConfirmButton extends React.Component {
 
         if (this.state.confirm) {
             this.props.action();
+            clearTimeout(this._timeout);
         } else {
             confirm = true;
 
             //iOS fix since onblur doesn't work
-            setTimeout(this.handleBlur.bind(this),5000);
+            this._timeout = setTimeout(this.handleBlur.bind(this),5000);
         }
         this.setState({confirm});
     }

@@ -65,8 +65,6 @@ export default class FermentablesList extends React.Component {
     getListOfFermentables() {
         const { fermentables, recipeFermentables } = this.props;
 
-        console.log(recipeFermentables);
-
         return _.uniq([...recipeFermentables.slice(0).reverse(), ...fermentables], (f) => f.name);
     }
 
