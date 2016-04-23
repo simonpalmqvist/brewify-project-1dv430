@@ -37,7 +37,7 @@ class Table extends React.Component {
     }
 
     render() {
-        const { headerRow, footerRow, bodyRows, mobile} = this.props;
+        const { headerRow, footerRow, bodyRows, mobile, className} = this.props;
 
         let header;
         let footer;
@@ -56,7 +56,7 @@ class Table extends React.Component {
         }
 
         return (
-            <table className="c-table">
+            <table className={classNames("c-table", className)}>
                 <thead><tr>{header}</tr></thead>
                 <tfoot>{footer}</tfoot>
 

@@ -140,10 +140,12 @@ export default class FermentablesList extends React.Component {
         return (
             <div>
                 <h2 className="extract-header">Fermentables</h2>
-                <Table headerRow={headerRow}
-                       footerRow={footerRow}
-                       bodyRows={bodyRows}
-                       mobile={mobile}/>
+                <Table
+                    className="recipe-fermentables"
+                    headerRow={headerRow}
+                    footerRow={footerRow}
+                    bodyRows={bodyRows}
+                    mobile={mobile}/>
                 {addElement}
 
             </div>

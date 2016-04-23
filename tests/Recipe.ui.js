@@ -43,7 +43,6 @@ describe("Recipe UI", function() {
 
         //Press enter
         browser.keys(["Enter"]);
-        //browser.pause(10000);
 
         server.call("test.get-recipes")[0].name.should.equal(newName);
     });
@@ -54,7 +53,6 @@ describe("Recipe UI", function() {
         browser.waitForExist("button.add-fermentable");
 
         browser.click("button.add-fermentable");
-
 
         browser.setValue("input.add-fermentable", searchString);
 
@@ -67,4 +65,7 @@ describe("Recipe UI", function() {
         //Should have one new fermentable
         elements.value.length.should.equal(1);
     });
+
+    //TODO: TEST Change fermentable value, See so same fermentable has new value
+    //TODO: TEST Create own fermentable
 });

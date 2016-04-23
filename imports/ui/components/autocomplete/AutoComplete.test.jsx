@@ -51,7 +51,7 @@ if (Meteor.isClient) {
             autoComplete.refs.list.children.length.should.equal(10);
         });
 
-        it("Should call callback when field has been selected and pressed enter", function() {
+        it("Should call callback when field has been filled in and pressed enter", function() {
             callback = sinon.spy();
 
             const autoComplete = ReactTestUtils.renderIntoDocument(
@@ -62,15 +62,18 @@ if (Meteor.isClient) {
 
             ReactTestUtils.Simulate.focus(inputNode);
 
-            childNode = autoComplete.refs["child-0"];
+            //Set random name
+            name = faker.lorem.words();
+            inputNode.value = name;
+            ReactTestUtils.Simulate.change(inputNode);
 
+            //Trigger enter event
             ReactTestUtils.Simulate.keyDown(inputNode, {key: "Enter"});
-
             //Ugly hack since components blur event won't run in test
             ReactTestUtils.Simulate.blur(inputNode);
 
             callback.called.should.be.true;
-            callback.should.be.calledWith(null, childNode.props.obj);
+            callback.should.be.calledWith({name});
         });
 
         it("Should be able to navigate with arrows", function() {
@@ -84,18 +87,12 @@ if (Meteor.isClient) {
 
             ReactTestUtils.Simulate.focus(inputNode);
 
-            //childNode = autoComplete.refs["child-0"];
-
-            //Should still be on selected 0 if trying to navigate up
-            ReactTestUtils.Simulate.keyDown(inputNode, {key: "ArrowUp"});
-            autoComplete.state.selected.should.equal(0);
-
             //Should be be able to navigate down
             ReactTestUtils.Simulate.keyDown(inputNode, {key: "ArrowDown"});
-            autoComplete.state.selected.should.equal(1);
+            autoComplete.state.selected.should.equal(0);
 
             //Should not be able to navigate out of the list
-            _.times(fakeData.length, () => {
+            _.times(fakeData.length + 1, () => {
                 ReactTestUtils.Simulate.keyDown(inputNode, {key: "ArrowDown"});
             });
             autoComplete.state.selected.should.equal(fakeData.length -1);
@@ -107,7 +104,7 @@ if (Meteor.isClient) {
             ReactTestUtils.Simulate.blur(inputNode);
 
             callback.called.should.be.true;
-            callback.should.be.calledWith(null, childNode.props.obj);
+            callback.should.be.calledWith(childNode.props.obj);
         });
 
         it("Should be able to select option in list with the mouse", function() {
@@ -127,7 +124,7 @@ if (Meteor.isClient) {
             ReactTestUtils.Simulate.click(childNode);
 
             callback.called.should.be.true;
-            callback.should.be.calledWith(null, obj);
+            callback.should.be.calledWith(obj);
         });
 
         it("Should be able to exit without triggering callback", function() {
