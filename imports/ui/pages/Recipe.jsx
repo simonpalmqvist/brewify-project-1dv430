@@ -5,6 +5,7 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
+import { _ } from "meteor/underscore";
 import { createContainer } from "meteor/react-meteor-data";
 import { connect }  from "react-redux";
 
@@ -87,11 +88,19 @@ Recipe.defaultProps = {
 };
 
 //Creates meteor container to provide subscribed data
-const RecipeContainer = createContainer(({params}) => ({
-    recipe: Recipes.findOne(params.id),
-    recipeFermentables: RecipeFermentables.find().fetch(),
-    fermentables: Fermentables.find().fetch()
-}), Recipe);
+const RecipeContainer = createContainer(({params}) => {
+    const allFermentables = RecipeFermentables.find().fetch();
+    let fermentables = Fermentables.find().fetch();
+    let recipeFermentables = allFermentables.filter((f) => f.recipeId === params.id);
+
+    fermentables = _.uniq([...allFermentables.slice(0).reverse(), ...fermentables], (f) => f.name);
+
+    return {
+        recipe: Recipes.findOne(params.id),
+        recipeFermentables,
+        fermentables
+    };
+}, Recipe);
 
 //Map the current state to the properties in component
 function mappingStateToProps({ flashMessages, browser }) {

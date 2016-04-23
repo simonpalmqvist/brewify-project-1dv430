@@ -4,7 +4,6 @@
  */
 
 import React from "react";
-import { _ } from "meteor/underscore";
 
 import { addRecipeFermentable, updateRecipeFermentable, deleteRecipeFermentable } from "../../actions/RecipeActions";
 
@@ -15,7 +14,6 @@ import { RecipeFermentables } from "../../../api/recipes/fermentables/RecipeFerm
 import AutoComplete from "../autocomplete/AutoComplete";
 import Input from "./../base/Input";
 import ConfirmButton from "./../base/ConfirmButton";
-
 import Table from "../base/Table";
 
 export default class FermentablesList extends React.Component {
@@ -62,25 +60,9 @@ export default class FermentablesList extends React.Component {
         this.setState({add: false});
     }
 
-    getListOfFermentables() {
-        const { fermentables, recipeFermentables } = this.props;
-
-        return _.uniq([...recipeFermentables.slice(0).reverse(), ...fermentables], (f) => f.name);
-    }
-
-    getRecipeFermentables() {
-        const {recipeFermentables, recipeId} = this.props;
-
-        return recipeFermentables.filter((f) => f.recipeId === recipeId);
-    }
 
     render() {
-        const {mobile, fermentableWeight} = this.props;
-
-        const fermentables = this.getListOfFermentables();
-
-        const recipeFermentables = this.getRecipeFermentables();
-
+        const {mobile, fermentableWeight, fermentables, recipeFermentables} = this.props;
 
         const headerRow = [
             "Name",
