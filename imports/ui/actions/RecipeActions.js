@@ -7,7 +7,10 @@ import { Meteor } from "meteor/meteor";
 import { browserHistory } from "react-router";
 import Store from "../store";
 import { saveAction, errorAction } from "./StatusActions";
+import { addBrewProfile } from "./BrewProfileActions";
+
 import { Recipes } from "../../api/recipes/Recipes";
+import { BrewProfiles } from "../../api/brewprofiles/BrewProfiles";
 
 import { srmToEbc } from "../helpers/beerCalc";
 import { BATCHSIZE, BOILTIME } from "../helpers/recipeStandards";
@@ -17,11 +20,14 @@ import { BATCHSIZE, BOILTIME } from "../helpers/recipeStandards";
  */
 export function addRecipe() {
     let name = "Recipe";
-    let batchSize = BATCHSIZE;
-    let boilTime = BOILTIME;
+    let brewProfile = BrewProfiles.findOne();
+
+    if (!brewProfile) {
+        return addBrewProfile();
+    }
 
     Store.dispatch(() => {
-        Meteor.callPromise("recipes.insert", name, batchSize, boilTime)
+        Meteor.callPromise("recipes.insert", name, brewProfile.batchSize, brewProfile.boilTime)
             .then((recipeId) => browserHistory.push(`/recipe/${recipeId}`))
             .catch(errorAction);
     });
