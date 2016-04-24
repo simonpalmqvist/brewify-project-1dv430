@@ -29,6 +29,10 @@ export default class ConfirmButton extends React.Component {
     }
 
     handleBlur() {
+        if (this._timeout) {
+            clearTimeout(this._timeout);
+        }
+
         this.setState({confirm: false});
     }
 

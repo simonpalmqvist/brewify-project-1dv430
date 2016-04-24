@@ -19,9 +19,8 @@ function redirect() {
     browserHistory.push("/dashboard");
 }
 
-
-function subscribe() {
-    if (!Store.getState().subscriptions.subscribed) {
+export function subscribe() {
+    if (Meteor.userId() && !Store.getState().subscriptions.subscribed) {
         //Subscribe to the data sources
         subscribeAction("recipes");
         subscribeAction("brew.profiles");
@@ -29,7 +28,6 @@ function subscribe() {
         subscribeAction("fermentables");
     }
 }
-
 
 /**
  * Login action
@@ -42,6 +40,7 @@ export function loginUser(email, password) {
             if (error) {
                 return errorAction(error);
             }
+            subscribe();
             redirect();
         });
     });
@@ -83,7 +82,6 @@ export function logoutUser() {
 export function alreadyLoggedIn(nextState, transition) {
     //If user already logged in redirect to dashboard
     if (Meteor.userId()) {
-        subscribe();
         transition("/dashboard");
     }
 }
@@ -97,6 +95,4 @@ export function loggedIn(nextState, transition) {
     if (!Meteor.userId()) {
         return transition("/login");
     }
-
-    subscribe();
 }
