@@ -7,6 +7,7 @@
 import { Meteor } from "meteor/meteor";
 
 //Collections
+import { BrewProfiles } from "../brewprofiles/BrewProfiles";
 import { Recipes } from "../recipes/Recipes";
 import { RecipeFermentables } from "../recipes/fermentables/RecipeFermentables";
 import { Hops } from "../brewerydb/Hops";
@@ -16,6 +17,15 @@ import { Ingredients } from "../brewerydb/Ingredients";
 import { Styles } from "../brewerydb/Styles";
 
 //Define what should be published to the client
+
+//All brew profiles that belong to user
+Meteor.publish("brew.profiles", function() {
+    if (!this.userId) {
+        return null;
+    }
+    return BrewProfiles.find({userId: this.userId });
+});
+
 
 //All recipes that belong to user
 Meteor.publish("recipes", function() {
