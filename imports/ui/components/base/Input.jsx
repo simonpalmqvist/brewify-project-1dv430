@@ -90,12 +90,14 @@ export default class Input extends React.Component {
         const { value } = this.state;
 
         let labelEl;
+        let id;
         let classes = classNames("c-input", className);
 
 
         //Write out label if needed
         if (label) {
-            labelEl = (<label>{label} </label>);
+            labelEl = (<label className="c-input-label" htmlFor={name}>{label}</label>);
+            id = name;
         }
 
         return (
@@ -104,6 +106,7 @@ export default class Input extends React.Component {
                 <input ref="input"
                        className={classes}
                        name={name}
+                       id={id}
                        value={value}
                        {...attr}
                        onChange={this.handleChange.bind(this)}
