@@ -12,7 +12,7 @@ import reducer from "../reducers/reducer";
 //Use Thunk to be able to dispatch async functions
 const middleware = [ReduxThunk];
 
-if (Meteor.isDevelopment) {
+if (Meteor.isDevelopment && !Meteor.isTest) {
     middleware.push(createLogger());
 }
 

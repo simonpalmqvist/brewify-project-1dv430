@@ -37,7 +37,9 @@ if (Meteor.isClient) {
 
             const list = ReactTestUtils.findRenderedDOMComponentWithTag(dashboard, "ul");
 
-            const listNames = _.map(list.children, (el) => el.textContent);
+
+
+            const listNames = _.compact(_.map(list.children, (el) => el.textContent));
             const recipeNames = _.map(recipes, (recipe) => recipe.name);
 
             list.children.length.should.equal(numberOfRecipes);
