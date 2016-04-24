@@ -1,5 +1,7 @@
 # Brewify
 
+Online on brewify.xyz
+
 ## Setting up dev environment
 
 ```
