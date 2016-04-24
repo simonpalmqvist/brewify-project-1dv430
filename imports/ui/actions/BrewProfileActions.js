@@ -37,7 +37,7 @@ export function addBrewProfile() {
 
     Store.dispatch(() => {
         Meteor.callPromise("brew.profiles.insert", brewProfile)
-            .then(() => browserHistory.push(`/brew/profile`))
+            .then(() => browserHistory.push("/brew/profile"))
             .catch(errorAction);
     });
 }

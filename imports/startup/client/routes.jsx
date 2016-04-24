@@ -25,6 +25,7 @@ import AuthContainer from "../../ui/layouts/AuthContainer";
 import Main from "../../ui/pages/Main";
 import Dashboard from "../../ui/pages/Dashboard";
 import Recipe from "../../ui/pages/Recipe";
+import BrewProfile from "../../ui/pages/BrewProfile";
 import NotFound from "../../ui/pages/NotFound";
 
 //Components
@@ -49,6 +50,7 @@ Meteor.startup(() => {
                     <IndexRoute component={Main} onEnter={alreadyLoggedIn}/>
                     <Route path="/dashboard" component={Dashboard} onEnter={loggedIn}/>
                     <Route path="/recipe/:id" component={Recipe} onEnter={recipeExists}/>
+                    <Route path="/brew/profile" component={BrewProfile} onEnter={loggedIn}/>
                     <Route path="*" component={NotFound}/>
                 </Route>
             </Router>
