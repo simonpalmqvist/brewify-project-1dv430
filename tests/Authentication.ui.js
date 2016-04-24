@@ -34,7 +34,7 @@ describe("Authentication UI", () => {
             browser.leftClick("input[type=submit]");
 
             browser.pause(1000);
-            browser.getUrl().should.equal("http://localhost:3000/dashboard");
+            browser.getUrl().should.equal("http://localhost:3000/brew/profile");
         });
 
     });

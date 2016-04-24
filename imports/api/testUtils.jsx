@@ -20,6 +20,7 @@ import ReactTestUtils from "react-addons-test-utils";
 import { Recipes } from "../api/recipes/Recipes";
 import { Fermentables } from "../api/brewerydb/Fermentables";
 import { RecipeFermentables } from "../api/recipes/fermentables/RecipeFermentables";
+import { BrewProfiles } from "../api/brewprofiles/BrewProfiles";
 import Store from "../ui/store";
 
 
@@ -46,7 +47,23 @@ Meteor.methods({
             password: faker.internet.password()
         };
 
-        Accounts.createUser(data);
+        userId = Accounts.createUser(data);
+
+        console.log(userId);
+
+        brewProfile = {
+            userId,
+            efficiency: faker.random.number({min: 0, max: 100}),
+            batchSize: faker.random.number({min: 0, max: 1000}),
+            boilTime: faker.random.number({min: 0, max: 120}),
+            evapRate: faker.random.number({min: 0, max: 100}),
+            waterGrainRatio: faker.random.number({min: 0, max: 10}),
+            boilLoss: faker.random.number({min: 0, max: 10}),
+            lauterDeadSpace: faker.random.number({min: 0, max: 10}),
+            grainTemp: faker.random.number({min: 0, max: 100})
+        };
+
+        BrewProfiles.insert(brewProfile);
 
         return data;
     },

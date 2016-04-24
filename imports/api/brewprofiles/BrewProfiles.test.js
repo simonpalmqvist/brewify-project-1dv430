@@ -58,7 +58,6 @@ if (Meteor.isServer) {
             brewProfile = {
                 userId,
                 efficiency,
-                hopUtilization,
                 batchSize,
                 boilTime,
                 evapRate,
