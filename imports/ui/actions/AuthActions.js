@@ -9,6 +9,8 @@ import { Accounts } from "meteor/accounts-base";
 import { browserHistory } from "react-router";
 import Store from "../store";
 import { errorAction } from "./StatusActions";
+import { subscribeAction } from "./SubscribeActions";
+import { addBrewProfile } from "./BrewProfileActions";
 
 /**
  * Redirect to dashboard for logged in users
@@ -16,6 +18,18 @@ import { errorAction } from "./StatusActions";
 function redirect() {
     browserHistory.push("/dashboard");
 }
+
+
+function subscribe() {
+    if (!Store.getState().subscriptions.subscribed) {
+        //Subscribe to the data sources
+        subscribeAction("recipes");
+        subscribeAction("brew.profiles");
+        subscribeAction("recipes.fermentables");
+        subscribeAction("fermentables");
+    }
+}
+
 
 /**
  * Login action
@@ -44,6 +58,9 @@ export function registerUser(email, password) {
             if (error) {
                 return errorAction(error);
             }
+            //Subscribe to collections, add a brew profile and redirect to dashboard
+            subscribe();
+            addBrewProfile();
             redirect();
         });
     });
@@ -66,6 +83,7 @@ export function logoutUser() {
 export function alreadyLoggedIn(nextState, transition) {
     //If user already logged in redirect to dashboard
     if (Meteor.userId()) {
+        subscribe();
         transition("/dashboard");
     }
 }
@@ -77,6 +95,8 @@ export function alreadyLoggedIn(nextState, transition) {
  */
 export function loggedIn(nextState, transition) {
     if (!Meteor.userId()) {
-        transition("/login");
+        return transition("/login");
     }
+
+    subscribe();
 }

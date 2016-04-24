@@ -15,7 +15,7 @@ import { syncHistoryWithStore} from "react-router-redux";
 import { alreadyLoggedIn, loggedIn } from "../../ui/actions/AuthActions";
 import { recipeExists } from "../../ui/actions/RecipeActions";
 import Store from "../../ui/store";
-import { subscribeAction } from "../../ui/actions/SubscribeActions";
+
 
 //Layouts
 import AppContainer from "../../ui/layouts/AppContainer";
@@ -33,10 +33,6 @@ import Login from "../../ui/components/auth/Login";
 import Logout from "../../ui/components/auth/Logout";
 
 Meteor.startup(() => {
-    //Subscribe to the data sources
-    subscribeAction("recipes");
-    subscribeAction("recipes.fermentables");
-    subscribeAction("fermentables");
 
     //Sync route history with store
     const hist = syncHistoryWithStore(browserHistory, Store);

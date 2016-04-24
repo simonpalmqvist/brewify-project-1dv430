@@ -28,7 +28,6 @@ if (Meteor.isServer) {
     let userId;
     let brewProfileId;
     let efficiency;
-    let hopUtilization;
     let batchSize;
     let boilTime;
     let evapRate;
@@ -48,7 +47,6 @@ if (Meteor.isServer) {
             userId = Random.id();
             brewProfileId = Random.id();
             efficiency = faker.random.number({min: 0, max: 100});
-            hopUtilization = faker.random.number({min: 0, max: 100});
             batchSize = faker.random.number({min: 0, max: 1000});
             boilTime = faker.random.number({min: 0, max: 120});
             evapRate = faker.random.number({min: 0, max: 100});
@@ -86,14 +84,6 @@ if (Meteor.isServer) {
 
             it("Should not be able to add brew profile without efficiency", function() {
                 delete brewProfile.efficiency;
-                (() => BrewProfiles.insert(brewProfile)).should.throw(Error);
-
-                //BrewProfile should not be added
-                BrewProfiles.find({}).count().should.equal(0);
-            });
-
-            it("Should not be able to add brew profile without hopUtilization", function() {
-                delete brewProfile.hopUtilization;
                 (() => BrewProfiles.insert(brewProfile)).should.throw(Error);
 
                 //BrewProfile should not be added

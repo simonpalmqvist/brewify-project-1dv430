@@ -1,6 +1,8 @@
 import "../imports/api/server/publications";
 import "../imports/api/recipes/methods";
 import "../imports/api/recipes/fermentables/methods";
+import "../imports/api/brewprofiles/methods";
+
 import { SyncedCron } from "meteor/percolate:synced-cron";
 import { syncBreweryDB } from  "../imports/api/server/breweryDB";
 import { Accounts } from "meteor/accounts-base";

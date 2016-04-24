@@ -21,12 +21,6 @@ BrewProfiles.schema = new SimpleSchema({
         max: 100,
         decimal: true
     },
-    hopUtilization: {
-        type: Number,
-        min: 0,
-        max: 100,
-        decimal: true
-    },
     batchSize: {
         type: Number,
         min: 0,
