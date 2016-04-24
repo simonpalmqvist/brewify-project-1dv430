@@ -84,41 +84,119 @@ if (Meteor.isServer) {
                 BrewProfiles.find({userId}).count().should.equal(1);
             });
 
-            it("Should not be able to add brewprofile without efficiency", function() {
+            it("Should not be able to add brew profile without efficiency", function() {
                 delete brewProfile.efficiency;
-
-                console.log(brewProfile);
-
                 (() => BrewProfiles.insert(brewProfile)).should.throw(Error);
 
                 //BrewProfile should not be added
                 BrewProfiles.find({}).count().should.equal(0);
             });
+
+            it("Should not be able to add brew profile without hopUtilization", function() {
+                delete brewProfile.hopUtilization;
+                (() => BrewProfiles.insert(brewProfile)).should.throw(Error);
+
+                //BrewProfile should not be added
+                BrewProfiles.find({}).count().should.equal(0);
+            });
+
+            it("Should not be able to add brew profile without batchSize", function() {
+                delete brewProfile.batchSize;
+                (() => BrewProfiles.insert(brewProfile)).should.throw(Error);
+
+                //BrewProfile should not be added
+                BrewProfiles.find({}).count().should.equal(0);
+            });
+
+            it("Should not be able to add brew profile without boilTime", function() {
+                delete brewProfile.boilTime;
+                (() => BrewProfiles.insert(brewProfile)).should.throw(Error);
+
+                //BrewProfile should not be added
+                BrewProfiles.find({}).count().should.equal(0);
+            });
+
+            it("Should not be able to add brew profile without evapRate", function() {
+                delete brewProfile.evapRate;
+                (() => BrewProfiles.insert(brewProfile)).should.throw(Error);
+
+                //BrewProfile should not be added
+                BrewProfiles.find({}).count().should.equal(0);
+            });
+
+            it("Should not be able to add brew profile without waterGrainRatio", function() {
+                delete brewProfile.waterGrainRatio;
+                (() => BrewProfiles.insert(brewProfile)).should.throw(Error);
+
+                //BrewProfile should not be added
+                BrewProfiles.find({}).count().should.equal(0);
+            });
+
+            it("Should not be able to add brew profile without boilLoss", function() {
+                delete brewProfile.boilLoss;
+                (() => BrewProfiles.insert(brewProfile)).should.throw(Error);
+
+                //BrewProfile should not be added
+                BrewProfiles.find({}).count().should.equal(0);
+            });
+
+            it("Should not be able to add brew profile without lauterDeadSpace", function() {
+                delete brewProfile.lauterDeadSpace;
+                (() => BrewProfiles.insert(brewProfile)).should.throw(Error);
+
+                //BrewProfile should not be added
+                BrewProfiles.find({}).count().should.equal(0);
+            });
+
+            it("Should not be able to add brew profile without grainTemp", function() {
+                delete brewProfile.grainTemp;
+                (() => BrewProfiles.insert(brewProfile)).should.throw(Error);
+
+                //BrewProfile should not be added
+                BrewProfiles.find({}).count().should.equal(0);
+            });
+
+            it("Should not contain properties not defined by schema", function() {
+                brewProfile.dummy = "dummy";
+                BrewProfiles.insert(brewProfile);
+
+                //BrewProfile should be added
+                BrewProfiles.find({}).count().should.equal(1);
+
+                //Brew profile should not contain dummy property
+                should.not.exist(BrewProfiles.findOne({}).dummy);
+            });
         });
-/*
+
         describe("methods", () => {
 
             describe("Not authenticated", () => {
-                it("Should not be able to insert new fermentable", function() {
-                    (() => insertMethod(recipeId, name, potential, ebc)).should.throw(Error);
+                it("Should not be able to insert new brew profile", function() {
+                    (() => insertMethod(brewProfile)).should.throw(Error);
 
-                    RecipeFermentables.find({}).count().should.equal(0);
+                    BrewProfiles.find({}).count().should.equal(0);
                 });
 
-                it("Should not be able to remove fermentable", function() {
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                it("Should not be able to remove brew profile", function() {
+                    //Adding user to be able to insert brew profile to perform test
+                    brewProfile.userId = userId;
+                    brewProfileId = BrewProfiles.insert(brewProfile);
 
-                    (() => removeMethod(fermentableId)).should.throw(Error);
+                    (() => removeMethod(brewProfileId)).should.throw(Error);
 
-                    RecipeFermentables.find({}).count().should.equal(1);
+                    BrewProfiles.find({}).count().should.equal(1);
                 });
 
-                it("Should not be able to update recipe", function() {
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                it("Should not be able to update brew profile", function() {
+                    const newBatchSize = faker.random.number({min: 0, max: 1000});
 
-                    (() => updateMethod(fermentableId, {name: faker.lorem.words()})).should.throw(Error);
+                    //Adding user to be able to insert brew profile to perform test
+                    brewProfile.userId = userId;
+                    brewProfileId = BrewProfiles.insert(brewProfile);
 
-                    RecipeFermentables.findOne(fermentableId).name.should.equal(name);
+                    (() => updateMethod(brewProfileId, {batchSize: newBatchSize})).should.throw(Error);
+
+                    BrewProfiles.findOne(brewProfileId).batchSize.should.equal(batchSize);
                 });
             });
 
@@ -127,48 +205,40 @@ if (Meteor.isServer) {
                     stub(Meteor, "userId", () => userId);
                 });
 
-                beforeEach(function() {
-                    recipeId = Recipes.insert({
-                        userId,
-                        name: faker.lorem.words(),
-                        batchSize: faker.random.number({min: 10, max: 1000}),
-                        boilTime: faker.random.number({min: 30, max: 1000})
-                    });
-                });
-
                 after(function() {
                     Meteor.userId.restore();
                 });
 
 
-                it("Should be able to insert new fermentable", function() {
+                it("Should be able to insert new brew profile", function() {
 
-                    insertMethod(recipeId, name, potential, ebc);
+                    insertMethod(brewProfile);
 
-                    RecipeFermentables.find({}).count().should.equal(1);
+                    BrewProfiles.find({}).count().should.equal(1);
                 });
 
-                it("Should be able to remove fermentable", function() {
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                it("Should be able to remove brew profile", function() {
+                    //Adding user to be able to insert brew profile to perform test
+                    brewProfile.userId = userId;
+                    brewProfileId = BrewProfiles.insert(brewProfile);
 
-                    removeMethod(fermentableId);
+                    removeMethod(brewProfileId);
 
-                    RecipeFermentables.find({}).count().should.equal(0);
+                    BrewProfiles.find({}).count().should.equal(0);
                 });
 
-                it("Should be able to update fermentable", function() {
-                    let newName = faker.lorem.words();
+                it("Should be able to update brew profile", function() {
+                    const newBatchSize = faker.random.number({min: 0, max: 1000});
 
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                    //Adding user to be able to insert brew profile to perform test
+                    brewProfile.userId = userId;
+                    brewProfileId = BrewProfiles.insert(brewProfile);
 
-                    updateMethod(fermentableId, {name: newName});
+                    updateMethod(brewProfileId, {batchSize: newBatchSize});
 
-                    RecipeFermentables.findOne(fermentableId).name.should.equal(newName);
+                    BrewProfiles.findOne(brewProfileId).batchSize.should.equal(newBatchSize);
                 });
             });
-
         });
-        */
-
     });
 }

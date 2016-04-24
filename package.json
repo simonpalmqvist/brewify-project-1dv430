@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "lint": "eslint .",
-    "test": "meteor test --driver-package=practicalmeteor:mocha",
+    "test": "meteor test --once --driver-package dispatch:mocha-phantomjs",
+    "test-watch": "TEST_WATCH=1 meteor test --driver-package dispatch:mocha-phantomjs",
     "acceptance-test": "chimp --ddp=http://localhost:3000 --mocha --path=tests",
     "acceptance-test-server": "meteor test --full-app --driver-package tmeasday:acceptance-test-driver",
     "deploy": "cd .deploy; mupx deploy; cd ..;",
