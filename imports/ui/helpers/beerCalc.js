@@ -3,6 +3,8 @@
  * @author simonpalmqvist
  */
 
+import { HOPS } from "./recipeStandards";
+
 /**
  * Function to convert colors from the SRM standard to EBC
  * @param srm - SRM color number
@@ -19,12 +21,10 @@ export function srmToEbc(srm) {
  * @returns {number} - returns expected OG
  */
 export function calcExpectedOg(fermentables, recipe) {
-    const oechsleKG = 400;
     //TODO: Read these values from brew profile
     const efficiency = 0.80;
     const waterAfterBoil = _literToGallon(recipe.batchSize + 0.5 + 2);
 
-    //(((1.036*8)+(1.025*1))*0.72)/20;
     let points = fermentables
         .map(({amount, potential}) => _kgToLbs(amount) * _getPoints(potential))
         .reduce(_sum, 0);
@@ -32,6 +32,30 @@ export function calcExpectedOg(fermentables, recipe) {
     let result = 1+(((points * efficiency) / waterAfterBoil) / 1000);
 
     return _round(result, 3);
+}
+
+/**
+ * Function to calculate the expected IBU
+ * @param hops - {amount, alpha, time, form}
+ * @param recipe - {batchSize, lossFermentation, lossKettle}
+ * @param og
+ * @returns {number} - returns expected IBU
+ */
+export function calcExpectedIBU(hops, recipe, og) {
+    //TODO: Read these values from brew profile
+    const waterAfterBoil = recipe.batchSize + 0.5 + 2;
+
+    const amountOfSugar = 1.65 * Math.pow(0.000125, og - 1);
+
+    let result = hops
+        .map(({amount, alpha, time, form}) => {
+            return hopEffectivity(form) * amountOfSugar * ((1 - Math.exp(-0.04 * time)) / 4.15) *
+                ((alpha * amount * 10) / waterAfterBoil);
+        })
+        .reduce(_sum, 0);
+
+
+    return _round(result, 1);
 }
 
 /**
@@ -71,4 +95,8 @@ function _round(value, decimals) {
     const x = Math.pow(10, decimals);
 
     return Math.round(value * x)/x;
+}
+
+function hopEffectivity(form) {
+    return form === HOPS.FORM.PELLET ? 1.15 : 1;
 }

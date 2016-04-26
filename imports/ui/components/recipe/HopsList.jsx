@@ -7,8 +7,6 @@ import React from "react";
 
 import { addRecipeHop, updateRecipeHop, deleteRecipeHop } from "../../actions/RecipeActions";
 
-//import { srmToEbc } from "../../helpers/beerCalc";
-
 import { RecipeHops } from "../../../api/recipes/hops/RecipeHops";
 
 import AutoComplete from "../autocomplete/AutoComplete";
@@ -134,7 +132,7 @@ export default class HopsList extends React.Component {
 
         return (
             <div>
-                <h2 className="hop-sub-header">Hops</h2>
+                <h2 className="extract-header">Hops</h2>
                 <Table
                     className="recipe-hops"
                     headerRow={headerRow}

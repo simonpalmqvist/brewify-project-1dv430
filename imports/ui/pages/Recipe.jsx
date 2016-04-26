@@ -17,7 +17,7 @@ import { RecipeHops } from "../../api/recipes/hops/RecipeHops";
 import { Fermentables } from "../../api/brewerydb/Fermentables";
 import { Hops } from "../../api/brewerydb/Hops";
 
-import { calcExpectedOg, calcIngredientWeight } from "../helpers/beerCalc";
+import { calcExpectedOg, calcExpectedIBU, calcIngredientWeight } from "../helpers/beerCalc";
 import { HOPS } from "../helpers/recipeStandards";
 
 import Table from "../components/base/Table";
@@ -47,6 +47,9 @@ class Recipe extends React.Component {
             hops,
             mobile } = this.props;
 
+        const expectedOG = calcExpectedOg(recipeFermentables, recipe);
+        const expectedIBU = calcExpectedIBU(recipeHops, recipe, expectedOG);
+
         const bodyRow = [[
             (<Input name="batchSize"
                     attr={{type: "number"}}
@@ -61,7 +64,10 @@ class Recipe extends React.Component {
             (<Input attr={{type: "number", disabled: true}}
                     fixedDecimals={3}
                     name="expextedOG"
-                    value={calcExpectedOg(recipeFermentables, recipe)} />)
+                    value={expectedOG} />),
+            (<Input attr={{type: "number", disabled: true}}
+                    name="expectedIBU"
+                    value={expectedIBU} />)
         ]];
 
         return (
@@ -75,7 +81,7 @@ class Recipe extends React.Component {
                            onUpdate={update}/>
 
                     <Table
-                        headerRow={["Batch size (l)", "Boil time (min)", "OG"]}
+                        headerRow={["Batch size (l)", "Boil time (min)", "OG", "IBU"]}
                         bodyRows={bodyRow} mobile={mobile}/>
                 </div>
                 <div className="content-box full-width-mobile">
