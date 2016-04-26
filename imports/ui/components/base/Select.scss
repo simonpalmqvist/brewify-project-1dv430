@@ -1,0 +1,26 @@
+@import "../../layouts/base";
+
+select.c-select {
+    outline: 0;
+    box-sizing: border-box;
+    padding: $input-spacing;
+    font-family: $font-family;
+    font-size: $text-size;
+    background-color: $white;
+    width: 100px;
+    text-align: left;
+    display: block;
+    border-radius: 2px;
+    border: dashed 1px transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    @include transition(border 0.3s);
+
+    &:hover {
+        border: dashed 1px $dark-grey;
+
+        @media #{$mobile} {
+            border-color: transparent;
+        }
+    }
+}

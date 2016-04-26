@@ -69,6 +69,31 @@ export function calcIngredientWeight(ingredients) {
         .reduce(_sum, 0);
 }
 
+/**
+ * Function to get text representation of hop form
+ * @param form - number representation of hop form
+ * @returns {String}
+ */
+export function hopFormToText(form) {
+    let result;
+
+    switch (form) {
+        case HOPS.FORM.PELLET:
+            result = "Pellets";
+            break;
+        case HOPS.FORM.LEAF:
+            result = "Cones";
+            break;
+        case HOPS.FORM.EXTRACT:
+            result = "extract";
+            break;
+        default:
+            throw new Error("Form value doesn't exist for enumeration HOPS.FORM");
+    }
+    return result;
+}
+
+
 function _getPoints(potential) {
     let result = 0;
 

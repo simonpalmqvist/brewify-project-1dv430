@@ -9,8 +9,12 @@ import { addRecipeHop, updateRecipeHop, deleteRecipeHop } from "../../actions/Re
 
 import { RecipeHops } from "../../../api/recipes/hops/RecipeHops";
 
+import { hopFormToText } from "../../helpers/beerCalc";
+import { HOPS } from "../../helpers/recipeStandards";
+
 import AutoComplete from "../autocomplete/AutoComplete";
 import Input from "./../base/Input";
+import Select from "./../base/Select";
 import ConfirmButton from "./../base/ConfirmButton";
 import Table from "../base/Table";
 
@@ -91,7 +95,11 @@ export default class HopsList extends React.Component {
                         data={hops}
                         onSelected={autoUpdateFun}
                         value={hop.name}/>),
-                    (<select><option value={hop.form}>{hop.form}</option></select>),
+                    (<Select name="form"
+                             value={hop.form}
+                             options={HOPS.FORM}
+                             valToText={hopFormToText}
+                             onUpdate={updateFun} />),
                     (<Input attr={{type: "number", step: "0.1"}}
                             fixedDecimals={2}
                             name="alpha"
@@ -132,7 +140,7 @@ export default class HopsList extends React.Component {
 
         return (
             <div>
-                <h2 className="extract-header">Hops</h2>
+                <h2 className="hop-header">Hops</h2>
                 <Table
                     className="recipe-hops"
                     headerRow={headerRow}
