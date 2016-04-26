@@ -15,7 +15,7 @@ import { sinon } from "meteor/practicalmeteor:sinon";
 import { Recipes } from "../Recipes";
 import { RecipeHops } from "./RecipeHops";
 
-//import "./methods";
+import "./methods";
 
 const should = chai.should();
 const { stub } = sinon;
@@ -29,7 +29,7 @@ if (Meteor.isServer) {
 
     let userId;
     let recipeId;
-    let hopsId;
+    let hopId;
     let name;
     let form;
     let use;
@@ -65,10 +65,10 @@ if (Meteor.isServer) {
         describe("collection", function() {
 
             it("Should be able to add hops to recipe", function() {
-                hopsId = RecipeHops.insert(hop);
+                hopId = RecipeHops.insert(hop);
 
                 // Recipe should be added
-                RecipeHops.find({_id: hopsId}).count().should.equal(1);
+                RecipeHops.find(hopId).count().should.equal(1);
             });
 
             it("Should not be able to add hops without name", function() {
@@ -125,30 +125,30 @@ if (Meteor.isServer) {
                 RecipeHops.find({}).count().should.equal(0);
             });
         });
-/*
+
         describe("methods", () => {
 
             describe("Not authenticated", () => {
-                it("Should not be able to insert new fermentable", function() {
-                    (() => insertMethod(recipeId, name, potential, ebc)).should.throw(Error);
+                it("Should not be able to insert new hop", function() {
+                    (() => insertMethod(recipeId, use, name, alpha, form)).should.throw(Error);
 
-                    RecipeFermentables.find({}).count().should.equal(0);
+                    RecipeHops.find({}).count().should.equal(0);
                 });
 
-                it("Should not be able to remove fermentable", function() {
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                it("Should not be able to remove hop", function() {
+                    hopId = RecipeHops.insert(hop);
 
-                    (() => removeMethod(fermentableId)).should.throw(Error);
+                    (() => removeMethod(hopId)).should.throw(Error);
 
-                    RecipeFermentables.find({}).count().should.equal(1);
+                    RecipeHops.find({}).count().should.equal(1);
                 });
 
-                it("Should not be able to update recipe", function() {
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                it("Should not be able to update hop", function() {
+                    hopId = RecipeHops.insert(hop);
 
-                    (() => updateMethod(fermentableId, {name: faker.lorem.words()})).should.throw(Error);
+                    (() => updateMethod(hopId, {name: faker.lorem.words()})).should.throw(Error);
 
-                    RecipeFermentables.findOne(fermentableId).name.should.equal(name);
+                    RecipeHops.findOne(hopId).name.should.equal(name);
                 });
             });
 
@@ -171,34 +171,32 @@ if (Meteor.isServer) {
                 });
 
 
-                it("Should be able to insert new fermentable", function() {
+                it("Should be able to insert new hop", function() {
 
-                    insertMethod(recipeId, name, potential, ebc);
+                    insertMethod(recipeId, use, name, alpha, form);
 
-                    RecipeFermentables.find({}).count().should.equal(1);
+                    RecipeHops.find({}).count().should.equal(1);
                 });
 
-                it("Should be able to remove fermentable", function() {
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                it("Should be able to remove hop", function() {
+                    hopId = RecipeHops.insert(hop);
 
-                    removeMethod(fermentableId);
+                    removeMethod(hopId);
 
-                    RecipeFermentables.find({}).count().should.equal(0);
+                    RecipeHops.find({}).count().should.equal(0);
                 });
 
-                it("Should be able to update fermentable", function() {
+                it("Should be able to update hop", function() {
                     let newName = faker.lorem.words();
 
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                    hopId = RecipeHops.insert(hop);
 
-                    updateMethod(fermentableId, {name: newName});
+                    updateMethod(hopId, {name: newName});
 
-                    RecipeFermentables.findOne(fermentableId).name.should.equal(newName);
+                    RecipeHops.findOne(hopId).name.should.equal(newName);
                 });
             });
-
         });
-        */
 
     });
 }
