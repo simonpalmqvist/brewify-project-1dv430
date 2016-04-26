@@ -18,3 +18,15 @@ export const BOIL_LOSS = 0;
 export const LAUTER_DEAD_SPACE = 0;
 
 export const GRAIN_TEMP = 21;
+
+export const HOPS = Object.freeze({
+    FORM: Object.freeze({
+        LEAF: 0,
+        PELLET: 1,
+        EXTRACT: 2
+    }),
+    USE: Object.freeze({
+        BOIL: 0,
+        DRY_HOP: 1
+    })
+});
