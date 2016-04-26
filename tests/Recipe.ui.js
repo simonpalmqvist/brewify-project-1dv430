@@ -14,6 +14,7 @@ let user;
 let userId;
 let recipe;
 let fermentables;
+let hops;
 
 describe("Recipe UI", function() {
     beforeEach(function() {
@@ -24,6 +25,7 @@ describe("Recipe UI", function() {
 
         recipe = server.call("test.generate-recipes", 1, userId)[0];
         fermentables = server.call("test.generate-fermentables", 30);
+        hops = server.call("test.generate-hops", 30);
 
         //Go to url
         browser.url(`http://localhost:3000/recipe/${recipe._id}`);
@@ -68,4 +70,23 @@ describe("Recipe UI", function() {
 
     //TODO: TEST Change fermentable value, See so same fermentable has new value
     //TODO: TEST Create own fermentable
+
+    it("Should be able to add hop", function() {
+        const searchString = hops[5].name.split(" ")[0];
+
+        browser.waitForExist("button.add-hop");
+
+        browser.click("button.add-hop");
+
+        browser.setValue("input.add-hop", searchString);
+
+        browser.keys(["Enter"]);
+
+        browser.waitForExist(".recipe-hops tbody tr");
+
+        const elements = browser.elements(".recipe-hops tbody tr");
+
+        //Should have one new hop
+        elements.value.length.should.equal(1);
+    });
 });

@@ -18,9 +18,11 @@ import ReactTestUtils from "react-addons-test-utils";
 
 //Collections
 import { Recipes } from "../api/recipes/Recipes";
-import { Fermentables } from "../api/brewerydb/Fermentables";
 import { RecipeFermentables } from "../api/recipes/fermentables/RecipeFermentables";
 import { BrewProfiles } from "../api/brewprofiles/BrewProfiles";
+import { Fermentables } from "../api/brewerydb/Fermentables";
+import { Hops } from "../api/brewerydb/Hops";
+
 import Store from "../ui/store";
 
 
@@ -35,6 +37,10 @@ Meteor.methods({
 
     "test.generate-fermentables": (numberOfItems) => {
         return createFermentables(numberOfItems);
+    },
+
+    "test.generate-hops": (numberOfItems) => {
+        return createHops(numberOfItems);
     },
 
     "test.get-recipes": () => {
@@ -145,6 +151,39 @@ function _fermentable() {
         name: faker.lorem.words(),
         srmPrecise: faker.random.number({min: 2, max: 1000}),
         potential: faker.random.number({min: 1.000, max: 1.060, precision: 0.001})
+    };
+}
+
+/**
+ * Server: Creates hops and inserts them in collection
+ * @param times - number of hops that should be created
+ * @returns {Array} - array of created hops
+ */
+export function createHops(times) {
+    let ids = _.times(times, i => _createHop());
+    return _.map(ids, id => Hops.findOne(id));
+}
+
+/**
+ * Function to insert hop into collection
+ * @returns {Object}
+ * @private
+ */
+function _createHop() {
+    return Hops.insert(_hop());
+}
+
+/**
+ * Function to generate hops obj with fake data
+ * @returns {{id: String, name: String, alphaAcidMin: Number, alphaAcidMax: Number}}
+ * @private
+ */
+function _hop() {
+    return {
+        id: faker.random.number({min: 1, max: 1000}),
+        name: faker.lorem.words(),
+        alphaAcidMin: faker.random.number({min: 0, max: 100, precision: 0.01}),
+        alphaAcidMax: faker.random.number({min: 0, max: 100, precision: 0.01})
     };
 }
 
