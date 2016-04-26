@@ -13,7 +13,7 @@ import { Recipes } from "../../api/recipes/Recipes";
 import { BrewProfiles } from "../../api/brewprofiles/BrewProfiles";
 
 import { srmToEbc } from "../helpers/beerCalc";
-import { BATCHSIZE, BOILTIME } from "../helpers/recipeStandards";
+import { BATCHSIZE, BOILTIME, HOPS } from "../helpers/recipeStandards";
 
 /**
  * Action to add a new recipe
@@ -82,6 +82,48 @@ export function updateRecipeFermentable(id, update) {
 export function deleteRecipeFermentable(id) {
     Store.dispatch(() => {
         Meteor.callPromise("recipes.fermentables.remove", id)
+            .then(saveAction)
+            .catch(errorAction);
+    });
+}
+
+/**
+ * Action to add a new recipe hop
+ * @param recipeId
+ * @param use - enum HOPS.USE
+ * @param hop
+ */
+export function addRecipeHop(recipeId, use, hop) {
+    const alpha = hop.alphaAcidMin || hop.alphaAcidMax || hop.alpha || 0;
+    const form = HOPS.FORM.PELLET;
+
+    Store.dispatch(() => {
+        Meteor.callPromise("recipes.hops.insert", recipeId, use, hop.name, alpha, form)
+            .then(saveAction)
+            .catch(errorAction);
+    });
+}
+
+/**
+ * Action to update a recipe hop
+ * @param id - RecipeHop id
+ * @param update object with key value pairs on what should update
+ */
+export function updateRecipeHop(id, update) {
+    Store.dispatch(() => {
+        Meteor.callPromise("recipes.hops.update", id, update)
+            .then(saveAction)
+            .catch(errorAction);
+    });
+}
+
+/**
+ * Action to delete a recipe hop
+ * @param id - RecipeHop id
+ */
+export function deleteRecipeHop(id) {
+    Store.dispatch(() => {
+        Meteor.callPromise("recipes.hops.remove", id)
             .then(saveAction)
             .catch(errorAction);
     });

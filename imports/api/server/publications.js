@@ -10,6 +10,7 @@ import { Meteor } from "meteor/meteor";
 import { BrewProfiles } from "../brewprofiles/BrewProfiles";
 import { Recipes } from "../recipes/Recipes";
 import { RecipeFermentables } from "../recipes/fermentables/RecipeFermentables";
+import { RecipeHops } from "../recipes/hops/RecipeHops";
 import { Hops } from "../brewerydb/Hops";
 import { Fermentables } from "../brewerydb/Fermentables";
 import { Yeasts } from "../brewerydb/Yeasts";
@@ -32,7 +33,7 @@ Meteor.publish("recipes", function() {
     if (!this.userId) {
         return null;
     }
-    return RecipeFermentables.find({userId: this.userId });
+    return Recipes.find({userId: this.userId });
 });
 
 //All recipes that belong to user
@@ -40,7 +41,15 @@ Meteor.publish("recipes.fermentables", function() {
     if (!this.userId) {
         return null;
     }
-    return Recipes.find({userId: this.userId });
+    return RecipeFermentables.find({userId: this.userId });
+});
+
+//All recipes that belong to user
+Meteor.publish("recipes.hops", function() {
+    if (!this.userId) {
+        return null;
+    }
+    return RecipeHops.find({userId: this.userId });
 });
 
 //All hops for logged in users

@@ -31,10 +31,6 @@ export default class FermentablesList extends React.Component {
         return RecipeFermentables.schema.newContext().validateOne(obj, key);
     }
 
-    updateFermentable(value, id) {
-        updateRecipeFermentable(id, value);
-    }
-
     autoUpdateFermentable(fermentable, id) {
         let updates = {
             name: fermentable.name,
@@ -85,8 +81,8 @@ export default class FermentablesList extends React.Component {
 
         const bodyRows = recipeFermentables.map((fermentable) => {
             const {_id} = fermentable;
-            const updateFun = (value) => this.updateFermentable(value, _id);
-            const autoUpdateFun = (error, fermentable) => this.autoUpdateFermentable(error, fermentable, _id);
+            const updateFun = (value) => updateRecipeFermentable(_id, value);
+            const autoUpdateFun = (fermentable) => this.autoUpdateFermentable(fermentable, _id);
             const deleteFun = () => deleteRecipeFermentable(_id);
 
             return [

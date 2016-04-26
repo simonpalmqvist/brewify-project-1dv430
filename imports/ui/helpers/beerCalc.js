@@ -35,12 +35,12 @@ export function calcExpectedOg(fermentables, recipe) {
 }
 
 /**
- * Function to sum up total weight/amount of fermentables
- * @param fermentables - {amount}
- * @returns {number} - returns total weight/amount of fermentables
+ * Function to sum up total weight/amount of ingredients in array
+ * @param ingredients - {amount}
+ * @returns {number} - returns total weight/amount of ingredients
  */
-export function calcFermentableWeight(fermentables) {
-    return fermentables
+export function calcIngredientWeight(ingredients) {
+    return ingredients
         .map(({amount}) => amount)
         .reduce(_sum, 0);
 }

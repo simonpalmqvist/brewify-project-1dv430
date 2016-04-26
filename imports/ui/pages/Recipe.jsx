@@ -10,16 +10,20 @@ import { createContainer } from "meteor/react-meteor-data";
 import { connect }  from "react-redux";
 
 import { updateRecipe } from "../actions/RecipeActions";
+
 import { Recipes } from "../../api/recipes/Recipes";
 import { RecipeFermentables } from "../../api/recipes/fermentables/RecipeFermentables";
+import { RecipeHops } from "../../api/recipes/hops/RecipeHops";
 import { Fermentables } from "../../api/brewerydb/Fermentables";
+import { Hops } from "../../api/brewerydb/Hops";
+
+import { calcExpectedOg, calcIngredientWeight } from "../helpers/beerCalc";
+import { HOPS } from "../helpers/recipeStandards";
 
 import Table from "../components/base/Table";
-
-import { calcExpectedOg, calcFermentableWeight } from "../helpers/beerCalc";
-
 import Input from "../components/base/Input";
 import FermentablesList from "../components/recipe/FermentablesList";
+import HopsList from "../components/recipe/HopsList";
 
 class Recipe extends React.Component {
 
@@ -35,8 +39,13 @@ class Recipe extends React.Component {
 
     render() {
         const update = this.update.bind(this);
-        const { recipe, recipeFermentables, fermentables, mobile } = this.props;
-
+        const {
+            recipe,
+            recipeFermentables,
+            recipeHops,
+            fermentables,
+            hops,
+            mobile } = this.props;
 
         const bodyRow = [[
             (<Input name="batchSize"
@@ -74,7 +83,16 @@ class Recipe extends React.Component {
                         mobile={mobile}
                         fermentables={fermentables}
                         recipeFermentables={recipeFermentables}
-                        fermentableWeight={calcFermentableWeight(recipeFermentables)}
+                        fermentableWeight={calcIngredientWeight(recipeFermentables)}
+                        recipeId={this.props.recipe._id}/>
+                </div>
+                <div className="content-box full-width-mobile">
+                    <HopsList
+                        mobile={mobile}
+                        hops={hops}
+                        recipeHops={recipeHops}
+                        use={HOPS.USE.BOIL}
+                        hopWeight={calcIngredientWeight(recipeHops)}
                         recipeId={this.props.recipe._id}/>
                 </div>
             </div>
@@ -84,21 +102,37 @@ class Recipe extends React.Component {
 
 Recipe.defaultProps = {
     recipe: {},
-    recipeFermentables: []
+    recipeFermentables: [],
+    recipeHops: [],
+    fermentables: [],
+    hops: []
 };
+
+function joinArrayUniqByName(arr1, arr2) {
+    //Create copy of array and get the latest added
+    arr1 = arr1.slice(0).reverse();
+
+    //Return array with unique names on objects
+    return _.uniq([...arr1, ...arr2], (item) => item.name);
+}
+
+function getIngredientsForRecipe(list, id) {
+    return list.filter((item) => item.recipeId === id);
+}
+
 
 //Creates meteor container to provide subscribed data
 const RecipeContainer = createContainer(({params}) => {
+    const { id } = params;
     const allFermentables = RecipeFermentables.find().fetch();
-    let fermentables = Fermentables.find().fetch();
-    let recipeFermentables = allFermentables.filter((f) => f.recipeId === params.id);
-
-    fermentables = _.uniq([...allFermentables.slice(0).reverse(), ...fermentables], (f) => f.name);
+    const allHops = RecipeHops.find().fetch();
 
     return {
         recipe: Recipes.findOne(params.id),
-        recipeFermentables,
-        fermentables
+        recipeFermentables: getIngredientsForRecipe(allFermentables, id),
+        recipeHops: getIngredientsForRecipe(allHops, id),
+        fermentables: joinArrayUniqByName(allFermentables, Fermentables.find().fetch()),
+        hops: joinArrayUniqByName(allHops, Hops.find().fetch())
     };
 }, Recipe);
 
