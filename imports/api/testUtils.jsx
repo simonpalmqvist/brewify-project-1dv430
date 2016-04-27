@@ -55,8 +55,6 @@ Meteor.methods({
 
         userId = Accounts.createUser(data);
 
-        console.log(userId);
-
         brewProfile = {
             userId,
             efficiency: faker.random.number({min: 0, max: 100}),
@@ -242,8 +240,6 @@ function _regexpFind(str,regex) {
     if(result) {
         result = result[1];
     }
-
-    console.log(result);
 
     return result;
 }

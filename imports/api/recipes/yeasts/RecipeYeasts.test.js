@@ -15,7 +15,7 @@ import { sinon } from "meteor/practicalmeteor:sinon";
 import { Recipes } from "../Recipes";
 import { RecipeYeasts } from "./RecipeYeasts";
 
-//import "./methods";
+import "./methods";
 
 const should = chai.should();
 const { stub } = sinon;
@@ -23,9 +23,9 @@ const { stub } = sinon;
 if (Meteor.isServer) {
 
     //Getting the exposed methods
-    const insertMethod = Meteor.server.method_handlers["recipes.hops.insert"];
-    const updateMethod = Meteor.server.method_handlers["recipes.hops.update"];
-    const removeMethod = Meteor.server.method_handlers["recipes.hops.remove"];
+    const insertMethod = Meteor.server.method_handlers["recipes.yeasts.insert"];
+    const updateMethod = Meteor.server.method_handlers["recipes.yeasts.update"];
+    const removeMethod = Meteor.server.method_handlers["recipes.yeasts.remove"];
 
     let userId;
     let recipeId;
@@ -160,30 +160,31 @@ if (Meteor.isServer) {
             });
 
         });
-/*
+
         describe("methods", () => {
 
             describe("Not authenticated", () => {
-                it("Should not be able to insert new hop", function() {
-                    (() => insertMethod(recipeId, use, name, alpha, form)).should.throw(Error);
+                it("Should not be able to insert new yeast", function() {
 
-                    RecipeHops.find({}).count().should.equal(0);
+                    (() => insertMethod(recipeId, yeast)).should.throw(Error);
+
+                    RecipeYeasts.find({}).count().should.equal(0);
                 });
 
                 it("Should not be able to remove hop", function() {
-                    hopId = RecipeHops.insert(hop);
+                    yeastId = RecipeYeasts.insert(yeast);
 
-                    (() => removeMethod(hopId)).should.throw(Error);
+                    (() => removeMethod(yeastId)).should.throw(Error);
 
-                    RecipeHops.find({}).count().should.equal(1);
+                    RecipeYeasts.find({}).count().should.equal(1);
                 });
 
                 it("Should not be able to update hop", function() {
-                    hopId = RecipeHops.insert(hop);
+                    yeastId = RecipeYeasts.insert(yeast);
 
-                    (() => updateMethod(hopId, {name: faker.lorem.words()})).should.throw(Error);
+                    (() => updateMethod(yeastId, {name: faker.lorem.words()})).should.throw(Error);
 
-                    RecipeHops.findOne(hopId).name.should.equal(name);
+                    RecipeYeasts.findOne(yeastId).name.should.equal(name);
                 });
             });
 
@@ -206,32 +207,41 @@ if (Meteor.isServer) {
                 });
 
 
-                it("Should be able to insert new hop", function() {
+                it("Should be able to insert new yeast", function() {
 
-                    insertMethod(recipeId, use, name, alpha, form);
+                    insertMethod(recipeId, yeast);
 
-                    RecipeHops.find({}).count().should.equal(1);
+                    RecipeYeasts.find({}).count().should.equal(1);
                 });
 
-                it("Should be able to remove hop", function() {
-                    hopId = RecipeHops.insert(hop);
+                it("Should not be able to insert more than one yeast", function() {
 
-                    removeMethod(hopId);
+                    insertMethod(recipeId, yeast);
 
-                    RecipeHops.find({}).count().should.equal(0);
+                    (() => insertMethod(recipeId, yeast)).should.throw(Error);
+
+                    RecipeYeasts.find({}).count().should.equal(1);
                 });
 
-                it("Should be able to update hop", function() {
+                it("Should be able to remove yeast", function() {
+                    yeastId = RecipeYeasts.insert(yeast);
+
+                    removeMethod(yeastId);
+
+                    RecipeYeasts.find({}).count().should.equal(0);
+                });
+
+                it("Should be able to update yeast", function() {
                     let newName = faker.lorem.words();
 
-                    hopId = RecipeHops.insert(hop);
+                    yeastId = RecipeYeasts.insert(yeast);
 
-                    updateMethod(hopId, {name: newName});
+                    updateMethod(yeastId, {name: newName});
 
-                    RecipeHops.findOne(hopId).name.should.equal(newName);
+                    RecipeYeasts.findOne(yeastId).name.should.equal(newName);
                 });
             });
+
         });
-*/
     });
 }
