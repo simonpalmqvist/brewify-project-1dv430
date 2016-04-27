@@ -30,3 +30,17 @@ export const HOPS = Object.freeze({
         DRY_HOP: 1
     })
 });
+
+export const YEAST = Object.freeze({
+    FORM: Object.freeze({
+        LIQUID: 0,
+        DRY: 1
+    }),
+    TYPE: Object.freeze({
+        ALE: 0,
+        LAGER: 1,
+        WHEAT: 2,
+        CHAMPAGNE: 3,
+        WINE: 4
+    })
+});
