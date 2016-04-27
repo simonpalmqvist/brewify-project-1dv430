@@ -8,7 +8,7 @@
 import { Meteor } from "meteor/meteor";
 import { should } from "meteor/practicalmeteor:chai";
 
-import { srmToEbc, calcExpectedOg, calcFermentableWeight } from "./beerCalc";
+import { srmToEbc, calcExpectedOg, calcIngredientWeight } from "./beerCalc";
 
 if (Meteor.isClient) {
     describe("Beer calculations", function() {
@@ -31,7 +31,7 @@ if (Meteor.isClient) {
             calcExpectedOg(fermentables, recipe).should.equal(1.046);
         });
 
-        it("Should be able to give an expected OG", function() {
+        it("Should be able to give calculate total weight of ingredients", function() {
             const fermentables = [
                 {amount: 1.9},
                 {amount: 0.10},
@@ -39,7 +39,7 @@ if (Meteor.isClient) {
                 {amount: 0}
             ];
 
-            calcFermentableWeight(fermentables).should.equal(2.010);
+            calcIngredientWeight(fermentables).should.equal(2.010);
         });
     });
 }
