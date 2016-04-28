@@ -79,34 +79,49 @@ class Recipe extends React.Component {
 
         return (
             <div>
-                <div className="content-box full-width-mobile">
-                    <Input name="name"
-                           value={recipe.name}
-                           className={["input-header", "glass"]}
-                           attr={{type: "text"}}
-                           validate={this.recipeValidateOne}
-                           onUpdate={update}/>
+                <div className="col-height-wrapper">
+                    <div className="content-box full-width-mobile col-3-4">
+                        <Input name="name"
+                               value={recipe.name}
+                               className={["input-header", "glass"]}
+                               attr={{type: "text"}}
+                               validate={this.recipeValidateOne}
+                               onUpdate={update}/>
 
-                    <Table
-                        headerRow={["Batch size (l)", "Boil time (min)", "OG", "IBU"]}
-                        bodyRows={bodyRow} mobile={mobile}/>
+                        <Table
+                            headerRow={["Batch size (l)", "Boil time (min)", "OG", "IBU"]}
+                            bodyRows={bodyRow} mobile={mobile}/>
+                    </div>
+                    <div className="content-box full-width-mobile col-1-4">
+                        <h2>Beer style</h2>
+                    </div>
                 </div>
-                <div className="content-box full-width-mobile">
-                    <FermentablesList
-                        mobile={mobile}
-                        fermentables={fermentables}
-                        recipeFermentables={recipeFermentables}
-                        fermentableWeight={calcIngredientWeight(recipeFermentables)}
-                        recipeId={this.props.recipe._id}/>
+                <div className="col-height-wrapper">
+                    <div className="content-box full-width-mobile col-3-4">
+                        <FermentablesList
+                            mobile={mobile}
+                            fermentables={fermentables}
+                            recipeFermentables={recipeFermentables}
+                            fermentableWeight={calcIngredientWeight(recipeFermentables)}
+                            recipeId={this.props.recipe._id}/>
+                    </div>
+                    <div className="content-box full-width-mobile col-1-4">
+                        <h2>Yeast</h2>
+                    </div>
                 </div>
-                <div className="content-box full-width-mobile">
-                    <HopsList
-                        mobile={mobile}
-                        hops={hops}
-                        recipeHops={recipeHops}
-                        use={HOPS.USE.BOIL}
-                        hopWeight={calcIngredientWeight(recipeHops)}
-                        recipeId={this.props.recipe._id}/>
+                <div className="col-height-wrapper">
+                    <div className="content-box full-width-mobile col-3-4">
+                        <HopsList
+                            mobile={mobile}
+                            hops={hops}
+                            recipeHops={recipeHops}
+                            use={HOPS.USE.BOIL}
+                            hopWeight={calcIngredientWeight(recipeHops)}
+                            recipeId={this.props.recipe._id}/>
+                    </div>
+                    <div className="content-box full-width-mobile col-1-4">
+                        <h2>Settings</h2>
+                    </div>
                 </div>
             </div>
         );

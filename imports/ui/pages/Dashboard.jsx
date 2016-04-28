@@ -29,9 +29,16 @@ class Dashboard extends React.Component {
 
         return (
             <div>
-                <div className="content-box full-width-mobile">
-                    <button className="main-button" type="text" onClick={this.handle.bind(this)}>Create recipe</button>
-                    <ul className="list-items">{listEl}</ul>
+                <div className="col-height-wrapper">
+                    <div className="content-box full-width-mobile col-3-3">
+                        <h1>News</h1>
+                    </div>
+                    <div className="content-box full-width-mobile col-1-3">
+                        <button className="main-button" type="text" onClick={this.handle.bind(this)}>
+                            Create recipe
+                        </button>
+                        <ul className="list-items">{listEl}</ul>
+                    </div>
                 </div>
             </div>
         );

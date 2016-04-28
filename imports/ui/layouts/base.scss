@@ -8,12 +8,14 @@ $white: #FFF;
 
 //Dimensions
 $spacing: 20px;
+$half-spacing: $spacing / 2;
 $input-spacing: 4px;
 $border-radius: 6px;
 
 $mobile: "(max-width: 400px)";
 //!!!!!! If changed then update width in browserActions.js as well !!!!!//
 $tablet: "(max-width: 780px)";
+$laptop: "(max-width: 1000px)";
 $desktop: 1140px;
 
 //Fonts
@@ -32,6 +34,23 @@ $line-height: 1.4em;
     -o-transition:      $transition;
     -webkit-transition: $transition;
     transition:         $transition;
+}
+
+@mixin calc-width($width, $sign, $space) {
+    width: -webkit-calc(#{$width} #{$sign} #{$space});
+    width:         calc(#{$width} #{$sign} #{$space});
+}
+
+/**
+* Clearfix
+*/
+.clearfix {
+
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
 
 
@@ -103,19 +122,27 @@ div.modal-wrapper {
 }
 
 .content-box {
+    box-sizing: border-box;
     background-color: $white;
     border-radius: $border-radius;
     padding: $spacing;
-    margin-bottom: $spacing;
 
     @media #{$mobile} {
         &.full-width-mobile {
-            padding: $spacing  0  0  $spacing / 2;
+            padding: $spacing  0  0 $half-spacing;
+            border-radius: 0;
+        }
+    }
+/*
+    @media #{$mobile} {
+        &.full-width-mobile {
+            padding: $spacing  0  0  $half-spacing;
             margin-left: - $spacing;
             margin-right: - $spacing;
             border-radius: 0;
         }
     }
+    */
 }
 
 
@@ -132,11 +159,11 @@ div.modal-wrapper {
 
 h2, .input-header {
     font-size: $h2-size;
-    margin-bottom: $spacing / 2;
+    margin-bottom: $spacing;
 }
 
 h2 {
-    margin-top: $input-spacing;
+    padding-bottom: $spacing;
 }
 
 h2.extract-header {
