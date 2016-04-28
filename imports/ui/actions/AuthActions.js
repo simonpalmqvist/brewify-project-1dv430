@@ -26,8 +26,10 @@ export function subscribe() {
         subscribeAction("brew.profiles");
         subscribeAction("recipes.fermentables");
         subscribeAction("recipes.hops");
+        subscribeAction("recipes.yeats");
         subscribeAction("fermentables");
         subscribeAction("hops");
+        subscribeAction("yeasts");
     }
 }
 

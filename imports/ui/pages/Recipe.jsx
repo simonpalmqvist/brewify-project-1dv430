@@ -14,8 +14,10 @@ import { updateRecipe } from "../actions/RecipeActions";
 import { Recipes } from "../../api/recipes/Recipes";
 import { RecipeFermentables } from "../../api/recipes/fermentables/RecipeFermentables";
 import { RecipeHops } from "../../api/recipes/hops/RecipeHops";
+import { RecipeYeasts } from "../../api/recipes/yeasts/RecipeYeasts";
 import { Fermentables } from "../../api/brewerydb/Fermentables";
 import { Hops } from "../../api/brewerydb/Hops";
+import { Yeasts } from "../../api/brewerydb/Yeasts";
 
 import { calcExpectedOg, calcExpectedIBU, calcIngredientWeight } from "../helpers/beerCalc";
 import { HOPS } from "../helpers/recipeStandards";
@@ -43,9 +45,14 @@ class Recipe extends React.Component {
             recipe,
             recipeFermentables,
             recipeHops,
+            recipeYeast,
             fermentables,
             hops,
+            yeasts,
             mobile } = this.props;
+
+        console.log(yeasts);
+        console.log(recipeYeast);
 
         const expectedOG = calcExpectedOg(recipeFermentables, recipe);
         const expectedIBU = calcExpectedIBU(recipeHops, recipe, expectedOG);
@@ -110,8 +117,10 @@ Recipe.defaultProps = {
     recipe: {},
     recipeFermentables: [],
     recipeHops: [],
+    recipeYeast: {},
     fermentables: [],
-    hops: []
+    hops: [],
+    yeasts: []
 };
 
 function joinArrayUniqByName(arr1, arr2) {
@@ -132,13 +141,16 @@ const RecipeContainer = createContainer(({params}) => {
     const { id } = params;
     const allFermentables = RecipeFermentables.find().fetch();
     const allHops = RecipeHops.find().fetch();
+    const allYeast = RecipeYeasts.find().fetch();
 
     return {
         recipe: Recipes.findOne(params.id),
         recipeFermentables: getIngredientsForRecipe(allFermentables, id),
         recipeHops: getIngredientsForRecipe(allHops, id),
+        recipeYeast: getIngredientsForRecipe(allYeast, id)[0],
         fermentables: joinArrayUniqByName(allFermentables, Fermentables.find().fetch()),
-        hops: joinArrayUniqByName(allHops, Hops.find().fetch())
+        hops: joinArrayUniqByName(allHops, Hops.find().fetch()),
+        yeasts: joinArrayUniqByName(allYeast, Yeasts.find().fetch())
     };
 }, Recipe);
 
