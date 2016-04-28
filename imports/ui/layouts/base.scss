@@ -41,6 +41,25 @@ $line-height: 1.4em;
     width:         calc(#{$width} #{$sign} #{$space});
 }
 
+@mixin placeholder() {
+
+    &::-webkit-input-placeholder {
+        @content;
+    }
+
+    &:-moz-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder {
+        @content;
+    }
+
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
 /**
 * Clearfix
 */
@@ -126,23 +145,16 @@ div.modal-wrapper {
     background-color: $white;
     border-radius: $border-radius;
     padding: $spacing;
+    position: relative;
 
     @media #{$mobile} {
         &.full-width-mobile {
             padding: $spacing  0  0 $half-spacing;
             border-radius: 0;
         }
+
+        position: static;
     }
-/*
-    @media #{$mobile} {
-        &.full-width-mobile {
-            padding: $spacing  0  0  $half-spacing;
-            margin-left: - $spacing;
-            margin-right: - $spacing;
-            border-radius: 0;
-        }
-    }
-    */
 }
 
 

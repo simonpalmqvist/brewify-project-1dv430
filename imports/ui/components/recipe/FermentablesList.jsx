@@ -19,10 +19,6 @@ import Table from "../base/Table";
 export default class FermentablesList extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            add: false
-        };
     }
 
     validateOne(key, value) {
@@ -41,21 +37,9 @@ export default class FermentablesList extends React.Component {
         updateRecipeFermentable(id, updates);
     }
 
-    showAddInput() {
-        //Show input field and set focus on it when rendered
-        this.setState({add: true}, () => {
-            this.refs.autocomplete.refs.input.focus();
-        });
-    }
-
     add(result) {
         addRecipeFermentable(this.props.recipeId, result);
     }
-
-    finishedAdding() {
-        this.setState({add: false});
-    }
-
 
     render() {
         const {mobile, fermentableWeight, fermentables, recipeFermentables} = this.props;
@@ -115,24 +99,6 @@ export default class FermentablesList extends React.Component {
             ];
         });
 
-        //Show button until pressed then show autocomplete input to add fermentable
-        let addElement = (
-            <button className="add-fermentable"
-                    onClick={this.showAddInput.bind(this)}>Add fermentable</button>
-        );
-
-        //Fermentables referenced here are not recipe specific fermentables
-        if (this.state.add) {
-            addElement = (
-                <AutoComplete
-                    className="add-fermentable"
-                    ref="autocomplete"
-                    data={fermentables}
-                    onSelected={this.add.bind(this)}
-                    onExit={this.finishedAdding.bind(this)}/>
-            );
-        }
-
         return (
             <div>
                 <h2 className="extract-header">Fermentables</h2>
@@ -142,8 +108,12 @@ export default class FermentablesList extends React.Component {
                     footerRow={footerRow}
                     bodyRows={bodyRows}
                     mobile={mobile}/>
-                {addElement}
-
+                <AutoComplete
+                    className="add-fermentable"
+                    ref="autocomplete"
+                    placeholder="Add"
+                    data={fermentables}
+                    onSelected={this.add.bind(this)}/>
             </div>
         );
     }

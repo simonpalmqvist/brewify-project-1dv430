@@ -19,13 +19,6 @@ import ConfirmButton from "./../base/ConfirmButton";
 import Table from "../base/Table";
 
 export default class HopsList extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            add: false
-        };
-    }
 
     validateOne(key, value) {
         let obj = {};
@@ -43,22 +36,10 @@ export default class HopsList extends React.Component {
         updateRecipeHop(id, updates);
     }
 
-    showAddInput() {
-        //Show input field and set focus on it when rendered
-        this.setState({add: true}, () => {
-            this.refs.autocomplete.refs.input.focus();
-        });
-    }
-
     add(result) {
         const { recipeId, use } = this.props;
         addRecipeHop(recipeId, use, result);
     }
-
-    finishedAdding() {
-        this.setState({add: false});
-    }
-
 
     render() {
         const {mobile, hopWeight, hops, recipeHops} = this.props;
@@ -120,24 +101,6 @@ export default class HopsList extends React.Component {
                 ];
             });
 
-        //Show button until pressed then show autocomplete input to add hop
-        let addElement = (
-            <button className="add-hop"
-                    onClick={this.showAddInput.bind(this)}>Add hop</button>
-        );
-
-        //Hops referenced here are not recipe specific hops
-        if (this.state.add) {
-            addElement = (
-                <AutoComplete
-                    className="add-hop"
-                    ref="autocomplete"
-                    data={hops}
-                    onSelected={this.add.bind(this)}
-                    onExit={this.finishedAdding.bind(this)}/>
-            );
-        }
-
         return (
             <div>
                 <h2 className="hop-header">Hops</h2>
@@ -147,7 +110,12 @@ export default class HopsList extends React.Component {
                     footerRow={footerRow}
                     bodyRows={bodyRows}
                     mobile={mobile}/>
-                {addElement}
+                <AutoComplete
+                    className="add-hop"
+                    ref="autocomplete"
+                    placeholder="Add"
+                    data={hops}
+                    onSelected={this.add.bind(this)} />
             </div>
         );
     }

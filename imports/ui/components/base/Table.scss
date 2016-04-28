@@ -26,7 +26,8 @@ table.c-table {
 
         th {
             position:absolute;
-            padding: 12px 0;
+            line-height: normal;
+            padding-top: $half-spacing;
             font-weight: normal;
         }
 
@@ -36,9 +37,13 @@ table.c-table {
 
             input, select {
 
-                padding: 10px 10px 10px 0;
+                padding: $half-spacing $half-spacing $half-spacing 0;
                 width: 100%;
                 text-align: right;
+
+            }
+
+            select {
                 direction:rtl;
 
                 option {

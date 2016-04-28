@@ -8,6 +8,7 @@ input.c-input {
     border-radius: 2px;
     border: dashed 1px transparent;
     @include transition(border 0.3s);
+    line-height: normal;
 
     &[type=text] {
         width: 100%;
@@ -32,6 +33,20 @@ input.c-input {
     &[disabled] {
         color: $dark-grey;
         border: solid 1px transparent;
+    }
+
+    @media #{$mobile} {
+        border:0;
+        &:hover, &:focus, &[disabled] {
+            border: 0;
+        }
+
+        &:focus {
+            position: relative;
+            background-color: $white;
+            text-align: center !important;
+        }
+
     }
 }
 
