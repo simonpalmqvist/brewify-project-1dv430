@@ -34,12 +34,18 @@ table.c-table {
             text-align: right;
             width: 100%;
 
-            input {
+            input, select {
 
                 padding: 10px 10px 10px 0;
                 width: 100%;
                 text-align: right;
+                direction:rtl;
+
+                option {
+                    direction: rtl;
+                }
             }
+
         }
     }
 
