@@ -24,14 +24,14 @@ RecipeYeasts.schema = new SimpleSchema({
         max: 100
     },
     form: {
-        type: Number, //Type can be 0 LIQUID, 1 DRY
-        min: 0,
-        max: 1
+        type: Number, //Type can be 1 LIQUID, 2 DRY
+        min: 1,
+        max: 2
     },
     type: {
-        type: Number, //Type can be 0 ALE, 1 LAGER, 2 WHEAT, 3 CHAMPAGNE, 4 WINE
-        min: 0,
-        max: 4
+        type: Number, //Type can be 1 ALE, 2 LAGER, 3 WHEAT, 4 CHAMPAGNE, 5 WINE
+        min: 1,
+        max: 5
     },
     attenuation: {
         type: Number,
@@ -62,11 +62,6 @@ RecipeYeasts.schema = new SimpleSchema({
         min: 0,
         max: 20,
         decimal: true
-    },
-    amount: {
-        type: Number,
-        min: 0,
-        decimal: true
     }
 });
 
@@ -74,8 +69,6 @@ RecipeYeasts.schema = new SimpleSchema({
     Name:
     yeastType: lager/ale/wine/wheat/champagne
     yeastForm: liquid/dry
-
-    amount: liter/gram
 
     attenuation: 75
 

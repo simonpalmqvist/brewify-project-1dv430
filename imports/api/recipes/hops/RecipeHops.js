@@ -24,14 +24,14 @@ RecipeHops.schema = new SimpleSchema({
         max: 100
     },
     form: {
-        type: Number, //Type can be 0 LEAF, 1 PELLET, 2 EXTRACT
-        min: 0,
-        max: 2
+        type: Number, //Type can be 1 LEAF, 2 PELLET, 3 EXTRACT
+        min: 1,
+        max: 3
     },
     use: {
-        type: Number, //Type can be 0 BOIL, 1 DRY_HOP
-        min: 0,
-        max: 1
+        type: Number, //Type can be 1 BOIL, 2 DRY_HOP
+        min: 1,
+        max: 2
     },
     alpha: {
         type: Number,

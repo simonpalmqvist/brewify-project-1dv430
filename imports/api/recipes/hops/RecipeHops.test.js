@@ -49,8 +49,8 @@ if (Meteor.isServer) {
             userId = Random.id();
             recipeId = Random.id();
             name = faker.random.words();
-            form = faker.random.number({min: 0, max: 2});
-            use = faker.random.number({min: 0, max: 1});
+            form = faker.random.number({min: 1, max: 3});
+            use = faker.random.number({min: 1, max: 2});
             alpha = faker.random.number({min: 0, max: 100, precision: 0.01});
             amount = faker.random.number({min: 0, max: 1000});
             time = faker.random.number({min: 0, max: 300});

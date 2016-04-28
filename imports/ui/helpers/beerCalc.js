@@ -93,6 +93,38 @@ export function hopFormToText(form) {
     return result;
 }
 
+/**
+ * Function to get value representation from enumeration
+ * @param enumeration - to get value from
+ * @param text - text representation
+ * @returns {Number}
+ */
+export function enumerationToValue(enumeration, text) {
+    let result;
+
+    if (typeof text === "string") {
+        result = enumeration[text.toUpperCase()];
+    }
+
+    return result;
+}
+
+/**
+ * Function to get average from two optional values if one value is missing just take that value if both
+ * then return 0
+ * @param val1
+ * @param val2
+ * @returns {Number}
+ */
+export function maybeGetAverage(val1, val2) {
+    let result = val1 || val2 || 0;
+
+    if( val1 && val2) {
+        result = (val1 + val2) / 2;
+    }
+
+    return result;
+}
 
 function _getPoints(potential) {
     let result = 0;

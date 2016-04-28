@@ -38,7 +38,6 @@ if (Meteor.isServer) {
     let maxTemperature;
     let minAlcoholTolerance;
     let maxAlcoholTolerance;
-    let amount;
 
     let recipe;
     let yeast;
@@ -52,17 +51,16 @@ if (Meteor.isServer) {
             userId = Random.id();
             recipeId = Random.id();
             name = faker.random.words();
-            form = faker.random.number({min: 0, max: 1});
-            type = faker.random.number({min: 0, max: 4});
+            form = faker.random.number({min: 1, max: 2});
+            type = faker.random.number({min: 1, max: 5});
             attenuation = faker.random.number({min: 0, max: 100, precision: 0.01});
             minTemperature = faker.random.number({min: 0, max: 100, precision: 0.1});
             maxTemperature = faker.random.number({min: 0, max: 100, precision: 0.1});
             minAlcoholTolerance = faker.random.number({min: 0, max: 20, precision: 0.1});
             maxAlcoholTolerance = faker.random.number({min: 0, max: 20, precision: 0.1});
-            amount = faker.random.number({min: 0, max: 1000, precision: 0.1});
 
             yeast = {userId, recipeId, name, form, type, attenuation, minTemperature,
-                maxTemperature, minAlcoholTolerance, maxAlcoholTolerance, amount};
+                maxTemperature, minAlcoholTolerance, maxAlcoholTolerance};
         });
 
         after(function() {
@@ -143,15 +141,6 @@ if (Meteor.isServer) {
 
             it("Should not be able to add yeast without max alcohol tolerance", function() {
                 delete yeast.maxAlcoholTolerance;
-
-                (() => RecipeYeasts.insert(yeast)).should.throw(Error);
-
-                //Recipe should not be added
-                RecipeYeasts.find({}).count().should.equal(0);
-            });
-
-            it("Should not be able to add yeast without amount", function() {
-                delete yeast.amount;
 
                 (() => RecipeYeasts.insert(yeast)).should.throw(Error);
 

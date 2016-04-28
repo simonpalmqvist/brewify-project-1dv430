@@ -21,26 +21,26 @@ export const GRAIN_TEMP = 21;
 
 export const HOPS = Object.freeze({
     FORM: Object.freeze({
-        LEAF: 0,
-        PELLET: 1,
-        EXTRACT: 2
+        LEAF: 1,
+        PELLET: 2,
+        EXTRACT: 3
     }),
     USE: Object.freeze({
-        BOIL: 0,
-        DRY_HOP: 1
+        BOIL: 1,
+        DRY_HOP: 2
     })
 });
 
 export const YEAST = Object.freeze({
     FORM: Object.freeze({
-        LIQUID: 0,
-        DRY: 1
+        LIQUID: 1,
+        DRY: 2
     }),
     TYPE: Object.freeze({
-        ALE: 0,
-        LAGER: 1,
-        WHEAT: 2,
-        CHAMPAGNE: 3,
-        WINE: 4
+        ALE: 1,
+        LAGER: 2,
+        WHEAT: 3,
+        CHAMPAGNE: 4,
+        WINE: 5
     })
 });
