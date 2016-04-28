@@ -26,7 +26,7 @@ export function subscribe() {
         subscribeAction("brew.profiles");
         subscribeAction("recipes.fermentables");
         subscribeAction("recipes.hops");
-        subscribeAction("recipes.yeats");
+        subscribeAction("recipes.yeasts");
         subscribeAction("fermentables");
         subscribeAction("hops");
         subscribeAction("yeasts");

@@ -26,6 +26,7 @@ import Table from "../components/base/Table";
 import Input from "../components/base/Input";
 import FermentablesList from "../components/recipe/FermentablesList";
 import HopsList from "../components/recipe/HopsList";
+import YeastInfo from "../components/recipe/YeastInfo";
 
 class Recipe extends React.Component {
 
@@ -50,9 +51,6 @@ class Recipe extends React.Component {
             hops,
             yeasts,
             mobile } = this.props;
-
-        console.log(yeasts);
-        console.log(recipeYeast);
 
         const expectedOG = calcExpectedOg(recipeFermentables, recipe);
         const expectedIBU = calcExpectedIBU(recipeHops, recipe, expectedOG);
@@ -80,6 +78,7 @@ class Recipe extends React.Component {
         return (
             <div>
                 <div className="col-height-wrapper">
+
                     <div className="content-box full-width-mobile col-3-4">
                         <Input name="name"
                                value={recipe.name}
@@ -92,11 +91,15 @@ class Recipe extends React.Component {
                             headerRow={["Batch size (l)", "Boil time (min)", "OG", "IBU"]}
                             bodyRows={bodyRow} mobile={mobile}/>
                     </div>
+
                     <div className="content-box full-width-mobile col-1-4">
                         <h2>Beer style</h2>
                     </div>
+
                 </div>
+
                 <div className="col-height-wrapper">
+
                     <div className="content-box full-width-mobile col-3-4">
                         <FermentablesList
                             mobile={mobile}
@@ -105,8 +108,13 @@ class Recipe extends React.Component {
                             fermentableWeight={calcIngredientWeight(recipeFermentables)}
                             recipeId={this.props.recipe._id}/>
                     </div>
+
                     <div className="content-box full-width-mobile col-1-4">
-                        <h2>Yeast</h2>
+                        <YeastInfo
+                            mobile={mobile}
+                            recipeYeast={recipeYeast}
+                            yeasts={yeasts}
+                            recipeId={this.props.recipe._id} />
                     </div>
                 </div>
                 <div className="col-height-wrapper">
@@ -132,7 +140,6 @@ Recipe.defaultProps = {
     recipe: {},
     recipeFermentables: [],
     recipeHops: [],
-    recipeYeast: {},
     fermentables: [],
     hops: [],
     yeasts: []
@@ -156,16 +163,25 @@ const RecipeContainer = createContainer(({params}) => {
     const { id } = params;
     const allFermentables = RecipeFermentables.find().fetch();
     const allHops = RecipeHops.find().fetch();
-    const allYeast = RecipeYeasts.find().fetch();
+    const allYeasts = RecipeYeasts.find().fetch();
+
+    //Prepend the product ID to yeast name
+    let yeasts = Yeasts.find().fetch().map((yeast) => {
+        const {name, productId} = yeast;
+        yeast.name = productId ? `${productId} ${name}` : name;
+        return yeast;
+    });
+
+    console.log(allYeasts);
 
     return {
         recipe: Recipes.findOne(params.id),
         recipeFermentables: getIngredientsForRecipe(allFermentables, id),
         recipeHops: getIngredientsForRecipe(allHops, id),
-        recipeYeast: getIngredientsForRecipe(allYeast, id)[0],
+        recipeYeast: getIngredientsForRecipe(allYeasts, id)[0],
         fermentables: joinArrayUniqByName(allFermentables, Fermentables.find().fetch()),
         hops: joinArrayUniqByName(allHops, Hops.find().fetch()),
-        yeasts: joinArrayUniqByName(allYeast, Yeasts.find().fetch())
+        yeasts: joinArrayUniqByName(allYeasts, yeasts)
     };
 }, Recipe);
 

@@ -37,8 +37,8 @@ $line-height: 1.4em;
 }
 
 @mixin calc-width($width, $sign, $space) {
-    width: -webkit-calc(#{$width} #{$sign} #{$space});
-    width:         calc(#{$width} #{$sign} #{$space});
+    width: -webkit-calc(#{$width $sign $space});
+    width:         calc(#{$width $sign $space});
 }
 
 @mixin placeholder() {
