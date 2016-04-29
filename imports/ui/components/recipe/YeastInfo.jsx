@@ -94,11 +94,6 @@ export default class YeastInfo extends React.Component {
                            validate={this.validateOne}
                            value={recipeYeast.attenuation}
                            onUpdate={updateFun} />
-                    <Input
-                        label="Amount (g)"
-                        attr={{type: "number", disabled: true}}
-                        name="yeastAmount"
-                        value={300} />
                 </div>
             );
         }

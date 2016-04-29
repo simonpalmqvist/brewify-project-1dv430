@@ -19,7 +19,7 @@ import { Fermentables } from "../../api/brewerydb/Fermentables";
 import { Hops } from "../../api/brewerydb/Hops";
 import { Yeasts } from "../../api/brewerydb/Yeasts";
 
-import { calcExpectedOg, calcExpectedIBU, calcIngredientWeight } from "../helpers/beerCalc";
+import { calcExpectedOg, calcExpectedFg, calcExpectedIBU, calcIngredientWeight } from "../helpers/beerCalc";
 import { HOPS } from "../helpers/recipeStandards";
 
 import Table from "../components/base/Table";
@@ -52,7 +52,9 @@ class Recipe extends React.Component {
             yeasts,
             mobile } = this.props;
 
+        const attenuation = recipeYeast ? recipeYeast.attenuation : 0;
         const expectedOG = calcExpectedOg(recipeFermentables, recipe);
+        const expectedFG = calcExpectedFg(attenuation, expectedOG);
         const expectedIBU = calcExpectedIBU(recipeHops, recipe, expectedOG);
 
         const bodyRow = [[
@@ -71,6 +73,10 @@ class Recipe extends React.Component {
                     name="expextedOG"
                     value={expectedOG} />),
             (<Input attr={{type: "number", disabled: true}}
+                    fixedDecimals={3}
+                    name="expextedFG"
+                    value={expectedFG} />),
+            (<Input attr={{type: "number", disabled: true}}
                     name="expectedIBU"
                     value={expectedIBU} />)
         ]];
@@ -88,7 +94,7 @@ class Recipe extends React.Component {
                                onUpdate={update}/>
 
                         <Table
-                            headerRow={["Batch size (l)", "Boil time (min)", "OG", "IBU"]}
+                            headerRow={["Batch size (l)", "Boil time (min)", "OG", "FG", "IBU"]}
                             bodyRows={bodyRow} mobile={mobile}/>
                     </div>
 

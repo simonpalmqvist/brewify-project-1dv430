@@ -59,6 +59,18 @@ export function calcExpectedIBU(hops, recipe, og) {
 }
 
 /**
+ * Function to calculate the expected FG
+ * @param yeastAttenuation
+ * @param og
+ * @returns {number} - returns expected FG
+ */
+export function calcExpectedFg(yeastAttenuation, og) {
+    let result = og - ((og*1000-1000)*(yeastAttenuation/100)/1000);
+
+    return _round(result, 3);
+}
+
+/**
  * Function to sum up total weight/amount of ingredients in array
  * @param ingredients - {amount}
  * @returns {number} - returns total weight/amount of ingredients
