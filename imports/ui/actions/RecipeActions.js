@@ -130,12 +130,15 @@ export function deleteRecipeHop(id) {
 }
 
 /**
- * Action to add a new recipe yeast
- * @param recipeId
+ * Helper function to set default yeast value according to priority
+ * 1. Get values from earlier used yeast
+ * 2. Get values from brewerydb database
+ * 3. Set default values
  * @param yeast
+ * @returns {Object}
  */
-export function addRecipeYeast(recipeId, yeast) {
-    const newYeast = {
+export function getYeastDefaults(yeast) {
+    return {
         name: yeast.name,
         form: yeast.form || enumerationToValue(YEAST.FORM, yeast.yeastFormat) || YEAST.FORM.DRY,
         type: yeast.type || enumerationToValue(YEAST.TYPE, yeast.yeastType)   || YEAST.TYPE.ALE,
@@ -145,6 +148,15 @@ export function addRecipeYeast(recipeId, yeast) {
         minAlcoholTolerance: yeast.alcoholToleranceMin || 0,
         maxAlcoholTolerance: yeast.alcoholToleranceMax || 20
     };
+}
+
+/**
+ * Action to add a new recipe yeast
+ * @param recipeId
+ * @param yeast
+ */
+export function addRecipeYeast(recipeId, yeast) {
+    const newYeast = getYeastDefaults(yeast);
 
     Store.dispatch(() => {
         Meteor.callPromise("recipes.yeasts.insert", recipeId, newYeast)

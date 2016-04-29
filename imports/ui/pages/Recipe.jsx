@@ -100,7 +100,7 @@ class Recipe extends React.Component {
 
                 <div className="col-height-wrapper">
 
-                    <div className="content-box full-width-mobile col-3-4">
+                    <div className="content-box extract full-width-mobile col-3-4">
                         <FermentablesList
                             mobile={mobile}
                             fermentables={fermentables}
@@ -109,7 +109,7 @@ class Recipe extends React.Component {
                             recipeId={this.props.recipe._id}/>
                     </div>
 
-                    <div className="content-box full-width-mobile col-1-4">
+                    <div className="content-box yeast full-width-mobile col-1-4">
                         <YeastInfo
                             mobile={mobile}
                             recipeYeast={recipeYeast}
@@ -118,7 +118,7 @@ class Recipe extends React.Component {
                     </div>
                 </div>
                 <div className="col-height-wrapper">
-                    <div className="content-box full-width-mobile col-3-4">
+                    <div className="content-box hops full-width-mobile col-3-4">
                         <HopsList
                             mobile={mobile}
                             hops={hops}
@@ -160,10 +160,10 @@ function getIngredientsForRecipe(list, id) {
 
 //Creates meteor container to provide subscribed data
 const RecipeContainer = createContainer(({params}) => {
-    const { id } = params;
+    const { id }          = params;
     const allFermentables = RecipeFermentables.find().fetch();
-    const allHops = RecipeHops.find().fetch();
-    const allYeasts = RecipeYeasts.find().fetch();
+    const allHops         = RecipeHops.find().fetch();
+    const allYeasts       = RecipeYeasts.find().fetch();
 
     //Prepend the product ID to yeast name
     let yeasts = Yeasts.find().fetch().map((yeast) => {
@@ -172,16 +172,14 @@ const RecipeContainer = createContainer(({params}) => {
         return yeast;
     });
 
-    console.log(allYeasts);
-
     return {
-        recipe: Recipes.findOne(params.id),
+        recipe:             Recipes.findOne(params.id),
         recipeFermentables: getIngredientsForRecipe(allFermentables, id),
-        recipeHops: getIngredientsForRecipe(allHops, id),
-        recipeYeast: getIngredientsForRecipe(allYeasts, id)[0],
-        fermentables: joinArrayUniqByName(allFermentables, Fermentables.find().fetch()),
-        hops: joinArrayUniqByName(allHops, Hops.find().fetch()),
-        yeasts: joinArrayUniqByName(allYeasts, yeasts)
+        recipeHops:         getIngredientsForRecipe(allHops, id),
+        recipeYeast:        getIngredientsForRecipe(allYeasts, id)[0],
+        fermentables:       joinArrayUniqByName(allFermentables, Fermentables.find().fetch()),
+        hops:               joinArrayUniqByName(allHops, Hops.find().fetch()),
+        yeasts:             joinArrayUniqByName(allYeasts, yeasts)
     };
 }, Recipe);
 

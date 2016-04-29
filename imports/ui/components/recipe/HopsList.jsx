@@ -103,7 +103,7 @@ export default class HopsList extends React.Component {
 
         return (
             <div>
-                <h2 className="hop-header">Hops</h2>
+                <h2>Hops</h2>
                 <Table
                     className="recipe-hops"
                     headerRow={headerRow}

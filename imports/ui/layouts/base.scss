@@ -76,9 +76,13 @@ $line-height: 1.4em;
 
 //Base styles
 
-html, body, button, input {
+html,body {
     background-color: $grey;
+}
+
+html, body, button, input, p, h1, h2, h3, h4, h5, h6 {
     font-family: $font-family;
+    color: $text-color;
     font-size: $text-size;
     line-height: $line-height;
 }
@@ -147,6 +151,27 @@ div.modal-wrapper {
     padding: $spacing;
     position: relative;
 
+    &.extract {
+        background-image: url("/extract.png");
+        background-size: 200px auto;
+        background-position: -30px -30px;
+        background-repeat: no-repeat;
+    }
+
+    &.hops {
+        background-image: url("/hops.png");
+        background-size: 200px auto;
+        background-position: -40px -40px;
+        background-repeat: no-repeat;
+    }
+
+    &.yeast {
+        background-image: url("/yeast.png");
+        background-size: 150px auto;
+        background-position: -20px -30px;
+        background-repeat: no-repeat;
+    }
+
     @media #{$mobile} {
         &.full-width-mobile {
             padding: $spacing  0  0 $half-spacing;
@@ -171,27 +196,14 @@ div.modal-wrapper {
 
 h2, .input-header {
     font-size: $h2-size;
-    margin-bottom: $spacing;
+    margin-top: -$half-spacing;
+    margin-bottom: $half-spacing;
 }
 
 h2 {
+    line-height: normal;
+    margin: 0;
     padding-bottom: $spacing;
-}
-
-h2.extract-header {
-    background-image: url("/extract.png");
-    background-size: auto 40px;
-    background-repeat: no-repeat;
-    padding: 8px 0 30px 50px;
-    display: block;
-}
-
-h2.hop-header {
-    background-image: url("/hops.png");
-    background-size: auto 40px;
-    background-repeat: no-repeat;
-    padding: 8px 0 30px 50px;
-    display: block;
 }
 
 .main-button {

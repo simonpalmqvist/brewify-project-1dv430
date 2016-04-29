@@ -41,7 +41,8 @@ div.c-autocomplete-list {
 }
 
 form.add-fermentable,
-form.add-hop
+form.add-hop,
+form.add-yeast
 {
     input.c-autocomplete {
         cursor: pointer;
@@ -141,6 +142,7 @@ form.add-hop
             right: inherit;
             top: inherit;
             width: 100%;
+            border-radius: 0 !important;
 
             a.c-autocomplete-field div {
                 text-align: center;
@@ -155,4 +157,31 @@ form.add-hop
         padding-bottom: $spacing;
     }
 
+}
+
+form.add-yeast {
+    width: 100%;
+
+    input.c-autocomplete {
+        position: static;
+        margin: 0 auto;
+
+        &:focus {
+            width: 100%;
+
+            @media #{$mobile} {
+                @include calc-width(100%, "+", $half-spacing);
+            }
+        }
+    }
+
+    div.c-autocomplete-list {
+        right: auto;
+        top: auto;
+        @include calc-width(100%, "-", $spacing * 2);
+
+        @media #{$mobile} {
+            width: 100%;
+        }
+    }
 }

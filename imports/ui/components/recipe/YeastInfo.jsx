@@ -5,15 +5,19 @@
 
 import React from "react";
 
-import { addRecipeYeast, updateRecipeYeast, deleteRecipeYeast } from "../../actions/RecipeActions";
+import {
+    addRecipeYeast,
+    updateRecipeYeast,
+    deleteRecipeYeast,
+    getYeastDefaults } from "../../actions/RecipeActions";
 
-import { srmToEbc } from "../../helpers/beerCalc";
-
+import { yeastFormToText, yeastTypeToText } from "../../helpers/beerCalc";
+import { YEAST } from "../../helpers/recipeStandards";
 import { RecipeYeasts } from "../../../api/recipes/yeasts/RecipeYeasts";
 
 import AutoComplete from "../autocomplete/AutoComplete";
-import Input from "./../base/Input";
-import ConfirmButton from "./../base/ConfirmButton";
+import Input from "../base/Input";
+import Select from "../base/Select";
 import Table from "../base/Table";
 
 export default class YeastInfo extends React.Component {
@@ -24,15 +28,20 @@ export default class YeastInfo extends React.Component {
         return RecipeYeasts.schema.newContext().validateOne(obj, key);
     }
 
-    autoUpdateRecipe(fermentable, id) {
-        console.log("Yay");
-        /*let updates = {
-            name: fermentable.name,
-            potential: fermentable.potential || 1,
-            ebc: srmToEbc(fermentable.srmPrecise || 0)
-        };
+    autoUpdateYeast(yeast) {
+        const {_id} = this.props.recipeYeast;
 
-        updateRecipeFermentable(id, updates);*/
+        //Get default values from the new yeast
+        let updates = getYeastDefaults(yeast);
+
+        //Update them
+        updateRecipeFermentable(_id, updates);
+    }
+
+    update(update) {
+        const { _id } = this.props.recipeYeast;
+
+        updateRecipeYeast(_id, update);
     }
 
     add(result) {
@@ -43,6 +52,9 @@ export default class YeastInfo extends React.Component {
     render() {
         const {mobile, yeasts, recipeYeast} = this.props;
 
+        const updateFun = this.update.bind(this);
+
+        //Show button to add yeast if recipe has no yeast
         let content = (
             <AutoComplete
                 className="add-yeast"
@@ -52,15 +64,43 @@ export default class YeastInfo extends React.Component {
                 onSelected={this.add.bind(this)} />
         );
 
+        //If recipe has a yeast override button with yeast information
         if (recipeYeast) {
             content = (
-                <p>{recipeYeast.name}</p>
+                <div>
+                    <AutoComplete
+                        data={yeasts}
+                        onSelected={this.autoUpdateYeast.bind(this)}
+                        value={recipeYeast.name}/>
+                    <Select
+                        name="form"
+                        value={recipeYeast.form}
+                        options={YEAST.FORM}
+                        valToText={yeastFormToText}
+                        onUpdate={updateFun} />
+                    <Select
+                        name="type"
+                        value={recipeYeast.type}
+                        options={YEAST.TYPE}
+                        valToText={yeastTypeToText}
+                        onUpdate={updateFun} />
+                    <Input attr={{type: "number", step: "0.1"}}
+                           fixedDecimals={2}
+                           name="attenuation"
+                           validate={this.validateOne}
+                           value={recipeYeast.attenuation}
+                           onUpdate={updateFun} />
+                    <Input
+                        attr={{type: "number", disabled: true}}
+                        name="yeastAmount"
+                        value={300} />
+                </div>
             );
         }
 
         return (
             <div>
-                <h2 className="extract-header">Yeast</h2>
+                <h2>Yeast</h2>
                 {content}
             </div>
         );

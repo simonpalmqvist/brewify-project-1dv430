@@ -101,7 +101,7 @@ export default class FermentablesList extends React.Component {
 
         return (
             <div>
-                <h2 className="extract-header">Fermentables</h2>
+                <h2>Fermentables</h2>
                 <Table
                     className="recipe-fermentables"
                     headerRow={headerRow}

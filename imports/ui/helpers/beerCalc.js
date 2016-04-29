@@ -3,7 +3,7 @@
  * @author simonpalmqvist
  */
 
-import { HOPS } from "./recipeStandards";
+import { HOPS, YEAST } from "./recipeStandards";
 
 /**
  * Function to convert colors from the SRM standard to EBC
@@ -85,10 +85,61 @@ export function hopFormToText(form) {
             result = "Cones";
             break;
         case HOPS.FORM.EXTRACT:
-            result = "extract";
+            result = "Extract";
             break;
         default:
             throw new Error("Form value doesn't exist for enumeration HOPS.FORM");
+    }
+    return result;
+}
+
+/**
+ * Function to get text representation of yeast form
+ * @param form - number representation of yeast form
+ * @returns {String}
+ */
+export function yeastFormToText(form) {
+    let result;
+
+    switch (form) {
+        case YEAST.FORM.LIQUID:
+            result = "Liquid yeast";
+            break;
+        case YEAST.FORM.DRY:
+            result = "Dry yeast";
+            break;
+        default:
+            throw new Error("Form value doesn't exist for enumeration YEAST.FORM");
+    }
+    return result;
+}
+
+/**
+ * Function to get text representation of yeast type
+ * @param type - number representation of yeast type
+ * @returns {String}
+ */
+export function yeastTypeToText(type) {
+    let result;
+
+    switch (type) {
+        case YEAST.TYPE.ALE:
+            result = "Ale yeast";
+            break;
+        case YEAST.TYPE.LAGER:
+            result = "Lager yeast";
+            break;
+        case YEAST.TYPE.WHEAT:
+            result = "Wheat yeast";
+            break;
+        case YEAST.TYPE.CHAMPAGNE:
+            result = "Champagne yeast";
+            break;
+        case YEAST.TYPE.WINE:
+            result = "Wine yeast";
+            break;
+        default:
+            throw new Error("Type value doesn't exist for enumeration YEAST.TYPE");
     }
     return result;
 }
