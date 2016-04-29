@@ -15,6 +15,7 @@ let userId;
 let recipe;
 let fermentables;
 let hops;
+let yeasts;
 
 describe("Recipe UI", function() {
     beforeEach(function() {
@@ -26,6 +27,7 @@ describe("Recipe UI", function() {
         recipe = server.call("test.generate-recipes", 1, userId)[0];
         fermentables = server.call("test.generate-fermentables", 30);
         hops = server.call("test.generate-hops", 30);
+        yeasts = server.call("test.generate-yeasts", 30);
 
         //Go to url
         browser.url(`http://localhost:3000/recipe/${recipe._id}`);
@@ -52,13 +54,13 @@ describe("Recipe UI", function() {
     it("Should be able to add fermentable", function() {
         const searchString = fermentables[5].name.split(" ")[0];
 
-        browser.waitForExist("button.add-fermentable");
+        browser.waitForExist("form.add-fermentable input");
 
-        browser.click("button.add-fermentable");
+        browser.click("form.add-fermentable input");
 
-        browser.setValue("input.add-fermentable", searchString);
+        browser.setValue("form.add-fermentable input", searchString);
 
-        browser.keys(["Enter"]);
+        browser.keys(["Down arrow","Enter"]);
 
         browser.waitForExist(".recipe-fermentables tbody tr");
 
@@ -74,13 +76,13 @@ describe("Recipe UI", function() {
     it("Should be able to add hop", function() {
         const searchString = hops[5].name.split(" ")[0];
 
-        browser.waitForExist("button.add-hop");
+        browser.waitForExist("form.add-hop input");
 
-        browser.click("button.add-hop");
+        browser.click("form.add-hop input");
 
-        browser.setValue("input.add-hop", searchString);
+        browser.setValue("form.add-hop input", searchString);
 
-        browser.keys(["Enter"]);
+        browser.keys(["Down arrow", "Enter"]);
 
         browser.waitForExist(".recipe-hops tbody tr");
 
@@ -88,5 +90,24 @@ describe("Recipe UI", function() {
 
         //Should have one new hop
         elements.value.length.should.equal(1);
+    });
+
+    it("Should be able to add yeast", function() {
+        const searchString = yeasts[5].name.split(" ")[0];
+
+        browser.waitForExist("form.add-yeast input");
+
+        browser.click("form.add-yeast input");
+
+        browser.setValue("form.add-yeast input", searchString);
+
+        browser.keys(["Down arrow","Enter"]);
+
+        browser.waitForExist(".yeast-info input.c-autocomplete");
+
+        const elements = browser.elements(".yeast-info input.c-autocomplete");
+
+        //Should have one new hop
+        browser.getValue(".yeast-info input.c-autocomplete").should.equal(yeasts[5].name);
     });
 });

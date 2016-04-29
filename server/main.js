@@ -9,6 +9,9 @@ import { SyncedCron } from "meteor/percolate:synced-cron";
 import { syncBreweryDB } from  "../imports/api/server/breweryDB";
 import { Accounts } from "meteor/accounts-base";
 
+//Meteors testing flag is currently broken, commenting uncommenting this import for now
+//import "../imports/api/testUtils";
+
 Meteor.startup(() => {
 
     Accounts.config({

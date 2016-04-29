@@ -22,6 +22,7 @@ import { RecipeFermentables } from "../api/recipes/fermentables/RecipeFermentabl
 import { BrewProfiles } from "../api/brewprofiles/BrewProfiles";
 import { Fermentables } from "../api/brewerydb/Fermentables";
 import { Hops } from "../api/brewerydb/Hops";
+import { Yeasts } from "../api/brewerydb/Yeasts";
 
 import Store from "../ui/store";
 
@@ -41,6 +42,10 @@ Meteor.methods({
 
     "test.generate-hops": (numberOfItems) => {
         return createHops(numberOfItems);
+    },
+
+    "test.generate-yeasts": (numberOfItems) => {
+        return createYeasts(numberOfItems);
     },
 
     "test.get-recipes": () => {
@@ -182,6 +187,44 @@ function _hop() {
         name: faker.lorem.words(),
         alphaAcidMin: faker.random.number({min: 0, max: 100, precision: 0.01}),
         alphaAcidMax: faker.random.number({min: 0, max: 100, precision: 0.01})
+    };
+}
+
+/**
+ * Server: Creates Yeasts and inserts them in collection
+ * @param times - number of yeasts that should be created
+ * @returns {Array} - array of created yeasts
+ */
+export function createYeasts(times) {
+    let ids = _.times(times, i => _createYeast());
+    return _.map(ids, id => Yeasts.findOne(id));
+}
+
+/**
+ * Function to insert yeast into collection
+ * @returns {Object}
+ * @private
+ */
+function _createYeast() {
+    return Yeasts.insert(_yeast());
+}
+
+/**
+ * Function to generate yeast obj with fake data
+ * @returns {yeast}
+ * @private
+ */
+function _yeast() {
+    return {
+        id: faker.random.number({min: 1, max: 1000}),
+        name: faker.random.words(),
+        form: faker.random.number({min: 1, max: 2}),
+        type: faker.random.number({min: 1, max: 5}),
+        attenuation: faker.random.number({min: 0, max: 100, precision: 0.01}),
+        minTemperature: faker.random.number({min: 0, max: 100, precision: 0.1}),
+        maxTemperature: faker.random.number({min: 0, max: 100, precision: 0.1}),
+        minAlcoholTolerance: faker.random.number({min: 0, max: 20, precision: 0.1}),
+        maxAlcoholTolerance: faker.random.number({min: 0, max: 20, precision: 0.1})
     };
 }
 

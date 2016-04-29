@@ -67,7 +67,7 @@ export default class YeastInfo extends React.Component {
         //If recipe has a yeast override button with yeast information
         if (recipeYeast) {
             content = (
-                <div>
+                <div className="yeast-info">
                     <AutoComplete
                         label="Name"
                         data={yeasts}
