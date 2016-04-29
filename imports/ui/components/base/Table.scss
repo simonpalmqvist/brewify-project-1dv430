@@ -37,10 +37,10 @@ table.c-table {
 
             input, select {
 
-                padding: $half-spacing $half-spacing $half-spacing 0;
-                width: 100%;
+                padding: $half-spacing;
+                margin-left: -$half-spacing;
+                @include calc-width(100%,"+", $half-spacing);
                 text-align: right;
-
             }
 
             select {

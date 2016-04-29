@@ -3,14 +3,17 @@
 
 input.c-autocomplete {
     @extend input.c-input;
-    min-width: 250px;
 }
 
+label.c-autocomplete-label {
+    @extend label.c-input-label;
+}
 
 div.c-autocomplete-list {
     box-sizing: border-box;
     background-color: white;
-    width: 300px;
+    @include calc-width(100%, "-", $spacing * 2);
+    max-width: 300px;
     z-index:300;
 
 
@@ -32,6 +35,7 @@ div.c-autocomplete-list {
     @media #{$mobile} {
         left: 0;
         width: 100%;
+        max-width: 100%;
 
         a.c-autocomplete-field div {
             text-align: center;
@@ -142,6 +146,7 @@ form.add-yeast
             right: inherit;
             top: inherit;
             width: 100%;
+            max-width: 100%;
             border-radius: 0 !important;
 
             a.c-autocomplete-field div {

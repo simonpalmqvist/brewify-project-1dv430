@@ -40,7 +40,8 @@ export default class Select extends React.Component {
     }
 
     render() {
-        const { valToText, options, className } = this.props;
+        let labelEl;
+        const { valToText, options, className, label, id } = this.props;
         const { value } = this.state;
 
         const classes = classNames("c-select", className);
@@ -49,10 +50,18 @@ export default class Select extends React.Component {
             <option key={key} value={options[key]}>{valToText(options[key])}</option>
         ));
 
+        //Write out label if needed
+        if (label) {
+            labelEl = (<label className="c-select-label" htmlFor={id}>{label}</label>);
+        }
+
         return (
-            <select className={classes} onChange={this.onChange.bind(this)} value={value}>
-                {optionsElements}
-            </select>
+            <div>
+                {labelEl}
+                <select className={classes} id={id} onChange={this.onChange.bind(this)} value={value}>
+                    {optionsElements}
+                </select>
+            </div>
         );
     }
 }

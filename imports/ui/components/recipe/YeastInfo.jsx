@@ -35,7 +35,7 @@ export default class YeastInfo extends React.Component {
         let updates = getYeastDefaults(yeast);
 
         //Update them
-        updateRecipeFermentable(_id, updates);
+        updateRecipeYeast(_id, updates);
     }
 
     update(update) {
@@ -69,28 +69,33 @@ export default class YeastInfo extends React.Component {
             content = (
                 <div>
                     <AutoComplete
+                        label="Name"
                         data={yeasts}
                         onSelected={this.autoUpdateYeast.bind(this)}
                         value={recipeYeast.name}/>
                     <Select
                         name="form"
+                        label="Form"
                         value={recipeYeast.form}
                         options={YEAST.FORM}
                         valToText={yeastFormToText}
                         onUpdate={updateFun} />
                     <Select
                         name="type"
+                        label="Type"
                         value={recipeYeast.type}
                         options={YEAST.TYPE}
                         valToText={yeastTypeToText}
                         onUpdate={updateFun} />
                     <Input attr={{type: "number", step: "0.1"}}
                            fixedDecimals={2}
+                           label="Attenuation (%)"
                            name="attenuation"
                            validate={this.validateOne}
                            value={recipeYeast.attenuation}
                            onUpdate={updateFun} />
                     <Input
+                        label="Amount (g)"
                         attr={{type: "number", disabled: true}}
                         name="yeastAmount"
                         value={300} />

@@ -164,8 +164,9 @@ export default class AutoComplete extends React.Component {
 
     render() {
         const { value, listOpen } = this.state;
-        const { className, placeholder } = this.props;
+        const { className, placeholder, label, id } = this.props;
         let menu;
+        let labelEl;
 
         //Component specific styles for list
         let listStyle = {
@@ -188,8 +189,14 @@ export default class AutoComplete extends React.Component {
             );
         }
 
+        //Write out label if needed
+        if (label) {
+            labelEl = (<label className="c-autocomplete-label" htmlFor={id}>{label}</label>);
+        }
+
         return (
             <form action="#" className={classNames(className)}>
+                {labelEl}
                 <input ref="input"
                        type="text"
                        autoCorrect="off"
