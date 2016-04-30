@@ -27,9 +27,11 @@ export function subscribe() {
         subscribeAction("recipes.fermentables");
         subscribeAction("recipes.hops");
         subscribeAction("recipes.yeasts");
+        subscribeAction("recipes.ingredients");
         subscribeAction("fermentables");
         subscribeAction("hops");
         subscribeAction("yeasts");
+        subscribeAction("ingredients");
     }
 }
 

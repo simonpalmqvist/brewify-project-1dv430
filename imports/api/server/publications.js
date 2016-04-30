@@ -12,6 +12,7 @@ import { Recipes } from "../recipes/Recipes";
 import { RecipeFermentables } from "../recipes/fermentables/RecipeFermentables";
 import { RecipeHops } from "../recipes/hops/RecipeHops";
 import { RecipeYeasts } from "../recipes/yeasts/RecipeYeasts";
+import { RecipeIngredients } from "../recipes/ingredients/RecipeIngredients";
 import { Fermentables } from "../brewerydb/Fermentables";
 import { Hops } from "../brewerydb/Hops";
 import { Yeasts } from "../brewerydb/Yeasts";
@@ -27,7 +28,6 @@ Meteor.publish("brew.profiles", function() {
     }
     return BrewProfiles.find({userId: this.userId });
 });
-
 
 //All recipes that belong to user
 Meteor.publish("recipes", function() {
@@ -59,6 +59,15 @@ Meteor.publish("recipes.yeasts", function() {
         return null;
     }
     return RecipeYeasts.find({userId: this.userId });
+});
+
+//All other recipe ingredients that belong to user
+Meteor.publish("recipes.ingredients", function() {
+    if (!this.userId) {
+        return null;
+    }
+
+    return RecipeIngredients.find({ userId: this.userId });
 });
 
 //All hops for logged in users
