@@ -92,7 +92,7 @@ export default class HopsList extends React.Component {
                             value={hop.amount}
                             validate={this.validateOne}
                             onUpdate={updateFun} />),
-                    (<Input attr={{type: "number"}}
+                    (<Input attr={{type: "number", step: "5"}}
                             name="time"
                             value={hop.time}
                             validate={this.validateOne}
@@ -111,7 +111,7 @@ export default class HopsList extends React.Component {
                     bodyRows={bodyRows}
                     mobile={mobile}/>
                 <AutoComplete
-                    className="add-hop"
+                    className="add-hop add-button"
                     ref="autocomplete"
                     placeholder="Add"
                     data={hops}

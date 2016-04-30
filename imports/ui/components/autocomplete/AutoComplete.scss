@@ -44,9 +44,7 @@ div.c-autocomplete-list {
     }
 }
 
-form.add-fermentable,
-form.add-hop,
-form.add-yeast
+form.add-button
 {
     input.c-autocomplete {
         cursor: pointer;
@@ -164,7 +162,7 @@ form.add-yeast
 
 }
 
-form.add-yeast {
+form.add-button.center {
     width: 100%;
 
     input.c-autocomplete {

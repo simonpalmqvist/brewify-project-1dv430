@@ -57,7 +57,7 @@ export default class YeastInfo extends React.Component {
         //Show button to add yeast if recipe has no yeast
         let content = (
             <AutoComplete
-                className="add-yeast"
+                className="add-yeast add-button center"
                 ref="autocomplete"
                 data={yeasts}
                 placeholder="Add"

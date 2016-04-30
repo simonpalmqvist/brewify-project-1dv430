@@ -109,7 +109,7 @@ export default class FermentablesList extends React.Component {
                     bodyRows={bodyRows}
                     mobile={mobile}/>
                 <AutoComplete
-                    className="add-fermentable"
+                    className="add-fermentable add-button"
                     ref="autocomplete"
                     placeholder="Add"
                     data={fermentables}
