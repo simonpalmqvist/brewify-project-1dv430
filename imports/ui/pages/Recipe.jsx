@@ -15,9 +15,11 @@ import { Recipes } from "../../api/recipes/Recipes";
 import { RecipeFermentables } from "../../api/recipes/fermentables/RecipeFermentables";
 import { RecipeHops } from "../../api/recipes/hops/RecipeHops";
 import { RecipeYeasts } from "../../api/recipes/yeasts/RecipeYeasts";
+import { RecipeIngredients } from "../../api/recipes/ingredients/RecipeIngredients";
 import { Fermentables } from "../../api/brewerydb/Fermentables";
 import { Hops } from "../../api/brewerydb/Hops";
 import { Yeasts } from "../../api/brewerydb/Yeasts";
+import { Ingredients } from "../../api/brewerydb/Ingredients";
 
 import { calcExpectedOg, calcExpectedFg, calcExpectedIBU, calcIngredientWeight } from "../helpers/beerCalc";
 import { HOPS } from "../helpers/recipeStandards";
@@ -27,6 +29,7 @@ import Input from "../components/base/Input";
 import FermentablesList from "../components/recipe/FermentablesList";
 import HopsList from "../components/recipe/HopsList";
 import YeastInfo from "../components/recipe/YeastInfo";
+import IngredientsList from "../components/recipe/IngredientsList";
 
 class Recipe extends React.Component {
 
@@ -47,9 +50,11 @@ class Recipe extends React.Component {
             recipeFermentables,
             recipeHops,
             recipeYeast,
+            recipeIngredients,
             fermentables,
             hops,
             yeasts,
+            ingredients,
             mobile } = this.props;
 
         const attenuation = recipeYeast ? recipeYeast.attenuation : 0;
@@ -137,6 +142,16 @@ class Recipe extends React.Component {
                         <h2>Settings</h2>
                     </div>
                 </div>
+                <div className="col-height-wrapper">
+                    <div className="content-box hops full-width-mobile col-3-4">
+                        <IngredientsList
+                            mobile={mobile}
+                            ingredients={ingredients}
+                            recipeIngredients={recipeIngredients}
+                            recipeId={this.props.recipe._id}/>
+                    </div>
+                    <div className="content-box full-width-mobile col-1-4"></div>
+                </div>
             </div>
         );
     }
@@ -146,9 +161,11 @@ Recipe.defaultProps = {
     recipe: {},
     recipeFermentables: [],
     recipeHops: [],
+    recipeIngredients: [],
     fermentables: [],
     hops: [],
-    yeasts: []
+    yeasts: [],
+    ingredients: []
 };
 
 function joinArrayUniqByName(arr1, arr2) {
@@ -170,6 +187,7 @@ const RecipeContainer = createContainer(({params}) => {
     const allFermentables = RecipeFermentables.find().fetch();
     const allHops         = RecipeHops.find().fetch();
     const allYeasts       = RecipeYeasts.find().fetch();
+    const allIngredients  = RecipeIngredients.find().fetch();
 
     //Prepend the product ID to yeast name
     let yeasts = Yeasts.find().fetch().map((yeast) => {
@@ -183,9 +201,11 @@ const RecipeContainer = createContainer(({params}) => {
         recipeFermentables: getIngredientsForRecipe(allFermentables, id),
         recipeHops:         getIngredientsForRecipe(allHops, id),
         recipeYeast:        getIngredientsForRecipe(allYeasts, id)[0],
+        recipeIngredients:  getIngredientsForRecipe(allIngredients, id),
         fermentables:       joinArrayUniqByName(allFermentables, Fermentables.find().fetch()),
         hops:               joinArrayUniqByName(allHops, Hops.find().fetch()),
-        yeasts:             joinArrayUniqByName(allYeasts, yeasts)
+        yeasts:             joinArrayUniqByName(allYeasts, yeasts),
+        ingredients:        joinArrayUniqByName(allIngredients, Ingredients.find().fetch())
     };
 }, Recipe);
 
