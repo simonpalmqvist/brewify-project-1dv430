@@ -45,7 +45,7 @@ export const YEAST = Object.freeze({
     })
 });
 
-export const INGREDIENTS = Object.freeze({
+export const INGREDIENT = Object.freeze({
     ADDED: Object.freeze({
         MASH: 1,
         BOIL: 2,

@@ -31,7 +31,7 @@ npm start
 ```
 #Lint tests
 npm run lint
-#Unit & integrations tests 
+#Unit & integrations tests (use test-watch to run test on changes)
 npm run test
 #Acceptance test
 npm run acceptance-test-server
