@@ -190,6 +190,43 @@ export function deleteRecipeYeast(id) {
     });
 }
 
+/**
+ * Action to add a new recipe ingredient
+ * @param recipeId
+ * @param ingredient
+ */
+export function addRecipeIngredient(recipeId, ingredient) {
+    Store.dispatch(() => {
+        Meteor.callPromise("recipes.ingredients.insert", recipeId, ingredient.name)
+            .then(saveAction)
+            .catch(errorAction);
+    });
+}
+
+/**
+ * Action to update a recipe ingredient
+ * @param id - RecipeIngredient id
+ * @param update object with key value pairs on what should update
+ */
+export function updateRecipeIngredient(id, update) {
+    Store.dispatch(() => {
+        Meteor.callPromise("recipes.ingredients.update", id, update)
+            .then(saveAction)
+            .catch(errorAction);
+    });
+}
+
+/**
+ * Action to delete a recipe ingredient
+ * @param id - RecipeIngredient id
+ */
+export function deleteRecipeIngredient(id) {
+    Store.dispatch(() => {
+        Meteor.callPromise("recipes.ingredients.remove", id)
+            .then(saveAction)
+            .catch(errorAction);
+    });
+}
 
 /**
  * Authorization method to redirect user if recipe doesn't belong to user or doesn't exist

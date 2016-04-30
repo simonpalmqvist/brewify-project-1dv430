@@ -3,7 +3,7 @@
  * @author simonpalmqvist
  */
 
-import { HOPS, YEAST } from "./recipeStandards";
+import { HOPS, YEAST, INGREDIENT } from "./recipeStandards";
 
 /**
  * Function to convert colors from the SRM standard to EBC
@@ -152,6 +152,61 @@ export function yeastTypeToText(type) {
             break;
         default:
             throw new Error("Type value doesn't exist for enumeration YEAST.TYPE");
+    }
+    return result;
+}
+
+/**
+ * Function to get text representation of when ingredient was added
+ * @param added
+ * @returns {String}
+ */
+export function ingredientAddedToText(added) {
+    let result;
+
+    switch (added) {
+        case INGREDIENT.ADDED.MASH:
+            result = "Mashing";
+            break;
+        case INGREDIENT.ADDED.BOIL:
+            result = "Boiling";
+            break;
+        case INGREDIENT.ADDED.PRIMARY:
+            result = "Primary fermentation";
+            break;
+        case INGREDIENT.ADDED.SECONDARY:
+            result = "Secondary fermentation";
+            break;
+        case INGREDIENT.ADDED.BOTTLE:
+            result = "Bottling";
+            break;
+        case INGREDIENT.ADDED.KEG:
+            result = "Kegging";
+            break;
+        default:
+            throw new Error("Type value doesn't exist for enumeration INGREDIENT.ADDED");
+    }
+    return result;
+}
+
+
+/**
+ * Function to get text representation of ingredient time type
+ * @param timeType
+ * @returns {String}
+ */
+export function ingredientTimeTypeToText(timeType) {
+    let result;
+
+    switch (timeType) {
+        case INGREDIENT.TIMETYPE.MIN:
+            result = "Minutes";
+            break;
+        case INGREDIENT.TIMETYPE.DAYS:
+            result = "Days";
+            break;
+        default:
+            throw new Error("Type value doesn't exist for enumeration INGREDIENT.ADDED");
     }
     return result;
 }
