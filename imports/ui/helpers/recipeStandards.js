@@ -44,3 +44,18 @@ export const YEAST = Object.freeze({
         WINE: 5
     })
 });
+
+export const INGREDIENTS = Object.freeze({
+    ADDED: Object.freeze({
+        MASH: 1,
+        BOIL: 2,
+        PRIMARY: 3,
+        SECONDARY: 4,
+        BOTTLE: 5,
+        KEG: 6
+    }),
+    TIMETYPE: Object.freeze({
+        MIN: 1,
+        DAYS: 2
+    })
+});
