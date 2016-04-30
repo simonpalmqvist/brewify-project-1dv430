@@ -23,6 +23,7 @@ import { BrewProfiles } from "../api/brewprofiles/BrewProfiles";
 import { Fermentables } from "../api/brewerydb/Fermentables";
 import { Hops } from "../api/brewerydb/Hops";
 import { Yeasts } from "../api/brewerydb/Yeasts";
+import { Ingredients } from "../api/brewerydb/Ingredients";
 
 import Store from "../ui/store";
 
@@ -46,6 +47,10 @@ Meteor.methods({
 
     "test.generate-yeasts": (numberOfItems) => {
         return createYeasts(numberOfItems);
+    },
+
+    "test.generate-ingredients": (numberOfItems) => {
+        return createIngredients(numberOfItems);
     },
 
     "test.get-recipes": () => {
@@ -225,6 +230,37 @@ function _yeast() {
         maxTemperature: faker.random.number({min: 0, max: 100, precision: 0.1}),
         minAlcoholTolerance: faker.random.number({min: 0, max: 20, precision: 0.1}),
         maxAlcoholTolerance: faker.random.number({min: 0, max: 20, precision: 0.1})
+    };
+}
+
+/**
+ * Server: Creates Ingredients and inserts them in collection
+ * @param times - number of ingredients that should be created
+ * @returns {Array} - array of created yeasts
+ */
+export function createIngredients(times) {
+    let ids = _.times(times, i => _createIngredient());
+    return _.map(ids, id => Ingredients.findOne(id));
+}
+
+/**
+ * Function to insert ingredient into collection
+ * @returns {Object}
+ * @private
+ */
+function _createIngredient() {
+    return Ingredients.insert(_yeast());
+}
+
+/**
+ * Function to generate ingredient obj with fake data
+ * @returns {ingredient}
+ * @private
+ */
+function _ingredient() {
+    return {
+        id: faker.random.number({min: 1, max: 1000}),
+        name: faker.random.words()
     };
 }
 

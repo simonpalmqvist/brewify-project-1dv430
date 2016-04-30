@@ -16,6 +16,7 @@ let recipe;
 let fermentables;
 let hops;
 let yeasts;
+let ingredients;
 
 describe("Recipe UI", function() {
     beforeEach(function() {
@@ -28,6 +29,7 @@ describe("Recipe UI", function() {
         fermentables = server.call("test.generate-fermentables", 30);
         hops = server.call("test.generate-hops", 30);
         yeasts = server.call("test.generate-yeasts", 30);
+        ingredients = server.call("test.generate-ingredients", 30);
 
         //Go to url
         browser.url(`http://localhost:3000/recipe/${recipe._id}`);
@@ -109,5 +111,24 @@ describe("Recipe UI", function() {
 
         //Should have one new hop
         browser.getValue(".yeast-info input.c-autocomplete").should.equal(yeasts[5].name);
+    });
+
+    it("Should be able to add other ingredient", function() {
+        const searchString = ingredients[5].name.split(" ")[0];
+
+        browser.waitForExist("form.add-ingredient input");
+
+        browser.click("form.add-ingredient input");
+
+        browser.setValue("form.add-ingredient input", searchString);
+
+        browser.keys(["Down arrow", "Enter"]);
+
+        browser.waitForExist(".recipe-ingredients tbody tr");
+
+        const elements = browser.elements(".recipe-ingredients tbody tr");
+
+        //Should have one new hop
+        elements.value.length.should.equal(1);
     });
 });
