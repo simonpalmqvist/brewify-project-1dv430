@@ -3,39 +3,40 @@
  * @author simonpalmqvist
  */
 
+//Modules
 import React from "react";
 
+//Actions
 import {
     addRecipeYeast,
     updateRecipeYeast,
     deleteRecipeYeast,
-    getYeastDefaults } from "../../actions/RecipeActions";
+    getYeastDefaults,
+    validateValue
+} from "../../actions/RecipeActions";
 
+//Helpers
 import { yeastFormToText, yeastTypeToText } from "../../helpers/beerCalc";
 import { YEAST } from "../../helpers/recipeStandards";
+
+//Collections
 import { RecipeYeasts } from "../../../api/recipes/yeasts/RecipeYeasts";
 
+//Components
 import AutoComplete from "../autocomplete/AutoComplete";
 import Input from "../base/Input";
 import Select from "../base/Select";
-import Table from "../base/Table";
 
 export default class YeastInfo extends React.Component {
+    constructor(props) {
+        super(props);
 
-    validateOne(key, value) {
-        let obj = {};
-        obj[key] = value;
-        return RecipeYeasts.schema.newContext().validateOne(obj, key);
+        this.update = this.update.bind(this);
     }
 
     autoUpdateYeast(yeast) {
-        const {_id} = this.props.recipeYeast;
-
-        //Get default values from the new yeast
-        let updates = getYeastDefaults(yeast);
-
         //Update them
-        updateRecipeYeast(_id, updates);
+        this.update(getYeastDefaults(yeast));
     }
 
     update(update) {
@@ -48,11 +49,13 @@ export default class YeastInfo extends React.Component {
         addRecipeYeast(this.props.recipeId, result);
     }
 
+    validate(key, value) {
+        return validateValue(RecipeYeasts, key, value);
+    }
+
 
     render() {
-        const {mobile, yeasts, recipeYeast} = this.props;
-
-        const updateFun = this.update.bind(this);
+        const {yeasts, recipeYeast} = this.props;
 
         //Show button to add yeast if recipe has no yeast
         let content = (
@@ -67,7 +70,7 @@ export default class YeastInfo extends React.Component {
         //If recipe has a yeast override button with yeast information
         if (recipeYeast) {
             content = (
-                <div className="yeast-info">
+                <div className="responsive-info side yeast-info">
                     <AutoComplete
                         label="Name"
                         data={yeasts}
@@ -79,21 +82,21 @@ export default class YeastInfo extends React.Component {
                         value={recipeYeast.form}
                         options={YEAST.FORM}
                         valToText={yeastFormToText}
-                        onUpdate={updateFun} />
+                        onUpdate={this.update} />
                     <Select
                         name="type"
                         label="Type"
                         value={recipeYeast.type}
                         options={YEAST.TYPE}
                         valToText={yeastTypeToText}
-                        onUpdate={updateFun} />
+                        onUpdate={this.update} />
                     <Input attr={{type: "number", step: "0.1"}}
                            fixedDecimals={2}
                            label="Attenuation (%)"
                            name="attenuation"
-                           validate={this.validateOne}
+                           validate={this.validate}
                            value={recipeYeast.attenuation}
-                           onUpdate={updateFun} />
+                           onUpdate={this.update} />
                 </div>
             );
         }

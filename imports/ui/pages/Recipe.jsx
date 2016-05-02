@@ -24,7 +24,6 @@ import { Ingredients } from "../../api/brewerydb/Ingredients";
 import { calcExpectedOg, calcExpectedFg, calcExpectedIBU, calcIngredientWeight } from "../helpers/beerCalc";
 import { HOPS } from "../helpers/recipeStandards";
 
-import Table from "../components/base/Table";
 import Input from "../components/base/Input";
 import FermentablesList from "../components/recipe/FermentablesList";
 import HopsList from "../components/recipe/HopsList";
@@ -62,30 +61,6 @@ class Recipe extends React.Component {
         const expectedFG = calcExpectedFg(attenuation, expectedOG);
         const expectedIBU = calcExpectedIBU(recipeHops, recipe, expectedOG);
 
-        const bodyRow = [[
-            (<Input name="batchSize"
-                    attr={{type: "number"}}
-                    value={recipe.batchSize}
-                    validate={this.recipeValidateOne}
-                    onUpdate={update}/>),
-            (<Input name="boilTime"
-                    attr={{type: "number"}}
-                    value={recipe.boilTime}
-                    validate={this.recipeValidateOne}
-                    onUpdate={update}/>),
-            (<Input attr={{type: "number", disabled: true}}
-                    fixedDecimals={3}
-                    name="expextedOG"
-                    value={expectedOG} />),
-            (<Input attr={{type: "number", disabled: true}}
-                    fixedDecimals={3}
-                    name="expextedFG"
-                    value={expectedFG} />),
-            (<Input attr={{type: "number", disabled: true}}
-                    name="expectedIBU"
-                    value={expectedIBU} />)
-        ]];
-
         return (
             <div>
                 <div className="col-height-wrapper">
@@ -98,9 +73,34 @@ class Recipe extends React.Component {
                                validate={this.recipeValidateOne}
                                onUpdate={update}/>
 
-                        <Table
-                            headerRow={["Batch size (l)", "Boil time (min)", "OG", "FG", "IBU"]}
-                            bodyRows={bodyRow} mobile={mobile}/>
+                        <div className="responsive-info recipe-info">
+                            <Input name="batchSize"
+                                   label="Batch size (l)"
+                                   attr={{type: "number"}}
+                                   value={recipe.batchSize}
+                                   validate={this.recipeValidateOne}
+                                   onUpdate={update}/>
+                            <Input name="boilTime"
+                                   label="Boil time (min)"
+                                   attr={{type: "number"}}
+                                   value={recipe.boilTime}
+                                   validate={this.recipeValidateOne}
+                                   onUpdate={update}/>
+                            <Input attr={{type: "number", disabled: true}}
+                                   fixedDecimals={3}
+                                   name="expextedOG"
+                                   label="OG"
+                                   value={expectedOG} />
+                            <Input attr={{type: "number", disabled: true}}
+                                   fixedDecimals={3}
+                                   name="expextedFG"
+                                   label="FG"
+                                   value={expectedFG} />
+                            <Input attr={{type: "number", disabled: true}}
+                                   name="expectedIBU"
+                                   label="IBU"
+                                   value={expectedIBU} />
+                        </div>
                     </div>
 
                     <div className="content-box full-width-mobile col-1-4">
@@ -143,7 +143,7 @@ class Recipe extends React.Component {
                     </div>
                 </div>
                 <div className="col-height-wrapper">
-                    <div className="content-box hops full-width-mobile col-3-4">
+                    <div className="content-box other-ingredients full-width-mobile col-3-4">
                         <IngredientsList
                             mobile={mobile}
                             ingredients={ingredients}
@@ -197,7 +197,7 @@ const RecipeContainer = createContainer(({params}) => {
     });
 
     return {
-        recipe:             Recipes.findOne(params.id),
+        recipe:             Recipes.findOne(id),
         recipeFermentables: getIngredientsForRecipe(allFermentables, id),
         recipeHops:         getIngredientsForRecipe(allHops, id),
         recipeYeast:        getIngredientsForRecipe(allYeasts, id)[0],

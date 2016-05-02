@@ -21,10 +21,6 @@ table.responsive-table {
 
     @media #{$tablet} {
 
-        tbody {
-            border-bottom: 1px solid $dark-grey;
-        }
-
         table, tbody, th, td, tr {
             display: block;
         }
@@ -83,12 +79,15 @@ table.responsive-table {
         }
 
         tfoot {
+
             tr {
-                border-bottom: solid 1px $dark-grey;
                 td {
                     border: 0;
 
-                    input, label {
+                    input, label, input[disabled] {
+                        background-color: $main;
+                        -webkit-text-fill-color: $white;
+                        color: $white;
                         font-weight: bold;
                     }
                 }
@@ -97,6 +96,82 @@ table.responsive-table {
 
         tr:first-child {
             border-top-color: $dark-grey;
+        }
+    }
+}
+
+
+
+div.responsive-info {
+
+    > div {
+        display: inline-block;
+        width: 20%;
+    }
+
+    &.side {
+        > div, > form {
+            display: block;
+            width: 100%;
+
+            input[type=text], input[type=number], select {
+                width: 100%;
+            }
+        }
+    }
+
+    @media #{$laptop} {
+        &.side {
+            > form {
+                display: inline-block;
+                width: 40%;
+            }
+            > div {
+                display: inline-block;
+                width: 20%;
+            }
+        }
+    }
+
+    @media #{$tablet} {
+        > div, > form, &.side > form, &.side > div {
+            display: block;
+            width: 100%;
+            border-top: 1px solid $grey;
+
+            label {
+                display: block;
+                position: absolute;
+                font-weight: normal;
+                padding: $half-spacing;
+                margin-left: -$half-spacing;
+            }
+
+            input[type=text], input[type=number], select {
+                box-sizing: border-box;
+                padding: $half-spacing;
+                @include calc-width(100%, "+", $spacing);
+                text-align: right;
+                margin-left: -$half-spacing;
+
+                @media #{$mobile} {
+                    width: 100%;
+                    margin: 0;
+
+                    &:focus {
+                        @include calc-width(100%, "+", $half-spacing);
+                        margin-left: - $half-spacing;
+                    }
+                }
+            }
+
+            select {
+                direction:rtl;
+
+                option {
+                    direction: rtl;
+                }
+            }
         }
     }
 }

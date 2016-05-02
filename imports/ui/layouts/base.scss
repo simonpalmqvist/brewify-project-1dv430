@@ -167,6 +167,13 @@ div.modal-wrapper {
         background-repeat: no-repeat;
     }
 
+    &.other-ingredients {
+        background-image: url("/other.png");
+        background-size: 220px auto;
+        background-position: -40px -20px;
+        background-repeat: no-repeat;
+    }
+
     @media #{$mobile} {
         &.full-width-mobile {
             padding: $spacing  0  0 $half-spacing;
