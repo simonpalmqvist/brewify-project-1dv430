@@ -3,38 +3,21 @@
  * @author simonpalmqvist
  */
 
+//Modules
 import React from "react";
 
-import { addRecipeHop, updateRecipeHop, deleteRecipeHop } from "../../actions/RecipeActions";
+//Actions
+import { addRecipeHop, validateValue } from "../../actions/RecipeActions";
 
+//Collections
 import { RecipeHops } from "../../../api/recipes/hops/RecipeHops";
 
-import { hopFormToText } from "../../helpers/beerCalc";
-import { HOPS } from "../../helpers/recipeStandards";
-
+//Components
+import HopRow from "./HopRow";
 import AutoComplete from "../autocomplete/AutoComplete";
-import Input from "./../base/Input";
-import Select from "./../base/Select";
-import ConfirmButton from "./../base/ConfirmButton";
-import Table from "../base/Table";
+import Input from "../base/Input";
 
 export default class HopsList extends React.Component {
-
-    validateOne(key, value) {
-        let obj = {};
-        obj[key] = value;
-        return RecipeHops.schema.newContext().validateOne(obj, key);
-    }
-
-    autoUpdateHop(hop, id) {
-        console.log(hop);
-        let updates = {
-            name: hop.name,
-            alpha: hop.alphaAcidMin || hop.alphaAcidMax || hop.alpha || 0
-        };
-
-        updateRecipeHop(id, updates);
-    }
 
     add(result) {
         const { recipeId, use } = this.props;
@@ -42,9 +25,9 @@ export default class HopsList extends React.Component {
     }
 
     render() {
-        const {mobile, hopWeight, hops, recipeHops} = this.props;
+        const {hopWeight, hops, recipeHops} = this.props;
 
-        const headerRow = [
+        const headers= [
             "Name",
             "Form",
             "Alpha-acid",
@@ -53,63 +36,47 @@ export default class HopsList extends React.Component {
             ""
         ];
 
-        const footerRow = [
-            "", "", "",
-            (<Input
-                attr={{type: "number", disabled: true}}
-                name="hopWeight"
-                value={hopWeight} />),
-            "", ""
-        ];
+        const headerRow = headers.map((title, i) => (<th key={i}>{title}</th>));
 
-        //Sort recipe hops based on time descending and create row
         const bodyRows = recipeHops
             .sort((a, b) => b.time - a.time)
-            .map((hop) => {
-                const {_id} = hop;
-                const updateFun = (value) => updateRecipeHop(_id, value);
-                const autoUpdateFun = (hop) => this.autoUpdateHop(hop, _id);
-                const deleteFun = () => deleteRecipeHop(_id);
-
-                return [
-                    (<AutoComplete
-                        data={hops}
-                        onSelected={autoUpdateFun}
-                        value={hop.name}/>),
-                    (<Select name="form"
-                             value={hop.form}
-                             options={HOPS.FORM}
-                             valToText={hopFormToText}
-                             onUpdate={updateFun} />),
-                    (<Input attr={{type: "number", step: "0.1"}}
-                            fixedDecimals={2}
-                            name="alpha"
-                            validate={this.validateOne}
-                            value={hop.alpha}
-                            onUpdate={updateFun} />),
-                    (<Input attr={{type: "number", step: "5"}}
-                            name="amount"
-                            value={hop.amount}
-                            validate={this.validateOne}
-                            onUpdate={updateFun} />),
-                    (<Input attr={{type: "number", step: "5"}}
-                            name="time"
-                            value={hop.time}
-                            validate={this.validateOne}
-                            onUpdate={updateFun} />),
-                    (<ConfirmButton text="Delete" symbol="×" className="delete" action={deleteFun}/>)
-                ];
-            });
+            .map((hop) => (
+                <HopRow key={hop._id}
+                        headers={headers}
+                        hop={hop}
+                        hops={hops}
+                        validate={(key, value) => validateValue(RecipeHops, key, value)}/>
+            ));
 
         return (
             <div>
                 <h2>Hops</h2>
-                <Table
-                    className="recipe-hops"
-                    headerRow={headerRow}
-                    footerRow={footerRow}
-                    bodyRows={bodyRows}
-                    mobile={mobile}/>
+                <table className="responsive-table">
+                    <thead>
+                    <tr>
+                        {headerRow}
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <Input
+                                attr={{type: "number", disabled: true}}
+                                name="hopWeight"
+                                label="Total amount"
+                                value={hopWeight} />
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {bodyRows}
+                    </tbody>
+                </table>
                 <AutoComplete
                     className="add-hop add-button"
                     ref="autocomplete"

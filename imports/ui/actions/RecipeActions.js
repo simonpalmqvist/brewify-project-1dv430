@@ -109,17 +109,32 @@ export function deleteRecipeFermentable(id) {
 }
 
 /**
+ * Helper function to set default hop value according to priority
+ * 1. Get values from earlier used hop
+ * 2. Get values from brewerydb database
+ * 3. Set default values
+ * @param hop
+ * @returns {Object}
+ */
+export function getHopDefaults(hop) {
+    return {
+        name: hop.name,
+        alpha: hop.alpha || maybeGetAverage(hop.alphaAcidMin, hop.alphaAcidMax),
+        form: hop.form || HOPS.FORM.PELLET
+    };
+}
+
+/**
  * Action to add a new recipe hop
  * @param recipeId
  * @param use - enum HOPS.USE
  * @param hop
  */
 export function addRecipeHop(recipeId, use, hop) {
-    const alpha = hop.alpha || maybeGetAverage(hop.alphaAcidMin, hop.alphaAcidMax);
-    const form = hop.form || HOPS.FORM.PELLET;
+    const { name, alpha, form} = getHopDefaults(hop);
 
     Store.dispatch(() => {
-        Meteor.callPromise("recipes.hops.insert", recipeId, use, hop.name, alpha, form)
+        Meteor.callPromise("recipes.hops.insert", recipeId, use, name, alpha, form)
             .then(saveAction)
             .catch(errorAction);
     });

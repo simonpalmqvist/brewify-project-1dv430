@@ -1,5 +1,5 @@
 /**
- * @description Fermentable row component to contain information for each fermentable
+ * @description Ingredient row component to contain information for each ingredient
  * @author simonpalmqvist
  */
 
@@ -15,9 +15,9 @@ import { INGREDIENT } from "../../helpers/recipeStandards";
 
 //Components
 import AutoComplete from "../autocomplete/AutoComplete";
-import Input from "./../base/Input";
-import Select from "./../base/Select";
-import ConfirmButton from "./../base/ConfirmButton";
+import Input from "../base/Input";
+import Select from "../base/Select";
+import ConfirmButton from "../base/ConfirmButton";
 
 export default class IngredientRow extends React.Component {
     constructor(props) {
