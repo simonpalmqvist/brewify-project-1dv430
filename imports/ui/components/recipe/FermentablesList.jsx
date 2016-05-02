@@ -1,5 +1,5 @@
 /**
- * @description Fermentables component to contain all fermentables
+ * @description Fermentables component to contain all recipes fermentables
  * @author simonpalmqvist
  */
 
@@ -32,18 +32,21 @@ export default class FermentablesList extends React.Component {
     render() {
         const {fermentableWeight, fermentables, recipeFermentables} = this.props;
 
-        const headerRow = [
+        const headers = [
             "Name",
             "EBC",
             "Potential",
             "Amount (kg)",
             "Amount (%)",
             ""
-        ].map((title, i) => (<th key={i}>{title}</th>));
+        ];
+
+        const headerRow = headers.map((title, i) => (<th key={i}>{title}</th>));
 
         const bodyRows = recipeFermentables
             .map((fermentable) => (
                 <FermentableRow key={fermentable._id}
+                                headers={headers}
                                 fermentable={fermentable}
                                 fermentables={fermentables}
                                 fermentableWeight={fermentableWeight}

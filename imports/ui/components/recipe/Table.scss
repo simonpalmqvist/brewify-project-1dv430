@@ -39,6 +39,7 @@ table.responsive-table {
                     label {
                         display: block;
                         position: absolute;
+                        font-weight: normal;
                         padding: $half-spacing;
                         margin-left: -$half-spacing;
                     }
@@ -53,6 +54,11 @@ table.responsive-table {
                         @media #{$mobile} {
                             width: 100%;
                             margin: 0;
+
+                            &:focus {
+                                @include calc-width(100%, "+", $half-spacing);
+                                margin-left: - $half-spacing;
+                            }
                         }
                     }
 
@@ -83,42 +89,6 @@ table.responsive-table {
                 }
             }
         }
-
-       /* tr {
-
-            border-top-width: 1px;
-            border-color: $grey;
-            border-style: solid;
-
-            th {
-                position:absolute;
-                line-height: normal;
-                padding-top: $half-spacing;
-                font-weight: normal;
-            }
-
-            td {
-                text-align: right;
-                width: 100%;
-
-                input, select {
-
-                    padding: $half-spacing;
-                    margin-left: -$half-spacing;
-                    @include calc-width(100%,"+", $half-spacing);
-                    text-align: right;
-                }
-
-                select {
-                    direction:rtl;
-
-                    option {
-                        direction: rtl;
-                    }
-                }
-
-            }
-        }*/
 
         tr:first-child {
             border-top-color: $dark-grey;

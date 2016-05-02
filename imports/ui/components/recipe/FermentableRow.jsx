@@ -1,17 +1,19 @@
 /**
- * @description Fermentables component to contain all fermentables
+ * @description Fermentable row component to contain information for each fermentable
  * @author simonpalmqvist
  */
 
+//Modules
 import React from "react";
 
+//Actions
 import {
+    getFermentableDefaults,
     updateRecipeFermentable,
     deleteRecipeFermentable
 } from "../../actions/RecipeActions";
 
-import { srmToEbc } from "../../helpers/beerCalc";
-
+//Components
 import AutoComplete from "../autocomplete/AutoComplete";
 import Input from "./../base/Input";
 import ConfirmButton from "./../base/ConfirmButton";
@@ -25,13 +27,7 @@ export default class FermentableRow extends React.Component {
     }
 
     autoUpdateFermentable(fermentable) {
-        let updates = {
-            name: fermentable.name,
-            potential: fermentable.potential || 1,
-            ebc: srmToEbc(fermentable.srmPrecise || 0)
-        };
-
-        updateFermentable(updates);
+        this.updateFermentable(getFermentableDefaults(fermentable));
     }
 
     updateFermentable(value) {
@@ -45,20 +41,20 @@ export default class FermentableRow extends React.Component {
     }
 
     render() {
-        const {fermentableWeight, fermentable, fermentables, validate} = this.props;
+        const {fermentableWeight, fermentable, fermentables, validate, headers} = this.props;
 
         return (
             <tr>
                 <td>
                     <AutoComplete data={fermentables}
-                                  label="Name"
+                                  label={headers[0]}
                                   onSelected={this.autoUpdateFermentable.bind(this)}
                                   value={fermentable.name}/>
                 </td>
                 <td>
                     <Input attr={{type: "number"}}
                            name="ebc"
-                           label="EBC"
+                           label={headers[1]}
                            value={fermentable.ebc}
                            onValidate={validate}
                            onUpdate={this.updateFermentable}/>
@@ -67,7 +63,7 @@ export default class FermentableRow extends React.Component {
                     <Input attr={{type: "number", step: "0.001"}}
                            fixedDecimals={3}
                            name="potential"
-                           label="Potential"
+                           label={headers[2]}
                            value={fermentable.potential}
                            validate={validate}
                            onUpdate={this.updateFermentable}/>
@@ -76,7 +72,7 @@ export default class FermentableRow extends React.Component {
                     <Input attr={{type: "number", step: "0.1"}}
                            fixedDecimals={3}
                            name="amount"
-                           label="Amount (kg)"
+                           label={headers[3]}
                            validate={validate}
                            value={fermentable.amount}
                            onUpdate={this.updateFermentable}/>
@@ -85,7 +81,7 @@ export default class FermentableRow extends React.Component {
                     <Input attr={{type: "number", disabled: true}}
                            fixedDecimals={2}
                            name="totalFermentables"
-                           label="Amount (%)"
+                           label={headers[4]}
                            value={(fermentable.amount / fermentableWeight) * 100 || 0} />
                 </td>
                 <td>

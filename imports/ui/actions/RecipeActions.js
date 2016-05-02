@@ -53,16 +53,31 @@ export function validateValue(Collection, key, value) {
 }
 
 /**
+ * Helper function to set default fermentable value according to priority
+ * 1. Get values from earlier used fermentable
+ * 2. Get values from brewerydb database
+ * 3. Set default values
+ * @param fermentable
+ * @returns {Object}
+ */
+export function getFermentableDefaults(fermentable) {
+    return {
+        name: fermentable.name,
+        potential: fermentable.potential || 1,
+        ebc: fermentable.ebc || srmToEbc(fermentable.srmPrecise || 0)
+    };
+}
+
+/**
  * Action to add a new recipe fermentable
  * @param recipeId
  * @param fermentable
  */
 export function addRecipeFermentable(recipeId, fermentable) {
-    let potential = fermentable.potential || 1;
-    let ebc = srmToEbc(fermentable.srmPrecise || 0);
+    const { name, potential, ebc } = getFermentableDefaults(fermentable);
 
     Store.dispatch(() => {
-        Meteor.callPromise("recipes.fermentables.insert", recipeId, fermentable.name, potential, ebc)
+        Meteor.callPromise("recipes.fermentables.insert", recipeId, name, potential, ebc)
             .then(saveAction)
             .catch(errorAction);
     });
