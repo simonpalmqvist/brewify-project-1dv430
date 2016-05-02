@@ -7,23 +7,9 @@ import React from "react";
 import { Link } from "react-router";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
-import { windowResize } from "../actions/browserActions";
 import NavigationBar from "../components/navigation/NavigationBar";
 
 export default class AppContainer extends React.Component {
-
-    handleWindowChange() {
-        windowResize(window.innerWidth);
-    }
-
-    componentWillMount() {
-        this.handleWindowChange();
-        window.addEventListener("resize", this.handleWindowChange);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.handleWindowChange);
-    }
 
     render() {
 

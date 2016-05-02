@@ -213,8 +213,7 @@ const RecipeContainer = createContainer(({params}) => {
 function mappingStateToProps({ flashMessages, browser }) {
     return {
         save: flashMessages.save,
-        error: flashMessages.error,
-        mobile: browser.mobile
+        error: flashMessages.error
     };
 }
 
