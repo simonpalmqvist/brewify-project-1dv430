@@ -1,6 +1,7 @@
 
 table.responsive-table {
     width: 100%;
+    margin-bottom: $spacing;
     tr {
         td, th {
             text-align: left;
@@ -19,6 +20,10 @@ table.responsive-table {
     }
 
     @media #{$tablet} {
+
+        tbody {
+            border-bottom: 1px solid $dark-grey;
+        }
 
         table, tbody, th, td, tr {
             display: block;
@@ -79,11 +84,11 @@ table.responsive-table {
 
         tfoot {
             tr {
-                border-top: 1px solid $dark-grey;
+                border-bottom: solid 1px $dark-grey;
                 td {
                     border: 0;
 
-                    input {
+                    input, label {
                         font-weight: bold;
                     }
                 }

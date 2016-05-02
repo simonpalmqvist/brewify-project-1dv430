@@ -16,7 +16,7 @@ button.c-confirm-button {
     @media #{$tablet} {
         float: none;
         display: block;
-        margin: 10px auto;
+        margin: $input-spacing * 2 auto;
         font-size: 18px;
         padding: $input-spacing / 4 $input-spacing * 2;
     }
