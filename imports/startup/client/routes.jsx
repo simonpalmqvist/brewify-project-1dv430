@@ -12,10 +12,10 @@ import { Router, Route, Link, IndexRoute, browserHistory } from "react-router";
 import { syncHistoryWithStore} from "react-router-redux";
 
 //Services
-import { alreadyLoggedIn, loggedIn, subscribe } from "../../ui/actions/AuthActions";
+import { alreadyLoggedIn, loggedIn } from "../../ui/actions/AuthActions";
+import { subscribeAll } from "../../ui/actions/SubscribeActions.js";
 import { recipeExists } from "../../ui/actions/RecipeActions";
 import Store from "../../ui/store";
-
 
 //Layouts
 import AppContainer from "../../ui/layouts/AppContainer";
@@ -36,7 +36,7 @@ import Logout from "../../ui/components/auth/Logout";
 Meteor.startup(() => {
 
     //Subscribe to publications if user is logged in
-    subscribe();
+    subscribeAll();
 
     //Sync route history with store
     const hist = syncHistoryWithStore(browserHistory, Store);

@@ -9,7 +9,7 @@ import { Accounts } from "meteor/accounts-base";
 import { browserHistory } from "react-router";
 import Store from "../store";
 import { errorAction } from "./StatusActions";
-import { subscribeAction } from "./SubscribeActions";
+import { subscribeAll } from "./SubscribeActions";
 import { addBrewProfile } from "./BrewProfileActions";
 
 /**
@@ -17,22 +17,6 @@ import { addBrewProfile } from "./BrewProfileActions";
  */
 function redirect() {
     browserHistory.push("/dashboard");
-}
-
-export function subscribe() {
-    if (Meteor.userId() && !Store.getState().subscriptions.subscribed) {
-        //Subscribe to the data sources
-        subscribeAction("recipes");
-        subscribeAction("brew.profiles");
-        subscribeAction("recipes.fermentables");
-        subscribeAction("recipes.hops");
-        subscribeAction("recipes.yeasts");
-        subscribeAction("recipes.ingredients");
-        subscribeAction("fermentables");
-        subscribeAction("hops");
-        subscribeAction("yeasts");
-        subscribeAction("ingredients");
-    }
 }
 
 /**
@@ -46,7 +30,7 @@ export function loginUser(email, password) {
             if (error) {
                 return errorAction(error);
             }
-            subscribe();
+            subscribeAll();
             redirect();
         });
     });
@@ -64,7 +48,7 @@ export function registerUser(email, password) {
                 return errorAction(error);
             }
             //Subscribe to collections, add a brew profile and redirect to dashboard
-            subscribe();
+            subscribeAll();
             addBrewProfile();
             redirect();
         });
