@@ -9,15 +9,14 @@ button.c-confirm-button {
     font-weight: bold;
     overflow:hidden;
     float:right;
+    cursor: pointer;
 
     @include transition(max-width 0.3s);
 
     @media #{$tablet} {
-        float:left;
-        position:relative;
-        left: 50%;
-        transform: translateX(-50%);
-        margin: 10px 0;
+        float: none;
+        display: block;
+        margin: 10px auto;
         font-size: 18px;
         padding: $input-spacing / 4 $input-spacing * 2;
     }

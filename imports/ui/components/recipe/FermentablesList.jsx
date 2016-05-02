@@ -3,38 +3,26 @@
  * @author simonpalmqvist
  */
 
+//Modules
 import React from "react";
 
-import { addRecipeFermentable, updateRecipeFermentable, deleteRecipeFermentable } from "../../actions/RecipeActions";
+//Actions
+import {
+    addRecipeFermentable,
+    validateValue
+} from "../../actions/RecipeActions";
 
-import { srmToEbc } from "../../helpers/beerCalc";
-
+//Collections
 import { RecipeFermentables } from "../../../api/recipes/fermentables/RecipeFermentables";
 
+//Components
+import FermentableRow from "./FermentableRow";
 import AutoComplete from "../autocomplete/AutoComplete";
 import Input from "./../base/Input";
-import ConfirmButton from "./../base/ConfirmButton";
-import Table from "../base/Table";
 
 export default class FermentablesList extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    validateOne(key, value) {
-        let obj = {};
-        obj[key] = value;
-        return RecipeFermentables.schema.newContext().validateOne(obj, key);
-    }
-
-    autoUpdateFermentable(fermentable, id) {
-        let updates = {
-            name: fermentable.name,
-            potential: fermentable.potential || 1,
-            ebc: srmToEbc(fermentable.srmPrecise || 0)
-        };
-
-        updateRecipeFermentable(id, updates);
     }
 
     add(result) {
@@ -42,7 +30,7 @@ export default class FermentablesList extends React.Component {
     }
 
     render() {
-        const {mobile, fermentableWeight, fermentables, recipeFermentables} = this.props;
+        const {fermentableWeight, fermentables, recipeFermentables} = this.props;
 
         const headerRow = [
             "Name",
@@ -51,63 +39,47 @@ export default class FermentablesList extends React.Component {
             "Amount (kg)",
             "Amount (%)",
             ""
-        ];
+        ].map((title, i) => (<th key={i}>{title}</th>));
 
-        const footerRow = [
-            "", "", "",
-            (<Input
-                attr={{type: "number", disabled: true}}
-                fixedDecimals={3}
-                name="fermentableWeight"
-                value={fermentableWeight} />),
-            "", ""
-        ];
-
-        const bodyRows = recipeFermentables.map((fermentable) => {
-            const {_id} = fermentable;
-            const updateFun = (value) => updateRecipeFermentable(_id, value);
-            const autoUpdateFun = (fermentable) => this.autoUpdateFermentable(fermentable, _id);
-            const deleteFun = () => deleteRecipeFermentable(_id);
-
-            return [
-                (<AutoComplete
-                    data={fermentables}
-                    onSelected={autoUpdateFun}
-                    value={fermentable.name}/>),
-                (<Input attr={{type: "number"}}
-                        name="ebc"
-                        value={fermentable.ebc}
-                        onValidate={this.validateOne}
-                        onUpdate={updateFun}/>),
-                (<Input attr={{type: "number", step: "0.001"}}
-                        fixedDecimals={3}
-                        name="potential"
-                        value={fermentable.potential}
-                        validate={this.validateOne}
-                        onUpdate={updateFun}/>),
-                (<Input attr={{type: "number", step: "0.1"}}
-                        fixedDecimals={3}
-                        name="amount"
-                        validate={this.validateOne}
-                        value={fermentable.amount}
-                        onUpdate={updateFun}/>),
-                (<Input attr={{type: "number", disabled: true}}
-                        fixedDecimals={2}
-                        name="totalFermentables"
-                        value={(fermentable.amount / fermentableWeight) * 100 || 0} />),
-                (<ConfirmButton text="Delete" symbol="×" className="delete" action={deleteFun}/>)
-            ];
-        });
+        const bodyRows = recipeFermentables
+            .map((fermentable) => (
+                <FermentableRow key={fermentable._id}
+                                fermentable={fermentable}
+                                fermentables={fermentables}
+                                fermentableWeight={fermentableWeight}
+                                validate={(key, value) => validateValue(RecipeFermentables, key, value)}/>
+            ));
 
         return (
             <div>
                 <h2>Fermentables</h2>
-                <Table
-                    className="recipe-fermentables"
-                    headerRow={headerRow}
-                    footerRow={footerRow}
-                    bodyRows={bodyRows}
-                    mobile={mobile}/>
+                <table className="responsive-table">
+                    <thead>
+                        <tr>
+                            {headerRow}
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <Input
+                                    attr={{type: "number", disabled: true}}
+                                    fixedDecimals={3}
+                                    name="fermentableWeight"
+                                    label="Total amount"
+                                    value={fermentableWeight} />
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {bodyRows}
+                    </tbody>
+                </table>
                 <AutoComplete
                     className="add-fermentable add-button"
                     ref="autocomplete"

@@ -1,0 +1,127 @@
+
+table.responsive-table {
+    width: 100%;
+    tr {
+        td, th {
+            text-align: left;
+            vertical-align: middle;
+
+            label {
+                display: none;
+            }
+        }
+
+        th {
+            padding: $input-spacing;
+            font-weight: bold;
+        }
+
+    }
+
+    @media #{$tablet} {
+
+        table, tbody, th, td, tr {
+            display: block;
+        }
+        thead {
+            display: none;
+        }
+
+        tbody, tfoot {
+            tr {
+                td {
+                    border-top-width: 1px;
+                    border-color: $grey;
+                    border-style: solid;
+                    display: block;
+                    width: 100%;
+
+                    label {
+                        display: block;
+                        position: absolute;
+                        padding: $half-spacing;
+                        margin-left: -$half-spacing;
+                    }
+
+                    input[type=text], input[type=number], select {
+                        box-sizing: border-box;
+                        padding: $half-spacing;
+                        @include calc-width(100%, "+", $spacing);
+                        text-align: right;
+                        margin-left: -$half-spacing;
+
+                        @media #{$mobile} {
+                            width: 100%;
+                            margin: 0;
+                        }
+                    }
+
+                    select {
+                        direction:rtl;
+
+                        option {
+                            direction: rtl;
+                        }
+                    }
+                }
+
+                td:first-child {
+                    border-top-color: $dark-grey;
+                }
+            }
+        }
+
+        tfoot {
+            tr {
+                border-top: 1px solid $dark-grey;
+                td {
+                    border: 0;
+
+                    input {
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+
+       /* tr {
+
+            border-top-width: 1px;
+            border-color: $grey;
+            border-style: solid;
+
+            th {
+                position:absolute;
+                line-height: normal;
+                padding-top: $half-spacing;
+                font-weight: normal;
+            }
+
+            td {
+                text-align: right;
+                width: 100%;
+
+                input, select {
+
+                    padding: $half-spacing;
+                    margin-left: -$half-spacing;
+                    @include calc-width(100%,"+", $half-spacing);
+                    text-align: right;
+                }
+
+                select {
+                    direction:rtl;
+
+                    option {
+                        direction: rtl;
+                    }
+                }
+
+            }
+        }*/
+
+        tr:first-child {
+            border-top-color: $dark-grey;
+        }
+    }
+}

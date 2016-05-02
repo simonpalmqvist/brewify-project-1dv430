@@ -46,6 +46,12 @@ export function updateRecipe(id, update) {
     });
 }
 
+export function validateValue(Collection, key, value) {
+    let obj = {};
+    obj[key] = value;
+    return Collection.schema.newContext().validateOne(obj, key);
+}
+
 /**
  * Action to add a new recipe fermentable
  * @param recipeId
