@@ -5,7 +5,6 @@
  */
 
 import { Meteor } from "meteor/meteor";
-import { resetDatabase } from "meteor/xolvio:cleaner";
 import { should } from "meteor/practicalmeteor:chai";
 import { sinon } from "meteor/practicalmeteor:sinon";
 
@@ -16,7 +15,7 @@ import faker from "faker";
 import Input from "./Input";
 
 if (Meteor.isClient) {
-    describe("Recipe Input component", function() {
+    describe("Input component", function() {
         it("Should run update function if state has changed", function() {
             let callback = sinon.spy();
             let name = faker.lorem.word();
