@@ -11,7 +11,13 @@ import { _ } from "meteor/underscore";
 import { sinon } from "meteor/practicalmeteor:sinon";
 import React from "react";
 import ReactTestUtils from "react-addons-test-utils";
-import { createRecipes, stubCollections, restoreCollections, renderIntoDocument } from "../../api/testUtils";
+import { findDOMNode } from "react-dom";
+import {
+    createRecipes,
+    stubCollections,
+    restoreCollections,
+    renderSmartComponentIntoDocument
+} from "../../api/testUtils";
 
 import { Recipes } from "../../api/recipes/Recipes";
 import Dashboard from "./Dashboard";
@@ -33,11 +39,9 @@ if (Meteor.isClient) {
             const numberOfRecipes = 3;
             const recipes = createRecipes(numberOfRecipes);
 
-            const dashboard = renderIntoDocument(<Dashboard />);
+            const dashboard = renderSmartComponentIntoDocument(<Dashboard />);
 
-            const list = ReactTestUtils.findRenderedDOMComponentWithTag(dashboard, "ul");
-
-
+            const list = findDOMNode(dashboard).querySelector("ul");
 
             const listNames = _.compact(_.map(list.children, (el) => el.textContent));
             const recipeNames = _.map(recipes, (recipe) => recipe.name);

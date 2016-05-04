@@ -14,7 +14,7 @@ import { ingredientAddedToText,ingredientTimeTypeToText } from "../../helpers/be
 import { INGREDIENT } from "../../helpers/recipeStandards";
 
 //Components
-import AutoComplete from "../autocomplete/AutoComplete";
+import AutoComplete from "../base/AutoComplete";
 import Input from "../base/Input";
 import Select from "../base/Select";
 import ConfirmButton from "../base/ConfirmButton";

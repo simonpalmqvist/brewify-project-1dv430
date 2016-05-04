@@ -25,6 +25,16 @@ import { Hops } from "../api/brewerydb/Hops";
 import { Yeasts } from "../api/brewerydb/Yeasts";
 import { Ingredients } from "../api/brewerydb/Ingredients";
 
+import {
+    brewProfile,
+    recipe,
+    fermentable,
+    hop,
+    yeast,
+    ingredient
+
+} from "./fakeData";
+
 import Store from "../ui/store";
 
 
@@ -38,19 +48,19 @@ Meteor.methods({
     },
 
     "test.generate-fermentables": (numberOfItems) => {
-        return createFermentables(numberOfItems);
+        return _createDataInCollections(Fermentables, fermentable, numberOfItems);
     },
 
     "test.generate-hops": (numberOfItems) => {
-        return createHops(numberOfItems);
+        return _createDataInCollections(Hops, hop, numberOfItems);
     },
 
     "test.generate-yeasts": (numberOfItems) => {
-        return createYeasts(numberOfItems);
+        return _createDataInCollections(Yeasts, yeast, numberOfItems);
     },
 
     "test.generate-ingredients": (numberOfItems) => {
-        return createIngredients(numberOfItems);
+        return _createDataInCollections(Ingredients, ingredient, numberOfItems);
     },
 
     "test.get-recipes": () => {
@@ -63,21 +73,9 @@ Meteor.methods({
             password: faker.internet.password()
         };
 
-        userId = Accounts.createUser(data);
+        const userId = Accounts.createUser(data);
 
-        brewProfile = {
-            userId,
-            efficiency: faker.random.number({min: 0, max: 100}),
-            batchSize: faker.random.number({min: 0, max: 1000}),
-            boilTime: faker.random.number({min: 0, max: 120}),
-            evapRate: faker.random.number({min: 0, max: 100}),
-            waterGrainRatio: faker.random.number({min: 0, max: 10}),
-            boilLoss: faker.random.number({min: 0, max: 10}),
-            lauterDeadSpace: faker.random.number({min: 0, max: 10}),
-            grainTemp: faker.random.number({min: 0, max: 100})
-        };
-
-        BrewProfiles.insert(brewProfile);
+        BrewProfiles.insert(brewProfile(userId));
 
         return data;
     },
@@ -95,173 +93,29 @@ Meteor.methods({
 
 /**
  * Server: Creates recipes and inserts them in collection
+ * @param collection - number of recipes that should be created
+ * @param data - function to return data to be inserted
+ * @param times - number of inserts to be made
+ * @returns {Array} - array of created recipes
+ */
+function _createDataInCollections(collection, data, times) {
+    let ids = _.times(times, i => _createData(collection, data));
+    return _.map(ids, id => collection.findOne(id));
+}
+
+function _createData(collection, data) {
+    return collection.insert(data);
+}
+
+/**
+ * Server: Creates recipes and inserts them in collection
  * @param times - number of recipes that should be created
  * @param id - user id if none it will take a random one
  * @returns {Array} - array of created recipes
  */
 export function createRecipes(times, id) {
-    let ids = _.times(times, i => _createRecipe(id));
+    let ids = _.times(times, i => Recipes.insert(recipe(id)));
     return _.map(ids, id => Recipes.findOne(id));
-}
-
-/**
- * Function creates recipe for collection
- * @param id - user id if none it will take a random one
- * @returns {Object} - returns the created recipe
- * @private
- */
-function _createRecipe(id) {
-    return Recipes.insert(_recipe(id));
-}
-
-/**
- * Function to generate recipe obj with fake data
- * @param id - userId
- * @returns {{userId: String, name: String, batchSize: Number, boilTime: Number}}
- * @private
- */
-function _recipe(id) {
-    return {
-        userId: id || Random.id(),
-        name: faker.lorem.words(),
-        batchSize: faker.random.number({min: 10, max: 1000}),
-        boilTime: faker.random.number({min: 30, max: 1000})
-    };
-}
-
-/**
- * Server: Creates fermentables and inserts them in collection
- * @param times - number of fermentables that should be created
- * @returns {Array} - array of created fermentables
- */
-export function createFermentables(times) {
-    let ids = _.times(times, i => _createFermentable());
-    return _.map(ids, id => Fermentables.findOne(id));
-}
-
-/**
- * Function to insert fermentable into collection
- * @returns {Object}
- * @private
- */
-function _createFermentable() {
-    return Fermentables.insert(_fermentable());
-}
-
-/**
- * Function to generate fermentable obj with fake data
- * @returns {{id: String, name: String, srmPrecise: Number, dryYield: Number}}
- * @private
- */
-function _fermentable() {
-    return {
-        id: faker.random.number({min: 1, max: 1000}),
-        name: faker.lorem.words(),
-        srmPrecise: faker.random.number({min: 2, max: 1000}),
-        potential: faker.random.number({min: 1.000, max: 1.060, precision: 0.001})
-    };
-}
-
-/**
- * Server: Creates hops and inserts them in collection
- * @param times - number of hops that should be created
- * @returns {Array} - array of created hops
- */
-export function createHops(times) {
-    let ids = _.times(times, i => _createHop());
-    return _.map(ids, id => Hops.findOne(id));
-}
-
-/**
- * Function to insert hop into collection
- * @returns {Object}
- * @private
- */
-function _createHop() {
-    return Hops.insert(_hop());
-}
-
-/**
- * Function to generate hops obj with fake data
- * @returns {{id: String, name: String, alphaAcidMin: Number, alphaAcidMax: Number}}
- * @private
- */
-function _hop() {
-    return {
-        id: faker.random.number({min: 1, max: 1000}),
-        name: faker.lorem.words(),
-        alphaAcidMin: faker.random.number({min: 0, max: 100, precision: 0.01}),
-        alphaAcidMax: faker.random.number({min: 0, max: 100, precision: 0.01})
-    };
-}
-
-/**
- * Server: Creates Yeasts and inserts them in collection
- * @param times - number of yeasts that should be created
- * @returns {Array} - array of created yeasts
- */
-export function createYeasts(times) {
-    let ids = _.times(times, i => _createYeast());
-    return _.map(ids, id => Yeasts.findOne(id));
-}
-
-/**
- * Function to insert yeast into collection
- * @returns {Object}
- * @private
- */
-function _createYeast() {
-    return Yeasts.insert(_yeast());
-}
-
-/**
- * Function to generate yeast obj with fake data
- * @returns {yeast}
- * @private
- */
-function _yeast() {
-    return {
-        id: faker.random.number({min: 1, max: 1000}),
-        name: faker.random.words(),
-        form: faker.random.number({min: 1, max: 2}),
-        type: faker.random.number({min: 1, max: 5}),
-        attenuation: faker.random.number({min: 0, max: 100, precision: 0.01}),
-        minTemperature: faker.random.number({min: 0, max: 100, precision: 0.1}),
-        maxTemperature: faker.random.number({min: 0, max: 100, precision: 0.1}),
-        minAlcoholTolerance: faker.random.number({min: 0, max: 20, precision: 0.1}),
-        maxAlcoholTolerance: faker.random.number({min: 0, max: 20, precision: 0.1})
-    };
-}
-
-/**
- * Server: Creates Ingredients and inserts them in collection
- * @param times - number of ingredients that should be created
- * @returns {Array} - array of created yeasts
- */
-export function createIngredients(times) {
-    let ids = _.times(times, i => _createIngredient());
-    return _.map(ids, id => Ingredients.findOne(id));
-}
-
-/**
- * Function to insert ingredient into collection
- * @returns {Object}
- * @private
- */
-function _createIngredient() {
-    return Ingredients.insert(_yeast());
-}
-
-/**
- * Function to generate ingredient obj with fake data
- * @returns {ingredient}
- * @private
- */
-function _ingredient() {
-    return {
-        id: faker.random.number({min: 1, max: 1000}),
-        name: faker.random.words()
-    };
 }
 
 /**
@@ -288,47 +142,11 @@ export function restoreCollections() {
 }
 
 /**
- * React helper function to get element by name
- * @param parentComponent
- * @param name
- * @returns {Element}
- */
-export function getElementByName(parentComponent, name) {
-    return ReactTestUtils.findAllInRenderedTree(parentComponent, (el) => el.name === name)[0];
-}
-
-/**
- * React helper function to get input with type
- * @param parentComponent
- * @param type
- * @returns {Element}
- */
-export function getInputByType(parentComponent, type) {
-    return ReactTestUtils.findAllInRenderedTree(parentComponent, (el) => {
-        return el.type === type && el.tagName === "INPUT";
-    })[0];
-}
-
-function _matchFun(match) {
-    return  (val) =>  match ? match === val : true;
-}
-
-function _regexpFind(str,regex) {
-    let result = str.match(regex);
-
-    if(result) {
-        result = result[1];
-    }
-
-    return result;
-}
-
-/**
  * Helper function to render react component with Store
  * @param component
  * @returns {Component}
  */
-export function renderIntoDocument(component) {
+export function renderSmartComponentIntoDocument(component) {
     //Render component
     return ReactTestUtils.renderIntoDocument(<Provider store={Store}>{component}</Provider>);
 }

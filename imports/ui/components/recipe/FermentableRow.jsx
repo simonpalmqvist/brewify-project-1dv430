@@ -14,7 +14,7 @@ import {
 } from "../../actions/RecipeActions";
 
 //Components
-import AutoComplete from "../autocomplete/AutoComplete";
+import AutoComplete from "../base/AutoComplete";
 import Input from "./../base/Input";
 import ConfirmButton from "./../base/ConfirmButton";
 

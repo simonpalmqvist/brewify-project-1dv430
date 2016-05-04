@@ -21,6 +21,7 @@ if (Meteor.isClient) {
     const should = chai.should();
 
     let fakeData = [];
+    let autoComplete;
     let inputNode;
     let childNode;
     let obj;
@@ -34,16 +35,17 @@ if (Meteor.isClient) {
         beforeEach(function() {
             fakeData = [];
             _.times(10, pushFakeData);
-        });
 
-        it("Should show list with proposals when focusing on input field", function() {
             callback = sinon.spy();
 
-            const autoComplete = ReactTestUtils.renderIntoDocument(
+            autoComplete = ReactTestUtils.renderIntoDocument(
                 <AutoComplete data={fakeData} onSelected={callback}/>
             );
 
             inputNode = autoComplete.refs.input;
+        });
+
+        it("Should show list with proposals when focusing on input field", function() {
 
             ReactTestUtils.Simulate.focus(inputNode);
 
@@ -52,13 +54,6 @@ if (Meteor.isClient) {
         });
 
         it("Should call callback when field has been filled in and pressed enter", function() {
-            callback = sinon.spy();
-
-            const autoComplete = ReactTestUtils.renderIntoDocument(
-                <AutoComplete data={fakeData} onSelected={callback}/>
-            );
-
-            inputNode = autoComplete.refs.input;
 
             ReactTestUtils.Simulate.focus(inputNode);
 
@@ -77,13 +72,6 @@ if (Meteor.isClient) {
         });
 
         it("Should be able to navigate with arrows", function() {
-            callback = sinon.spy();
-
-            const autoComplete = ReactTestUtils.renderIntoDocument(
-                <AutoComplete data={fakeData} onSelected={callback}/>
-            );
-
-            inputNode = autoComplete.refs.input;
 
             ReactTestUtils.Simulate.focus(inputNode);
 
@@ -108,13 +96,6 @@ if (Meteor.isClient) {
         });
 
         it("Should be able to select option in list with the mouse", function() {
-            callback = sinon.spy();
-
-            const autoComplete = ReactTestUtils.renderIntoDocument(
-                <AutoComplete data={fakeData} onSelected={callback}/>
-            );
-
-            inputNode = autoComplete.refs.input;
 
             ReactTestUtils.Simulate.focus(inputNode);
 
@@ -128,13 +109,6 @@ if (Meteor.isClient) {
         });
 
         it("Should be able to exit without triggering callback", function() {
-            callback = sinon.spy();
-
-            const autoComplete = ReactTestUtils.renderIntoDocument(
-                <AutoComplete data={fakeData} onSelected={callback}/>
-            );
-
-            inputNode = autoComplete.refs.input;
 
             ReactTestUtils.Simulate.focus(inputNode);
 
@@ -147,13 +121,6 @@ if (Meteor.isClient) {
         });
 
         it("Should be able to filter list", function() {
-            callback = sinon.spy();
-
-            const autoComplete = ReactTestUtils.renderIntoDocument(
-                <AutoComplete data={fakeData} onSelected={callback}/>
-            );
-
-            inputNode = autoComplete.refs.input;
 
             ReactTestUtils.Simulate.focus(inputNode);
 

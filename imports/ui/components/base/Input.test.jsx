@@ -19,6 +19,7 @@ let callback;
 let callback2;
 let name;
 let input;
+let fakeDom;
 let oldValue;
 let node;
 let newValue;
@@ -39,7 +40,9 @@ if (Meteor.isClient) {
                        onUpdate={callback}/>
             );
 
-            node = findDOMNode(input).querySelector("input");
+            fakeDom = findDOMNode(input);
+
+            node = fakeDom.querySelector("input");
 
         });
 
@@ -79,7 +82,8 @@ if (Meteor.isClient) {
                        onUpdate={() => {}}/>
             );
 
-            node = input.refs.input;
+            fakeDom = findDOMNode(input);
+            node = fakeDom.querySelector("input");
 
             node.value = newValue;
             ReactTestUtils.Simulate.change(node);
@@ -99,7 +103,8 @@ if (Meteor.isClient) {
                        onUpdate={callback}/>
             );
 
-            node = input.refs.input;
+            fakeDom = findDOMNode(input);
+            node = fakeDom.querySelector("input");
 
             node.value = newValue;
             ReactTestUtils.Simulate.change(node);

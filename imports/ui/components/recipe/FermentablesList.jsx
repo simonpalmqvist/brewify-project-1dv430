@@ -17,7 +17,7 @@ import { RecipeFermentables } from "../../../api/recipes/fermentables/RecipeFerm
 
 //Components
 import FermentableRow from "./FermentableRow";
-import AutoComplete from "../autocomplete/AutoComplete";
+import AutoComplete from "../base/AutoComplete";
 import Input from "./../base/Input";
 
 export default class FermentablesList extends React.Component {

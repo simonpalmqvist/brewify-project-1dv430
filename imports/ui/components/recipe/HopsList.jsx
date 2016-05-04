@@ -14,7 +14,7 @@ import { RecipeHops } from "../../../api/recipes/hops/RecipeHops";
 
 //Components
 import HopRow from "./HopRow";
-import AutoComplete from "../autocomplete/AutoComplete";
+import AutoComplete from "../base/AutoComplete";
 import Input from "../base/Input";
 
 export default class HopsList extends React.Component {

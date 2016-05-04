@@ -17,7 +17,7 @@ import { RecipeIngredients } from "../../../api/recipes/ingredients/RecipeIngred
 
 //Components
 import IngredientRow from "./IngredientRow";
-import AutoComplete from "../autocomplete/AutoComplete";
+import AutoComplete from "../base/AutoComplete";
 
 export default class IngredientsList extends React.Component {
     constructor(props) {

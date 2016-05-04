@@ -23,7 +23,7 @@ import { YEAST } from "../../helpers/recipeStandards";
 import { RecipeYeasts } from "../../../api/recipes/yeasts/RecipeYeasts";
 
 //Components
-import AutoComplete from "../autocomplete/AutoComplete";
+import AutoComplete from "../base/AutoComplete";
 import Input from "../base/Input";
 import Select from "../base/Select";
 
