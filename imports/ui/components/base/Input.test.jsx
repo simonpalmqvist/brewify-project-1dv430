@@ -9,30 +9,41 @@ import { should } from "meteor/practicalmeteor:chai";
 import { sinon } from "meteor/practicalmeteor:sinon";
 
 import React from "react";
+import { findDOMNode } from "react-dom";
 import ReactTestUtils from "react-addons-test-utils";
 import faker from "faker";
 
 import Input from "./Input";
 
+let callback;
+let callback2;
+let name;
+let input;
+let oldValue;
+let node;
+let newValue;
+
 if (Meteor.isClient) {
     describe("Input component", function() {
-        it("Should run update function if state has changed", function() {
-            let callback = sinon.spy();
-            let name = faker.lorem.word();
-            let oldValue = faker.lorem.words();
 
+        beforeEach(function() {
+            callback = sinon.spy();
+            name = faker.lorem.word();
+            oldValue = faker.lorem.words();
+            newValue = faker.lorem.words();
 
-            const input = ReactTestUtils.renderIntoDocument(
+            input = ReactTestUtils.renderIntoDocument(
                 <Input type="text"
                        name= {name}
                        value={oldValue}
                        onUpdate={callback}/>
             );
 
-            let node = input.refs.input;
+            node = findDOMNode(input).querySelector("input");
 
-            let newValue = faker.lorem.words();
+        });
 
+        it("Should run update function if state has changed", function() {
             node.value = newValue;
             ReactTestUtils.Simulate.change(node);
 
@@ -43,86 +54,32 @@ if (Meteor.isClient) {
         });
 
         it("Should not run update function if state has not changed", function() {
-            let callback = sinon.spy();
-            let name = faker.lorem.word();
-            let value = faker.lorem.words();
-
-
-            const input = ReactTestUtils.renderIntoDocument(
-                <Input type="text"
-                       name= {name}
-                       value={value}
-                       onUpdate={callback}/>
-            );
-
-            let node = input.refs.input;
             ReactTestUtils.Simulate.blur(node);
 
             callback.called.should.be.false;
         });
 
         it("Should not run update function if state value is empty", function() {
-            let callback = sinon.spy();
-            let name = faker.lorem.word();
-            let value = faker.lorem.words();
-
-
-            const input = ReactTestUtils.renderIntoDocument(
-                <Input type="text"
-                       name= {name}
-                       value={value}
-                       onUpdate={callback}/>
-            );
-
-            let node = input.refs.input;
-
             node.value = "";
             ReactTestUtils.Simulate.change(node);
 
             ReactTestUtils.Simulate.blur(node);
 
             callback.called.should.be.false;
-            node.value.should.equal(value);
+            node.value.should.equal(oldValue);
         });
 
 
         it("Should run validation function on change", function() {
-            let callback = sinon.spy();
-            let name = faker.lorem.word();
-            let value = faker.lorem.words();
-
-
-            const input = ReactTestUtils.renderIntoDocument(
+            input = ReactTestUtils.renderIntoDocument(
                 <Input type="text"
-                       name= {name}
-                       value={value}
-                       validate={callback}/>
+                       name={name}
+                       value={oldValue}
+                       validate={callback}
+                       onUpdate={() => {}}/>
             );
 
-            let node = input.refs.input;
-
-            node.value = faker.lorem.words();
-            ReactTestUtils.Simulate.change(node);
-
-            callback.called.should.be.true;
-        });
-
-        it("Should run validation function on change", function() {
-            let callback = sinon.spy();
-            let name = faker.lorem.word();
-            let value = faker.lorem.words();
-
-
-            const input = ReactTestUtils.renderIntoDocument(
-                <Input type="text"
-                       name= {name}
-                       value={value}
-                       onChange={callback}/>
-            );
-
-            let node = input.refs.input;
-
-            let newValue = faker.lorem.words();
+            node = input.refs.input;
 
             node.value = newValue;
             ReactTestUtils.Simulate.change(node);
@@ -132,26 +89,22 @@ if (Meteor.isClient) {
         });
 
         it("Should not change value if validation function returns false", function() {
-            let callback = sinon.spy();
             let validate = () => false;
-            let name = faker.lorem.word();
-            let value = faker.lorem.words();
 
-
-            const input = ReactTestUtils.renderIntoDocument(
+            input = ReactTestUtils.renderIntoDocument(
                 <Input type="text"
                        name={name}
-                       value={value}
+                       value={oldValue}
                        validate={validate}
                        onUpdate={callback}/>
             );
 
-            let node = input.refs.input;
+            node = input.refs.input;
 
-            node.value = faker.lorem.words();
+            node.value = newValue;
             ReactTestUtils.Simulate.change(node);
 
-            node.value.should.equal(value);
+            node.value.should.equal(oldValue);
         });
     });
 }

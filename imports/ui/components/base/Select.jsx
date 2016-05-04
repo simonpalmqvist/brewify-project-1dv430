@@ -58,7 +58,7 @@ export default class Select extends React.Component {
         return (
             <div>
                 {labelEl}
-                <select className={classes} ref="select" id={id} onChange={this.onChange.bind(this)} value={value}>
+                <select className={classes} id={id} onChange={this.onChange.bind(this)} value={value}>
                     {optionsElements}
                 </select>
             </div>

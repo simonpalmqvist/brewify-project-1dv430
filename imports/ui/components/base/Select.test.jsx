@@ -9,6 +9,7 @@ import { should } from "meteor/practicalmeteor:chai";
 import { sinon } from "meteor/practicalmeteor:sinon";
 
 import React from "react";
+import { findDOMNode } from "react-dom";
 import ReactTestUtils from "react-addons-test-utils";
 import faker from "faker";
 
@@ -40,7 +41,7 @@ if (Meteor.isClient) {
                         onUpdate={callback}/>
             );
 
-            node = select.refs.select;
+            node = findDOMNode(select).querySelector("select");
 
         });
 

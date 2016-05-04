@@ -101,8 +101,7 @@ export default class Input extends React.Component {
         return (
             <div>
                 {labelEl}
-                <input ref="input"
-                       className={classes}
+                <input className={classes}
                        name={name}
                        value={value}
                        {...attr}
