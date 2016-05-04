@@ -8,9 +8,9 @@
 import { Meteor } from "meteor/meteor";
 import { resetDatabase } from "meteor/xolvio:cleaner";
 import chai from "meteor/practicalmeteor:chai";
-import { Random } from "meteor/random";
-import faker from "faker";
 import { sinon } from "meteor/practicalmeteor:sinon";
+
+import { recipeHop, recipe } from "../../fakeData";
 
 import { Recipes } from "../Recipes";
 import { RecipeHops } from "./RecipeHops";
@@ -30,14 +30,6 @@ if (Meteor.isServer) {
     let userId;
     let recipeId;
     let hopId;
-    let name;
-    let form;
-    let use;
-    let alpha;
-    let amount;
-    let time;
-
-    let recipe;
     let hop;
 
     describe("Recipe Hops", function() {
@@ -46,16 +38,9 @@ if (Meteor.isServer) {
             resetDatabase();
 
             //Set fake information
-            userId = Random.id();
-            recipeId = Random.id();
-            name = faker.random.words();
-            form = faker.random.number({min: 1, max: 3});
-            use = faker.random.number({min: 1, max: 2});
-            alpha = faker.random.number({min: 0, max: 100, precision: 0.01});
-            amount = faker.random.number({min: 0, max: 1000});
-            time = faker.random.number({min: 0, max: 300});
-
-            hop = {userId, recipeId, name, form, use, alpha, amount, time};
+            hop = recipeHop();
+            userId = hop.userId;
+            recipeId = hop.recipeId;
         });
 
         after(function() {
@@ -130,7 +115,7 @@ if (Meteor.isServer) {
 
             describe("Not authenticated", () => {
                 it("Should not be able to insert new hop", function() {
-                    (() => insertMethod(recipeId, use, name, alpha, form)).should.throw(Error);
+                    (() => insertMethod(recipeId, hop.use, hop.name, hop.alpha, hop.form)).should.throw(Error);
 
                     RecipeHops.find({}).count().should.equal(0);
                 });
@@ -146,9 +131,9 @@ if (Meteor.isServer) {
                 it("Should not be able to update hop", function() {
                     hopId = RecipeHops.insert(hop);
 
-                    (() => updateMethod(hopId, {name: faker.lorem.words()})).should.throw(Error);
+                    (() => updateMethod(hopId, {name: recipeHop().name})).should.throw(Error);
 
-                    RecipeHops.findOne(hopId).name.should.equal(name);
+                    RecipeHops.findOne(hopId).name.should.equal(hop.name);
                 });
             });
 
@@ -158,12 +143,7 @@ if (Meteor.isServer) {
                 });
 
                 beforeEach(function() {
-                    recipeId = Recipes.insert({
-                        userId,
-                        name: faker.lorem.words(),
-                        batchSize: faker.random.number({min: 10, max: 1000}),
-                        boilTime: faker.random.number({min: 30, max: 1000})
-                    });
+                    recipeId = Recipes.insert(recipe(userId));
                 });
 
                 after(function() {
@@ -173,7 +153,7 @@ if (Meteor.isServer) {
 
                 it("Should be able to insert new hop", function() {
 
-                    insertMethod(recipeId, use, name, alpha, form);
+                    insertMethod(recipeId, hop.use, hop.name, hop.alpha, hop.form);
 
                     RecipeHops.find({}).count().should.equal(1);
                 });
@@ -187,7 +167,7 @@ if (Meteor.isServer) {
                 });
 
                 it("Should be able to update hop", function() {
-                    let newName = faker.lorem.words();
+                    let newName = recipeHop().name;
 
                     hopId = RecipeHops.insert(hop);
 

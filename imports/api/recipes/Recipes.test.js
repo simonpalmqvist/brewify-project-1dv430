@@ -12,7 +12,6 @@ import { Random } from "meteor/random";
 import faker from "faker";
 import { sinon } from "meteor/practicalmeteor:sinon";
 
-
 import { Recipes } from "./Recipes";
 
 import "./methods";

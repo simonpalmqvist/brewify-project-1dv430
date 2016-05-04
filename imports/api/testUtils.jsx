@@ -92,11 +92,11 @@ Meteor.methods({
 //Helper functions
 
 /**
- * Server: Creates recipes and inserts them in collection
- * @param collection - number of recipes that should be created
+ * Server: Creates items and inserts them in collection
+ * @param collection - collection in where to insert items
  * @param data - function to return data to be inserted
  * @param times - number of inserts to be made
- * @returns {Array} - array of created recipes
+ * @returns {Array} - array of created items
  */
 function _createDataInCollections(collection, data, times) {
     let ids = _.times(times, i => _createData(collection, data));

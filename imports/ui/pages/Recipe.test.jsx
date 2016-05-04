@@ -43,11 +43,7 @@ if (Meteor.isClient) {
             stubCollections([Recipes, RecipeFermentables]);
             recipe = createRecipes(numberOfRecipes)[0];
 
-            Meteor.callPromise("test.generate-fermentables", numberOfFermentables)
-                .then((result) => {
-                    fermentables = result;
-                    return Meteor.callPromise("test.stub-user-id", recipe.userId);
-                })
+            Meteor.callPromise("test.stub-user-id", recipe.userId)
                 .then(() => {
                     recipePage = renderSmartComponentIntoDocument(<Recipe params={{id: recipe._id}} />);
                     fakeDocument = findDOMNode(recipePage);
@@ -117,6 +113,7 @@ if (Meteor.isClient) {
             input.value.should.equal(newBoilTime.toString());
             Recipes.findOne(recipe._id).boilTime.should.equal(newBoilTime);
         });
+
     });
 }
 

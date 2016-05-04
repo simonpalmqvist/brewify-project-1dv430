@@ -3,67 +3,121 @@
  * @author simonpalmqvist
  */
 
-import faker from "faker";
+import { lorem, random } from "faker";
 import { Random } from "meteor/random";
+
+const { number } = random;
+const { words } = lorem;
 
 export function brewProfile(userId) {
     return {
         userId,
-        efficiency: faker.random.number({min: 0, max: 100}),
-        batchSize: faker.random.number({min: 0, max: 1000}),
-        boilTime: faker.random.number({min: 0, max: 120}),
-        evapRate: faker.random.number({min: 0, max: 100}),
-        waterGrainRatio: faker.random.number({min: 0, max: 10}),
-        boilLoss: faker.random.number({min: 0, max: 10}),
-        lauterDeadSpace: faker.random.number({min: 0, max: 10}),
-        grainTemp: faker.random.number({min: 0, max: 100})
+        efficiency: number({min: 0, max: 100}),
+        batchSize: number({min: 0, max: 1000}),
+        boilTime: number({min: 0, max: 120}),
+        evapRate: number({min: 0, max: 100}),
+        waterGrainRatio: number({min: 0, max: 10}),
+        boilLoss: number({min: 0, max: 10}),
+        lauterDeadSpace: number({min: 0, max: 10}),
+        grainTemp: number({min: 0, max: 100})
     };
 }
 
-export function recipe(id) {
+export function recipe(userId = Random.id()) {
     return {
-        userId: id || Random.id(),
-        name: faker.lorem.words(),
-        batchSize: faker.random.number({min: 10, max: 1000}),
-        boilTime: faker.random.number({min: 30, max: 1000})
+        userId,
+        name: words(),
+        batchSize: number({min: 10, max: 1000}),
+        boilTime: number({min: 30, max: 1000})
+    };
+}
+
+export function recipeFermentable(userId = Random.id(), recipeId = Random.id()) {
+    return {
+        userId,
+        recipeId,
+        name: words(),
+        amount: number({min: 0, max: 10}),
+        potential: number({min: 1.000, max: 1.060, precision: 0.001}),
+        ebc: number({min: 1, max: 140})
+    };
+}
+
+export function recipeHop(userId = Random.id(), recipeId = Random.id()) {
+    return {
+        userId,
+        recipeId,
+        name: words(),
+        form: number({min: 1, max: 3}),
+        use: number({min: 1, max: 2}),
+        alpha: number({min: 0, max: 100, precision: 0.01}),
+        amount: number({min: 0, max: 1000}),
+        time: number({min: 0, max: 300})
+    };
+}
+
+export function recipeYeast(userId = Random.id(), recipeId = Random.id()) {
+    return {
+        userId,
+        recipeId,
+        name: words(),
+        form: number({min: 1, max: 2}),
+        type: number({min: 1, max: 5}),
+        attenuation: number({min: 0, max: 100, precision: 0.01}),
+        minTemperature: number({min: 0, max: 100, precision: 0.1}),
+        maxTemperature: number({min: 0, max: 100, precision: 0.1}),
+        minAlcoholTolerance: number({min: 0, max: 20, precision: 0.1}),
+        maxAlcoholTolerance: number({min: 0, max: 20, precision: 0.1})
+    };
+}
+
+export function recipeIngredient(userId = Random.id(), recipeId = Random.id()) {
+    return {
+        userId,
+        recipeId,
+        name: words(),
+        amount: number({min: 0, max: 1000}),
+        added: number({min: 1, max: 6}),
+        time: number({min: 0, max: 300}),
+        timeType: number({min: 1, max: 2})
     };
 }
 
 export function fermentable() {
     return {
-        id: faker.random.number({min: 1, max: 1000}),
-        name: faker.lorem.words(),
-        srmPrecise: faker.random.number({min: 2, max: 1000}),
-        potential: faker.random.number({min: 1.000, max: 1.060, precision: 0.001})
+        id: number({min: 1, max: 1000}),
+        name: words(),
+        srmPrecise: number({min: 2, max: 1000}),
+        potential: number({min: 1.000, max: 1.060, precision: 0.001})
     };
 }
 
 export function hop() {
     return {
-        id: faker.random.number({min: 1, max: 1000}),
-        name: faker.lorem.words(),
-        alphaAcidMin: faker.random.number({min: 0, max: 100, precision: 0.01}),
-        alphaAcidMax: faker.random.number({min: 0, max: 100, precision: 0.01})
+        id: number({min: 1, max: 1000}),
+        name: words(),
+        alphaAcidMin: number({min: 0, max: 100, precision: 0.01}),
+        alphaAcidMax: number({min: 0, max: 100, precision: 0.01})
     };
 }
 
 export function yeast() {
     return {
-        id: faker.random.number({min: 1, max: 1000}),
-        name: faker.random.words(),
-        form: faker.random.number({min: 1, max: 2}),
-        type: faker.random.number({min: 1, max: 5}),
-        attenuation: faker.random.number({min: 0, max: 100, precision: 0.01}),
-        minTemperature: faker.random.number({min: 0, max: 100, precision: 0.1}),
-        maxTemperature: faker.random.number({min: 0, max: 100, precision: 0.1}),
-        minAlcoholTolerance: faker.random.number({min: 0, max: 20, precision: 0.1}),
-        maxAlcoholTolerance: faker.random.number({min: 0, max: 20, precision: 0.1})
+        id: number({min: 1, max: 1000}),
+        name: words(),
+        form: number({min: 1, max: 2}),
+        type: number({min: 1, max: 5}),
+        attenuation: number({min: 0, max: 100, precision: 0.01}),
+        minTemperature: number({min: 0, max: 100, precision: 0.1}),
+        maxTemperature: number({min: 0, max: 100, precision: 0.1}),
+        minAlcoholTolerance: number({min: 0, max: 20, precision: 0.1}),
+        maxAlcoholTolerance: number({min: 0, max: 20, precision: 0.1})
     };
 }
 
 export function ingredient() {
     return {
-        id: faker.random.number({min: 1, max: 1000}),
-        name: faker.random.words()
+        id: number({min: 1, max: 1000}),
+        name: words()
     };
 }

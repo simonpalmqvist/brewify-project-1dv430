@@ -8,12 +8,12 @@
 import { Meteor } from "meteor/meteor";
 import { resetDatabase } from "meteor/xolvio:cleaner";
 import chai from "meteor/practicalmeteor:chai";
-import { Random } from "meteor/random";
-import faker from "faker";
 import { sinon } from "meteor/practicalmeteor:sinon";
 
 import { Recipes } from "../Recipes";
 import { RecipeFermentables } from "./RecipeFermentables";
+
+import { recipeFermentable, recipe } from "../../fakeData";
 
 import "./methods";
 
@@ -30,12 +30,7 @@ if (Meteor.isServer) {
     let userId;
     let recipeId;
     let fermentableId;
-    let name;
-    let amount;
-    let potential;
-    let ebc;
-
-    let recipe;
+    let fermentable;
 
     describe("Recipe Fermentables", function() {
         beforeEach(function() {
@@ -43,12 +38,10 @@ if (Meteor.isServer) {
             resetDatabase();
 
             //Set fake information
-            userId = Random.id();
-            recipeId = Random.id();
-            name = faker.lorem.words();
-            amount = faker.random.number({min: 0, max: 10});
-            potential = faker.random.number({min: 1.000, max: 1.060, precision: 0.001});
-            ebc = faker.random.number({min: 1, max: 140});
+            fermentable = recipeFermentable();
+            userId = fermentable.userId;
+            recipeId = fermentable.recipeId;
+
         });
 
         after(function() {
@@ -58,39 +51,43 @@ if (Meteor.isServer) {
         describe("collection", function() {
 
             it("Should be able to add fermentables to recipe", function() {
-                RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                RecipeFermentables.insert(fermentable);
 
                 // Recipe should be added
-                RecipeFermentables.find({name}).count().should.equal(1);
+                RecipeFermentables.find({name: fermentable.name}).count().should.equal(1);
             });
 
             it("Should not be able to add fermentables without name", function() {
+                delete fermentable.name;
 
-                (() => RecipeFermentables.insert({userId, recipeId, amount, potential, ebc})).should.throw(Error);
+                (() => RecipeFermentables.insert(fermentable)).should.throw(Error);
 
                 //Recipe should not be added
                 RecipeFermentables.find({}).count().should.equal(0);
             });
 
             it("Should not be able to add fermentables without amount", function() {
+                delete fermentable.amount;
 
-                (() => RecipeFermentables.insert({userId, recipeId, name, potential, ebc})).should.throw(Error);
+                (() => RecipeFermentables.insert(fermentable)).should.throw(Error);
 
                 //Recipe should not be added
                 RecipeFermentables.find({}).count().should.equal(0);
             });
 
             it("Should not be able to add fermentables without potential", function() {
+                delete fermentable.potential;
 
-                (() => RecipeFermentables.insert({userId, recipeId, name, amount, ebc})).should.throw(Error);
+                (() => RecipeFermentables.insert(fermentable)).should.throw(Error);
 
                 //Recipe should not be added
                 RecipeFermentables.find({}).count().should.equal(0);
             });
 
             it("Should not be able to add fermentables without EBC", function() {
+                delete fermentable.ebc;
 
-                (() => RecipeFermentables.insert({userId, recipeId, name, amount, extracYield})).should.throw(Error);
+                (() => RecipeFermentables.insert(fermentable)).should.throw(Error);
 
                 //Recipe should not be added
                 RecipeFermentables.find({}).count().should.equal(0);
@@ -101,13 +98,15 @@ if (Meteor.isServer) {
 
             describe("Not authenticated", () => {
                 it("Should not be able to insert new fermentable", function() {
+                    const {name, potential, ebc} = fermentable;
+
                     (() => insertMethod(recipeId, name, potential, ebc)).should.throw(Error);
 
                     RecipeFermentables.find({}).count().should.equal(0);
                 });
 
                 it("Should not be able to remove fermentable", function() {
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                    fermentableId = RecipeFermentables.insert(fermentable);
 
                     (() => removeMethod(fermentableId)).should.throw(Error);
 
@@ -115,11 +114,11 @@ if (Meteor.isServer) {
                 });
 
                 it("Should not be able to update recipe", function() {
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                    fermentableId = RecipeFermentables.insert(fermentable);
 
-                    (() => updateMethod(fermentableId, {name: faker.lorem.words()})).should.throw(Error);
+                    (() => updateMethod(fermentableId, {name: recipeFermentable().name})).should.throw(Error);
 
-                    RecipeFermentables.findOne(fermentableId).name.should.equal(name);
+                    RecipeFermentables.findOne(fermentableId).name.should.equal(fermentable.name);
                 });
             });
 
@@ -129,12 +128,7 @@ if (Meteor.isServer) {
                 });
 
                 beforeEach(function() {
-                    recipeId = Recipes.insert({
-                        userId,
-                        name: faker.lorem.words(),
-                        batchSize: faker.random.number({min: 10, max: 1000}),
-                        boilTime: faker.random.number({min: 30, max: 1000})
-                    });
+                    recipeId = Recipes.insert(recipe(userId));
                 });
 
                 after(function() {
@@ -143,6 +137,7 @@ if (Meteor.isServer) {
 
 
                 it("Should be able to insert new fermentable", function() {
+                    const {name, potential, ebc} = fermentable;
 
                     insertMethod(recipeId, name, potential, ebc);
 
@@ -150,7 +145,7 @@ if (Meteor.isServer) {
                 });
 
                 it("Should be able to remove fermentable", function() {
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                    fermentableId = RecipeFermentables.insert(fermentable);
 
                     removeMethod(fermentableId);
 
@@ -158,9 +153,9 @@ if (Meteor.isServer) {
                 });
 
                 it("Should be able to update fermentable", function() {
-                    let newName = faker.lorem.words();
+                    let newName = recipeFermentable().name;
 
-                    fermentableId = RecipeFermentables.insert({userId, recipeId, name, amount, potential, ebc});
+                    fermentableId = RecipeFermentables.insert(fermentable);
 
                     updateMethod(fermentableId, {name: newName});
 

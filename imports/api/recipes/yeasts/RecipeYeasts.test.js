@@ -8,12 +8,12 @@
 import { Meteor } from "meteor/meteor";
 import { resetDatabase } from "meteor/xolvio:cleaner";
 import chai from "meteor/practicalmeteor:chai";
-import { Random } from "meteor/random";
-import faker from "faker";
 import { sinon } from "meteor/practicalmeteor:sinon";
 
 import { Recipes } from "../Recipes";
 import { RecipeYeasts } from "./RecipeYeasts";
+
+import { recipeYeast, recipe } from "../../fakeData";
 
 import "./methods";
 
@@ -28,39 +28,19 @@ if (Meteor.isServer) {
     const removeMethod = Meteor.server.method_handlers["recipes.yeasts.remove"];
 
     let userId;
-    let recipeId;
-    let yeastId;
-    let name;
-    let form;
-    let type;
-    let attenuation;
-    let minTemperature;
-    let maxTemperature;
-    let minAlcoholTolerance;
-    let maxAlcoholTolerance;
-
-    let recipe;
     let yeast;
+    let yeastId;
+    let recipeId;
 
     describe("Recipe Yeasts", function() {
         beforeEach(function() {
             //Reset database
             resetDatabase();
 
-            //Set fake information
-            userId = Random.id();
-            recipeId = Random.id();
-            name = faker.random.words();
-            form = faker.random.number({min: 1, max: 2});
-            type = faker.random.number({min: 1, max: 5});
-            attenuation = faker.random.number({min: 0, max: 100, precision: 0.01});
-            minTemperature = faker.random.number({min: 0, max: 100, precision: 0.1});
-            maxTemperature = faker.random.number({min: 0, max: 100, precision: 0.1});
-            minAlcoholTolerance = faker.random.number({min: 0, max: 20, precision: 0.1});
-            maxAlcoholTolerance = faker.random.number({min: 0, max: 20, precision: 0.1});
+            yeast = recipeYeast();
 
-            yeast = {userId, recipeId, name, form, type, attenuation, minTemperature,
-                maxTemperature, minAlcoholTolerance, maxAlcoholTolerance};
+            recipeId = yeast.recipeId;
+            userId = yeast.userId;
         });
 
         after(function() {
@@ -171,9 +151,9 @@ if (Meteor.isServer) {
                 it("Should not be able to update hop", function() {
                     yeastId = RecipeYeasts.insert(yeast);
 
-                    (() => updateMethod(yeastId, {name: faker.lorem.words()})).should.throw(Error);
+                    (() => updateMethod(yeastId, {name: recipeYeast().name})).should.throw(Error);
 
-                    RecipeYeasts.findOne(yeastId).name.should.equal(name);
+                    RecipeYeasts.findOne(yeastId).name.should.equal(yeast.name);
                 });
             });
 
@@ -183,12 +163,7 @@ if (Meteor.isServer) {
                 });
 
                 beforeEach(function() {
-                    recipeId = Recipes.insert({
-                        userId,
-                        name: faker.lorem.words(),
-                        batchSize: faker.random.number({min: 10, max: 1000}),
-                        boilTime: faker.random.number({min: 30, max: 1000})
-                    });
+                    recipeId = Recipes.insert(recipe(userId));
                 });
 
                 after(function() {
@@ -221,7 +196,7 @@ if (Meteor.isServer) {
                 });
 
                 it("Should be able to update yeast", function() {
-                    let newName = faker.lorem.words();
+                    let newName = recipeYeast().name;
 
                     yeastId = RecipeYeasts.insert(yeast);
 

@@ -8,9 +8,9 @@
 import { Meteor } from "meteor/meteor";
 import { resetDatabase } from "meteor/xolvio:cleaner";
 import chai from "meteor/practicalmeteor:chai";
-import { Random } from "meteor/random";
-import faker from "faker";
 import { sinon } from "meteor/practicalmeteor:sinon";
+
+import { recipeIngredient, recipe } from "../../fakeData";
 
 import { Recipes } from "../Recipes";
 import { RecipeIngredients } from "./RecipeIngredients";
@@ -30,13 +30,6 @@ if (Meteor.isServer) {
     let userId;
     let recipeId;
     let ingredientId;
-    let name;
-    let amount;
-    let added;
-    let time;
-    let timeType;
-
-    let recipe;
     let ingredient;
 
     describe("Recipe Ingredients", function() {
@@ -44,16 +37,9 @@ if (Meteor.isServer) {
             //Reset database
             resetDatabase();
 
-            //Set fake information
-            userId = Random.id();
-            recipeId = Random.id();
-            name = faker.random.words();
-            amount = faker.random.number({min: 0, max: 1000});
-            added = faker.random.number({min: 1, max: 6});
-            time = faker.random.number({min: 0, max: 300});
-            timeType = faker.random.number({min: 1, max: 2});
-
-            ingredient = {userId, recipeId, name, amount, added, time, timeType};
+            ingredient = recipeIngredient();
+            userId = ingredient.userId;
+            recipeId = ingredient.recipeId;
         });
 
         after(function() {
@@ -136,9 +122,9 @@ if (Meteor.isServer) {
                 it("Should not be able to update ingredient", function() {
                     ingredientId = RecipeIngredients.insert(ingredient);
 
-                    (() => updateMethod(ingredientId, {name: faker.lorem.words()})).should.throw(Error);
+                    (() => updateMethod(ingredientId, {name: recipeIngredient().name})).should.throw(Error);
 
-                    RecipeIngredients.findOne(ingredientId).name.should.equal(name);
+                    RecipeIngredients.findOne(ingredientId).name.should.equal(ingredient.name);
                 });
             });
 
@@ -148,12 +134,7 @@ if (Meteor.isServer) {
                 });
 
                 beforeEach(function() {
-                    recipeId = Recipes.insert({
-                        userId,
-                        name: faker.lorem.words(),
-                        batchSize: faker.random.number({min: 10, max: 1000}),
-                        boilTime: faker.random.number({min: 30, max: 1000})
-                    });
+                    recipeId = Recipes.insert(recipe(userId));
                 });
 
                 after(function() {
@@ -163,7 +144,7 @@ if (Meteor.isServer) {
 
                 it("Should be able to insert new ingredient", function() {
 
-                    insertMethod(recipeId, name);
+                    insertMethod(recipeId, ingredient.name);
 
                     RecipeIngredients.find({}).count().should.equal(1);
                 });
@@ -177,7 +158,7 @@ if (Meteor.isServer) {
                 });
 
                 it("Should be able to update hop", function() {
-                    let newName = faker.lorem.words();
+                    let newName = recipeIngredient().name;
 
                     ingredientId = RecipeIngredients.insert(ingredient);
 
