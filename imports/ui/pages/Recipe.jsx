@@ -21,7 +21,14 @@ import { Hops } from "../../api/brewerydb/Hops";
 import { Yeasts } from "../../api/brewerydb/Yeasts";
 import { Ingredients } from "../../api/brewerydb/Ingredients";
 
-import { calcExpectedOg, calcExpectedFg, calcExpectedIBU, calcIngredientWeight } from "../helpers/beerCalc";
+import {
+    calcExpectedOg,
+    calcExpectedFg,
+    calcExpectedIBU,
+    calcBeerEbc,
+    calcIngredientWeight
+} from "../helpers/beerCalc";
+
 import { HOPS } from "../helpers/recipeStandards";
 
 import Input from "../components/base/Input";
@@ -60,6 +67,7 @@ class Recipe extends React.Component {
         const expectedOG = calcExpectedOg(recipeFermentables, recipe);
         const expectedFG = calcExpectedFg(attenuation, expectedOG);
         const expectedIBU = calcExpectedIBU(recipeHops, recipe, expectedOG);
+        const expectedEBC = calcBeerEbc(recipeFermentables, recipe);
 
         return (
             <div>
@@ -100,6 +108,10 @@ class Recipe extends React.Component {
                                    name="expectedIBU"
                                    label="IBU"
                                    value={expectedIBU} />
+                            <Input attr={{type: "number", disabled: true}}
+                                   name="expectedEBC"
+                                   label="EBC"
+                                   value={expectedEBC} />
                         </div>
                     </div>
 
