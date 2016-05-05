@@ -153,7 +153,7 @@ div.modal-wrapper {
         background-color: $main;
     }
 
-    > div {
+    > div.auth-container {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -166,6 +166,14 @@ div.modal-wrapper {
             transform: none;
         }
 
+    }
+
+    @media #{$mobile} {
+        top:0;
+
+        > div.c-status-message {
+            top: 0 !important;
+        }
     }
 
     img.logo {

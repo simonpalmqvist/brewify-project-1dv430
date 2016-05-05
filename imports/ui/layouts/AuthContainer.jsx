@@ -6,12 +6,15 @@
 import React from "react";
 import { Link } from "react-router";
 
+import StatusMessage from "../components/base/StatusMessage";
+
 export default class AuthContainer extends React.Component {
 
     render() {
         return (
             <div className="modal-wrapper auth">
-                <div>
+                <StatusMessage/>
+                <div className="auth-container">
                     <Link to="/">
                         <img className="logo" src="/logo.png" alt="Brewify"/>
                     </Link>
