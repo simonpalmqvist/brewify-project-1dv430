@@ -94,6 +94,28 @@ table {
 header.main-header {
     background-color: $main;
 
+    div.wrapper {
+        padding: $spacing $spacing;
+
+        nav {
+            position: absolute;
+            top: $spacing;
+            right: $spacing;
+
+
+        }
+
+        @media #{$mobile} {
+            padding: $spacing $half-spacing;
+
+            nav {
+                right: $half-spacing;
+            }
+        }
+    }
+
+    text-align: center;
+
     a {
         color: $white;
     }
@@ -101,12 +123,9 @@ header.main-header {
 
 
 .logo {
-    width: 200px;
-    margin-bottom: -10px;
-
-    @media #{$mobile} {
-        width: 130px;
-    }
+    width: 100px;
+    margin-top: -10px;
+    margin-bottom: -14px;
 }
 
 div.wrapper {
@@ -131,6 +150,13 @@ div.modal-wrapper {
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
+
+        @media #{$mobile} {
+            margin: $spacing * 2 $half-spacing;
+            position: static;
+            transform: none;
+        }
+
     }
 
     img.logo {
