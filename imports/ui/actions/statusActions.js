@@ -13,7 +13,6 @@ let timeOut;
  * @param error
  */
 export function errorAction(error) {
-    clearTimeout(timeOut);
     Store.dispatch({type: "ERROR_MESSAGE", error});
 }
 
@@ -21,7 +20,6 @@ export function errorAction(error) {
  * Dispatches action save to indicate that last call to the server saved the current progress
  */
 export function saveAction() {
-    clearTimeout(timeOut);
     Store.dispatch({type: "SAVE_MESSAGE"});
 }
 
@@ -29,9 +27,7 @@ export function saveAction() {
  * Dispatches action saving to indicate that data is currently being saved
  */
 export function savingAction() {
-    timeOut = setTimeout(() => {
-        Store.dispatch({type: "SAVING_MESSAGE"});
-    }, 100);
+    Store.dispatch({type: "SAVING_MESSAGE"});
 }
 
 /**
