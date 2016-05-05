@@ -1,0 +1,50 @@
+@import "../../layouts/base";
+
+$middlegrey: lighten($dark-grey,10%);
+
+div.c-status-message.wrapper {
+    padding: 0;
+
+    &.active {
+        z-index: 999;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        padding: $half-spacing;
+        position: absolute;
+        background-color: rgba($grey, 0.9);
+        border-bottom: 1px solid $middlegrey;
+        border-top: 0;
+        left: 0;
+        right: 0;
+
+        > div {
+            max-width: 1140px;
+            margin: 0 auto;
+
+            p {
+                color: $middlegrey;
+                float: left;
+            }
+
+            button {
+                float: right;
+                padding: 0;
+                font-weight: bold;
+                border-radius: 10px;
+                width: 20px;
+                height: 20px;
+                text-align: center;
+                background-color: $middlegrey;
+                color: $grey;
+            }
+        }
+
+
+        @media #{$mobile} {
+            position: fixed;
+            top: $header-height;
+        }
+    }
+
+}

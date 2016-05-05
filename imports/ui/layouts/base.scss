@@ -17,6 +17,7 @@ $mobile: "(max-width: 400px)";
 $tablet: "(max-width: 780px)";
 $laptop: "(max-width: 1000px)";
 $desktop: 1140px;
+$header-height: 60px;
 
 //Fonts
 $font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -86,13 +87,23 @@ label {
     display: none;
 }
 
-table {
-
+body {
+    @media #{$mobile} {
+        margin-top: $header-height;
+    }
 }
-
 
 header.main-header {
     background-color: $main;
+    height: 60px;
+
+    @media #{$mobile} {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        z-index: 400;
+    }
 
     div.wrapper {
         padding: $spacing $spacing;
@@ -101,8 +112,6 @@ header.main-header {
             position: absolute;
             top: $spacing;
             right: $spacing;
-
-
         }
 
         @media #{$mobile} {

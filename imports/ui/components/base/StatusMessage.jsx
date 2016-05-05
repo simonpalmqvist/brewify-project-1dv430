@@ -5,6 +5,9 @@
 
 import { Meteor } from "meteor/meteor";
 import React from "react";
+import classNames from "classNames";
+
+import { removeMessage } from "../../actions/StatusActions";
 
 import { connect }  from "react-redux";
 
@@ -18,6 +21,8 @@ class StatusMessage extends React.Component {
         const { flashMessages } = this.props;
 
         let flashMessage;
+        let content;
+        let classes = "wrapper c-status-message";
 
         if (flashMessages.save) {
             flashMessage = (<p>Saved</p>);
@@ -27,9 +32,19 @@ class StatusMessage extends React.Component {
             flashMessage = (<p>Error: {flashMessages.error.reason}</p>);
         }
 
+        if (flashMessage) {
+            classes = classNames(classes, "active");
+            content = (
+                <div>
+                    {flashMessage}
+                    <button onClick={removeMessage}>×</button>
+                </div>
+            );
+        }
+
         return (
-            <div className="wrapper">
-                {flashMessage}
+            <div className={classes}>
+                {content}
             </div>
         );
     }
