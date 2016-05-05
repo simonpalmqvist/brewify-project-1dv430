@@ -15,6 +15,26 @@ export function srmToEbc(srm) {
 }
 
 /**
+ * Function to calculate beers expected color in EBC
+ * @param fermentables - {ebc, amount}
+ * @param recipe - {efficiency, batchSize, lossFermentation, lossKettle}
+ * @returns {number} returns expected ebc for beer
+ */
+export function calcBeerEbc(fermentables, recipe) {
+    //TODO: Read these values from brew profile
+    const efficiency = 0.80;
+    const waterAfterBoil = recipe.batchSize + 0.5 + 2;
+
+    const totalFermentableEbc = fermentables
+        .map(({ebc, amount}) => ebc * amount)
+        .reduce(_sum, 0);
+
+    let result = (totalFermentableEbc * 10 * efficiency) / waterAfterBoil;
+
+    return _round(result, 0);
+}
+
+/**
  * Function to calculate the expected OG
  * @param fermentables - {amount, potential}
  * @param recipe - {efficiency, batchSize, lossFermentation, lossKettle}

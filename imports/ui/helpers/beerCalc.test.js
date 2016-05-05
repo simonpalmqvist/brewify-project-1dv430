@@ -8,7 +8,13 @@
 import { Meteor } from "meteor/meteor";
 import { should } from "meteor/practicalmeteor:chai";
 
-import { srmToEbc, calcExpectedOg, calcExpectedFg, calcIngredientWeight } from "./beerCalc";
+import {
+    srmToEbc,
+    calcBeerEbc,
+    calcExpectedOg,
+    calcExpectedFg,
+    calcIngredientWeight
+} from "./beerCalc";
 
 if (Meteor.isClient) {
     describe("Beer calculations", function() {
@@ -47,6 +53,17 @@ if (Meteor.isClient) {
             ];
 
             calcIngredientWeight(fermentables).should.equal(2.010);
+        });
+
+        it("Should be able to calculate beers expected color in EBC", function() {
+            const fermentables = [
+                {amount: 2.3, ebc: 3},
+                {amount: 0.1, ebc: 5}
+            ];
+
+            const recipe = {batchSize: 8};
+
+            calcBeerEbc(fermentables, recipe).should.equal(6);
         });
     });
 }
