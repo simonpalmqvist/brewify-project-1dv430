@@ -8,6 +8,7 @@ import { Link } from "react-router";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import NavigationBar from "../components/navigation/NavigationBar";
+import StatusMessage from "../components/base/StatusMessage";
 
 export default class AppContainer extends React.Component {
 
@@ -25,6 +26,7 @@ export default class AppContainer extends React.Component {
                         <NavigationBar/>
                     </div>
                 </header>
+                <StatusMessage />
                 <div className="wrapper">
                     <ReactCSSTransitionGroup
                         component="div"

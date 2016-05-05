@@ -213,6 +213,7 @@ div.modal-wrapper {
 
 .button {
     cursor: pointer;
+    box-sizing: border-box;
     font-size: $button-size;
     font-weight: 700;
     letter-spacing: 0.05em;
@@ -241,6 +242,10 @@ h2 {
     color: $white;
     width: 100%;
     margin-top: 0;
+
+    @media #{$mobile} {
+        @include calc-width(100%, "-", $half-spacing);
+    }
 
     @include transition(background-color 0.3s);
 
