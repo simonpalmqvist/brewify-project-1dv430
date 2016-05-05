@@ -1,32 +1,49 @@
 @import "./base";
 
-
-.app-right-leave.app-right-leave-active,
 .app-left-enter {
-    transform: translate3d(102%,0,0);
+    position: absolute;
+    left: $spacing;
+    right: $spacing;
+    transform: translate3d(120%,0,0);
 }
 
-.app-left-leave.app-left-leave-active,
+.app-left-enter.app-left-enter-active {
+    transform: translate3d(0%,0,0);
+    transition: transform 500ms;
+}
+
+.app-left-leave {
+    position: absolute;
+    left: $spacing;
+    right: $spacing;
+    transform: translate3d(0%,0,0);
+}
+
+.app-left-leave.app-left-leave-active {
+    transform: translate3d(-120%,0,0);
+    transition: transform 500ms;
+}
+
 .app-right-enter {
-    transform: translate3d(-102%,0,0);
+    position: absolute;
+    left: $spacing;
+    right: $spacing;
+    transform: translate3d(-120%,0,0);
 }
 
-.app-left-enter.app-left-enter-active,
-.app-right-enter.app-right-enter-active,
-.app-left-leave,
-.app-right-leave {
-    transform: translate3d(0,0,0);
+.app-right-enter.app-right-enter-active {
+    transform: translate3d(0%,0,0);
+    transition: transform 500ms;
 }
 
-.app-left-enter,
-.app-left-leave,
-.app-right-enter,
 .app-right-leave {
     position: absolute;
-    left: 0;
-    right: 0;
-    transition: transform 0.5s linear;
+    left: $spacing;
+    right: $spacing;
+    transform: translate3d(0%,0,0);
 }
 
-
-
+.app-right-leave.app-right-leave-active {
+    transform: translate3d(120%,0,0);
+    transition: transform 500ms;
+}

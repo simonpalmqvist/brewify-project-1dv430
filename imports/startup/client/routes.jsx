@@ -43,7 +43,7 @@ Meteor.startup(() => {
 
     ReactDOM.render(
         <Provider store={Store}>
-            <Router history={hist}>
+            <Router onUpdate={() => window.scrollTo(0, 0)} history={hist}>
                 <Route component={AuthContainer}>
                     <Route path="/login" component={Login} onEnter={alreadyLoggedIn}/>
                     <Route path="/register" component={Register} onEnter={alreadyLoggedIn}/>
