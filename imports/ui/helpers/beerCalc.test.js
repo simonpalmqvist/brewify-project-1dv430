@@ -11,6 +11,7 @@ import { should } from "meteor/practicalmeteor:chai";
 import {
     srmToEbc,
     calcBeerEbc,
+    ebcToHex,
     calcExpectedOg,
     calcExpectedFg,
     calcIngredientWeight
@@ -64,6 +65,10 @@ if (Meteor.isClient) {
             const recipe = {batchSize: 8};
 
             calcBeerEbc(fermentables, recipe).should.equal(6);
+        });
+
+        it("Should be able to return black as color for ebc over 80", function() {
+            ebcToHex(Math.floor(Math.random() * 20) + 81).should.equal("#000000");
         });
     });
 }

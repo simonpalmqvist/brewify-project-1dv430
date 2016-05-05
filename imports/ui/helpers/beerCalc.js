@@ -15,6 +15,15 @@ export function srmToEbc(srm) {
 }
 
 /**
+ * Function to convert colors from the EBC standard to SRM
+ * @param ebc - EBC color number
+ * @returns {number} returns SRM color number
+ */
+export function ebcToSrm(ebc) {
+    return Math.round(ebc / 1.97);
+}
+
+/**
  * Function to calculate beers expected color in EBC
  * @param fermentables - {ebc, amount}
  * @param recipe - {efficiency, batchSize, lossFermentation, lossKettle}
@@ -229,6 +238,143 @@ export function ingredientTimeTypeToText(timeType) {
             throw new Error("Type value doesn't exist for enumeration INGREDIENT.ADDED");
     }
     return result;
+}
+
+/**
+ * Function to convert ebc to hex color
+ * @param ebc - ebc color
+ * @returns {string} - hex color
+ */
+export function ebcToHex(ebc) {
+    let result;
+
+    switch (ebcToSrm(ebc)) {
+        case 0:
+        case 1:
+            result = "FFE699";
+            break;
+        case 2:
+            result = "FFD878";
+            break;
+        case 3:
+            result = "FFCA5A";
+            break;
+        case 4:
+            result = "FFBF42";
+            break;
+        case 5:
+            result = "FBB123";
+            break;
+        case 6:
+            result = "F8A600";
+            break;
+        case 7:
+            result = "F39C00";
+            break;
+        case 8:
+            result = "EA8F00";
+            break;
+        case 9:
+            result = "E58500";
+            break;
+        case 10:
+            result = "DE7C00";
+            break;
+        case 11:
+            result = "D77200";
+            break;
+        case 12:
+            result = "CF6900";
+            break;
+        case 13:
+            result = "CB6200";
+            break;
+        case 14:
+            result = "C35900";
+            break;
+        case 15:
+            result = "BB5100";
+            break;
+        case 16:
+            result = "B54C00";
+            break;
+        case 17:
+            result = "B04500";
+            break;
+        case 18:
+            result = "A63E00";
+            break;
+        case 19:
+            result = "A13700";
+            break;
+        case 20:
+            result = "9B3200";
+            break;
+        case 21:
+            result = "952D00";
+            break;
+        case 22:
+            result = "8E2900";
+            break;
+        case 23:
+            result = "882300";
+            break;
+        case 24:
+            result = "821E00";
+            break;
+        case 25:
+            result = "7B1A00";
+            break;
+        case 26:
+            result = "771900";
+            break;
+        case 27:
+            result = "701400";
+            break;
+        case 28:
+            result = "6A0E00";
+            break;
+        case 29:
+            result = "660D00";
+            break;
+        case 30:
+            result = "600903";
+            break;
+        case 31:
+            result = "5E0B00";
+            break;
+        case 32:
+            result = "5A0A02";
+            break;
+        case 33:
+            result = "520907";
+            break;
+        case 34:
+            result = "4C0505";
+            break;
+        case 35:
+            result = "470606";
+            break;
+        case 36:
+            result = "440607";
+            break;
+        case 37:
+            result = "3F0708";
+            break;
+        case 38:
+            result = "3B0607";
+            break;
+        case 39:
+            result = "3A070B";
+            break;
+        case 40:
+            result = "36080A";
+            break;
+        default:
+            result = "000000";
+            break;
+    }
+    return "#" + result;
 }
 
 /**
