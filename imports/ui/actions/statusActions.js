@@ -6,33 +6,56 @@
 //Modules
 import Store from "../store";
 
+let timeOut;
+
 /**
  * Dispatches action error with specified error
  * @param error
  */
 export function errorAction(error) {
-    Store.dispatch({type: "ERROR", error});
+    clearTimeout(timeOut);
+    Store.dispatch({type: "ERROR_MESSAGE", error});
 }
 
 /**
  * Dispatches action save to indicate that last call to the server saved the current progress
  */
 export function saveAction() {
-    Store.dispatch({type: "SAVE"});
+    clearTimeout(timeOut);
+    Store.dispatch({type: "SAVE_MESSAGE"});
 }
+
+/**
+ * Dispatches action saving to indicate that data is currently being saved
+ */
+export function savingAction() {
+    timeOut = setTimeout(() => {
+        Store.dispatch({type: "SAVING_MESSAGE"});
+    }, 100);
+}
+
+/**
+ * Dispatches action remove message to hide any messages showed
+ */
+export function removeMessage() {
+    Store.dispatch({type: "REMOVE_MESSAGE"});
+}
+
+
 
 /**
  * Dispatches action to show loader but only after one second
  */
 export function startedLoading() {
-    setTimeout(() => {
+    timeOut = setTimeout(() => {
         Store.dispatch({type: "LOADING", status: true});
-    }, 1000);
+    }, 100);
 }
 
 /**
  * Dispatches action to dismiss loader
  */
 export function finishedLoading() {
+    clearTimeout(timeOut);
     Store.dispatch({type: "LOADING", status: false});
 }

@@ -8,7 +8,7 @@ import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { browserHistory } from "react-router";
 import Store from "../store";
-import { errorAction } from "./StatusActions";
+import { errorAction, removeMessage } from "./StatusActions";
 import { subscribeAll } from "./SubscribeActions";
 import { addBrewProfile } from "./BrewProfileActions";
 
@@ -30,6 +30,7 @@ export function loginUser(email, password) {
             if (error) {
                 return errorAction(error);
             }
+            removeMessage();
             subscribeAll();
             redirect();
         });
@@ -48,6 +49,7 @@ export function registerUser(email, password) {
                 return errorAction(error);
             }
             //Subscribe to collections, add a brew profile and redirect to dashboard
+            removeMessage();
             subscribeAll();
             addBrewProfile();
             redirect();
@@ -59,6 +61,7 @@ export function registerUser(email, password) {
  * Logout action, when done redirect to start page
  */
 export function logoutUser() {
+    removeMessage();
     Store.dispatch(() => {
         Meteor.logout(() => browserHistory.push("/"));
     });

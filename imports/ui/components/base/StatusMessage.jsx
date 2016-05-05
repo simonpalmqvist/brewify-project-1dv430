@@ -23,6 +23,8 @@ class StatusMessage extends React.Component {
             flashMessage = (<p>Saved</p>);
         } else if (flashMessages.saving) {
             flashMessage = (<p>Saving</p>);
+        } else if (flashMessages.error) {
+            flashMessage = (<p>Error: {flashMessages.error.reason}</p>);
         }
 
         return (

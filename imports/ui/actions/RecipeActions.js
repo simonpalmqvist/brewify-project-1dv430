@@ -6,7 +6,7 @@
 import { Meteor } from "meteor/meteor";
 import { browserHistory } from "react-router";
 import Store from "../store";
-import { saveAction, errorAction } from "./StatusActions";
+import { saveAction, savingAction, errorAction } from "./StatusActions";
 import { addBrewProfile } from "./BrewProfileActions";
 
 import { Recipes } from "../../api/recipes/Recipes";
@@ -39,6 +39,8 @@ export function addRecipe() {
  * @param update
  */
 export function updateRecipe(id, update) {
+    savingAction();
+
     Store.dispatch(() => {
         Meteor.callPromise("recipes.update", id, update)
             .then(saveAction)
@@ -74,6 +76,8 @@ export function getFermentableDefaults(fermentable) {
  * @param fermentable
  */
 export function addRecipeFermentable(recipeId, fermentable) {
+    savingAction();
+
     const { name, potential, ebc } = getFermentableDefaults(fermentable);
 
     Store.dispatch(() => {
@@ -89,6 +93,8 @@ export function addRecipeFermentable(recipeId, fermentable) {
  * @param update object with key value pairs on what should update
  */
 export function updateRecipeFermentable(id, update) {
+    savingAction();
+
     Store.dispatch(() => {
         Meteor.callPromise("recipes.fermentables.update", id, update)
             .then(saveAction)
@@ -101,6 +107,8 @@ export function updateRecipeFermentable(id, update) {
  * @param id - RecipeFermentable id
  */
 export function deleteRecipeFermentable(id) {
+    savingAction();
+
     Store.dispatch(() => {
         Meteor.callPromise("recipes.fermentables.remove", id)
             .then(saveAction)
@@ -131,6 +139,8 @@ export function getHopDefaults(hop) {
  * @param hop
  */
 export function addRecipeHop(recipeId, use, hop) {
+    savingAction();
+
     const { name, alpha, form} = getHopDefaults(hop);
 
     Store.dispatch(() => {
@@ -146,6 +156,8 @@ export function addRecipeHop(recipeId, use, hop) {
  * @param update object with key value pairs on what should update
  */
 export function updateRecipeHop(id, update) {
+    savingAction();
+
     Store.dispatch(() => {
         Meteor.callPromise("recipes.hops.update", id, update)
             .then(saveAction)
@@ -158,6 +170,8 @@ export function updateRecipeHop(id, update) {
  * @param id - RecipeHop id
  */
 export function deleteRecipeHop(id) {
+    savingAction();
+
     Store.dispatch(() => {
         Meteor.callPromise("recipes.hops.remove", id)
             .then(saveAction)
@@ -192,6 +206,8 @@ export function getYeastDefaults(yeast) {
  * @param yeast
  */
 export function addRecipeYeast(recipeId, yeast) {
+    savingAction();
+
     const newYeast = getYeastDefaults(yeast);
 
     Store.dispatch(() => {
@@ -207,6 +223,8 @@ export function addRecipeYeast(recipeId, yeast) {
  * @param update object with key value pairs on what should update
  */
 export function updateRecipeYeast(id, update) {
+    savingAction();
+
     Store.dispatch(() => {
         Meteor.callPromise("recipes.yeasts.update", id, update)
             .then(saveAction)
@@ -219,6 +237,8 @@ export function updateRecipeYeast(id, update) {
  * @param id - RecipeHop id
  */
 export function deleteRecipeYeast(id) {
+    savingAction();
+
     Store.dispatch(() => {
         Meteor.callPromise("recipes.yeasts.remove", id)
             .then(saveAction)
@@ -232,6 +252,8 @@ export function deleteRecipeYeast(id) {
  * @param ingredient
  */
 export function addRecipeIngredient(recipeId, ingredient) {
+    savingAction();
+
     Store.dispatch(() => {
         Meteor.callPromise("recipes.ingredients.insert", recipeId, ingredient.name)
             .then(saveAction)
@@ -245,6 +267,8 @@ export function addRecipeIngredient(recipeId, ingredient) {
  * @param update object with key value pairs on what should update
  */
 export function updateRecipeIngredient(id, update) {
+    savingAction();
+
     Store.dispatch(() => {
         Meteor.callPromise("recipes.ingredients.update", id, update)
             .then(saveAction)
@@ -257,6 +281,8 @@ export function updateRecipeIngredient(id, update) {
  * @param id - RecipeIngredient id
  */
 export function deleteRecipeIngredient(id) {
+    savingAction();
+
     Store.dispatch(() => {
         Meteor.callPromise("recipes.ingredients.remove", id)
             .then(saveAction)

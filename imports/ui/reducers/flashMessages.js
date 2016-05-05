@@ -3,15 +3,21 @@
  * @author simonpalmqvist
  */
 
-export default function flashMessages(state, action) {
+export default function flashMessages(state = {}, action = {}) {
     switch (action.type) {
-        case "SAVE":
-            return {save: {}};
+        case "SAVE_MESSAGE":
+            return {save: true};
             break;
-        case "ERROR":
+        case "SAVING_MESSAGE":
+            return {saving: true};
+            break;
+        case "ERROR_MESSAGE":
             return {error: action.error};
             break;
-        default:
+        case "REMOVE_MESSAGE":
             return {};
+            break;
+        default:
+            return state;
     }
 }
