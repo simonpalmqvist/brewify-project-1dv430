@@ -152,7 +152,7 @@ div.modal-wrapper {
         text-align: center;
 
         @media #{$mobile} {
-            margin: $spacing * 2 $half-spacing;
+            margin: $spacing * 4 $half-spacing;
             position: static;
             transform: none;
         }
@@ -239,6 +239,8 @@ h2 {
 
     background-color: $main;
     color: $white;
+    width: 100%;
+    margin-top: 0;
 
     @include transition(background-color 0.3s);
 
