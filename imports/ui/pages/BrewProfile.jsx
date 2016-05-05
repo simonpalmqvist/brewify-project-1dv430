@@ -109,11 +109,10 @@ const BrewProfileContainer = createContainer(() => {
 }, BrewProfile);
 
 //Map the current state to the properties in component
-function mappingStateToProps({ flashMessages, browser }) {
+function mappingStateToProps({ flashMessages }) {
     return {
         save: flashMessages.save,
-        error: flashMessages.error,
-        mobile: browser.mobile
+        error: flashMessages.error
     };
 }
 
