@@ -86,7 +86,7 @@ export default class Input extends React.Component {
     }
 
     render() {
-        const { label, name, attr, className} = this.props;
+        const { label, name, attr, className, style} = this.props;
         const { value } = this.state;
 
         let labelEl;
@@ -95,7 +95,7 @@ export default class Input extends React.Component {
 
         //Write out label if needed
         if (label) {
-            labelEl = (<label className="c-input-label" htmlFor={attr.id}>{label}</label>);
+            labelEl = (<label className={classes} htmlFor={attr.id}>{label}</label>);
         }
 
         return (
@@ -104,6 +104,7 @@ export default class Input extends React.Component {
                 <input className={classes}
                        name={name}
                        value={value}
+                       style={style}
                        {...attr}
                        onChange={this.handleChange.bind(this)}
                        onKeyPress={this.onEnterKeyPress.bind(this)}

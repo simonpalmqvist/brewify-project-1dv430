@@ -36,6 +36,7 @@ import FermentablesList from "../components/recipe/FermentablesList";
 import HopsList from "../components/recipe/HopsList";
 import YeastInfo from "../components/recipe/YeastInfo";
 import IngredientsList from "../components/recipe/IngredientsList";
+import EbcInput from "../components/recipe/EbcInput";
 
 class Recipe extends React.Component {
 
@@ -108,10 +109,7 @@ class Recipe extends React.Component {
                                    name="expectedIBU"
                                    label="IBU"
                                    value={expectedIBU} />
-                            <Input attr={{type: "number", disabled: true}}
-                                   name="expectedEBC"
-                                   label="EBC"
-                                   value={expectedEBC} />
+                            <EbcInput ebc={expectedEBC} />
                         </div>
                     </div>
 

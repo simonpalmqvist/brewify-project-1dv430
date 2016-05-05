@@ -50,10 +50,32 @@ input.c-input {
         }
 
     }
+
+    &.ebc-input {
+        -webkit-text-fill-color: $white;
+        color: $white;
+        width: 30px;
+        border-radius: 15px;
+        text-align: center;
+        
+        @media #{$tablet} {
+            border-radius: $input-spacing;
+        }
+
+        @media #{$mobile} {
+            border-radius: 0;
+        }
+    }
 }
 
-label.c-input-label {
+label.c-input {
     display: inline;
-    padding: 4px;
+    padding: $input-spacing;
     font-weight: bold;
+
+    &.ebc-input {
+        @media #{$tablet} {
+            color: $white;
+        }
+    }
 }

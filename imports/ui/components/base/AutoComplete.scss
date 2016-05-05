@@ -6,7 +6,7 @@ input.c-autocomplete {
 }
 
 label.c-autocomplete-label {
-    @extend label.c-input-label;
+    @extend label.c-input;
 }
 
 div.c-autocomplete-list {

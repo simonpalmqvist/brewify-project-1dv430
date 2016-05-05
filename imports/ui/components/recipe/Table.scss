@@ -145,6 +145,10 @@ div.responsive-info {
                 font-weight: normal;
                 padding: $half-spacing;
                 margin-left: -$half-spacing;
+
+                @media #{$mobile} {
+                    margin-left: -$input-spacing;
+                }
             }
 
             input[type=text], input[type=number], select {
