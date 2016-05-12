@@ -71,8 +71,14 @@ class BrewProfile extends React.Component {
                        validate={this.validateOne}
                        onUpdate={update}/>
                 <Input name="boilLoss"
-                       label="Loss after boil (l)"
+                       label="Loss in boil kettle (l)"
                        value={brewProfile.boilLoss}
+                       attr={{type: "number"}}
+                       validate={this.validateOne}
+                       onUpdate={update}/>
+                <Input name="fermenterLoss"
+                       label="Loss in fermententer (l)"
+                       value={brewProfile.fermenterLoss}
                        attr={{type: "number"}}
                        validate={this.validateOne}
                        onUpdate={update}/>

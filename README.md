@@ -37,3 +37,14 @@ npm run test
 npm run acceptance-test-server
 npm run acceptance-test
 ```
+
+
+
+## Release instructions
+
+### v0.0.6
+Update collections
+```
+db.brew.profiles.update({},{ $set: {fermenterLoss: 0}}, { multi: true });
+db.recipes.update({},{ $set: {efficiency: 75, boilLoss: 0, fermenterLoss: 0}}, { multi: true });
+```

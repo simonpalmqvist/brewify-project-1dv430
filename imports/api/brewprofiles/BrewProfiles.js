@@ -45,7 +45,11 @@ BrewProfiles.schema = new SimpleSchema({
     boilLoss: {
         type: Number,
         min: 0,
-        max: 100,
+        decimal: true
+    },
+    fermenterLoss: {
+        type: Number,
+        min: 0,
         decimal: true
     },
     lauterDeadSpace: {

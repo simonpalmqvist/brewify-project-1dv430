@@ -27,6 +27,22 @@ Recipes.schema = new SimpleSchema({
     boilTime: {
         type: Number,
         min: 0
+    },
+    efficiency: {
+        type: Number,
+        min: 0,
+        max: 100,
+        decimal: true
+    },
+    boilLoss: {
+        type: Number,
+        min: 0,
+        decimal: true
+    },
+    fermenterLoss: {
+        type: Number,
+        min: 0,
+        decimal: true
     }
 });
 
