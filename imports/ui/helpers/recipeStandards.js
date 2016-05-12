@@ -15,6 +15,8 @@ export const WATER_GRAIN_RATIO = 3;
 
 export const BOIL_LOSS = 0;
 
+export const FERMENTER_LOSS = 0;
+
 export const LAUTER_DEAD_SPACE = 0;
 
 export const GRAIN_TEMP = 21;

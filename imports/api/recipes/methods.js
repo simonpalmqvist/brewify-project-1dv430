@@ -8,10 +8,8 @@ import { Recipes } from "./Recipes";
 import {getUser, belongsToUser} from "../collectionHelpers";
 
 Meteor.methods({
-    "recipes.insert": (name, batchSize, boilTime) => {
-        let userId = getUser(Recipes);
-
-        const newRecipe = {userId, name, batchSize, boilTime};
+    "recipes.insert": (newRecipe) => {
+        newRecipe.userId = getUser(Recipes);
 
         //Validate and store it
         return Recipes.insert(newRecipe);

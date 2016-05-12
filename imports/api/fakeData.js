@@ -18,6 +18,7 @@ export function brewProfile(userId) {
         evapRate: number({min: 0, max: 100}),
         waterGrainRatio: number({min: 0, max: 10}),
         boilLoss: number({min: 0, max: 10}),
+        fermenterLoss: number({min: 0, max: 10}),
         lauterDeadSpace: number({min: 0, max: 10}),
         grainTemp: number({min: 0, max: 100})
     };
@@ -28,7 +29,10 @@ export function recipe(userId = Random.id()) {
         userId,
         name: words(),
         batchSize: number({min: 10, max: 1000}),
-        boilTime: number({min: 30, max: 1000})
+        boilTime: number({min: 30, max: 1000}),
+        efficiency: number({min: 0, max: 100}),
+        boilLoss: number({min: 0, max: 10}),
+        fermenterLoss: number({min: 0, max: 10})
     };
 }
 

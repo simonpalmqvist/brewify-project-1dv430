@@ -33,6 +33,7 @@ if (Meteor.isServer) {
     let evapRate;
     let waterGrainRatio;
     let boilLoss;
+    let fermenterLoss;
     let lauterDeadSpace;
     let grainTemp;
 
@@ -52,6 +53,7 @@ if (Meteor.isServer) {
             evapRate = faker.random.number({min: 0, max: 100});
             waterGrainRatio = faker.random.number({min: 0, max: 10});
             boilLoss = faker.random.number({min: 0, max: 10});
+            fermenterLoss = faker.random.number({min: 0, max: 10});
             lauterDeadSpace = faker.random.number({min: 0, max: 10});
             grainTemp = faker.random.number({min: 0, max: 100});
 
@@ -63,6 +65,7 @@ if (Meteor.isServer) {
                 evapRate,
                 waterGrainRatio,
                 boilLoss,
+                fermenterLoss,
                 lauterDeadSpace,
                 grainTemp
             };

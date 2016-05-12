@@ -4,7 +4,6 @@
  * @author simonpalmqvist
  */
 
-
 import { Meteor } from "meteor/meteor";
 import { resetDatabase } from "meteor/xolvio:cleaner";
 import chai from "meteor/practicalmeteor:chai";
@@ -28,9 +27,13 @@ if (Meteor.isServer) {
 
     let userId;
     let recipeId;
+    let recipe;
     let name;
     let batchSize;
     let boilTime;
+    let efficiency;
+    let boilLoss;
+    let fermenterLoss;
 
     describe("Recipes", function() {
         beforeEach(function() {
@@ -42,6 +45,19 @@ if (Meteor.isServer) {
             name = faker.lorem.words();
             batchSize = faker.random.number({min: 10, max: 1000});
             boilTime = faker.random.number({min: 30, max: 1000});
+            efficiency = faker.random.number({min: 0, max: 100});
+            boilLoss = faker.random.number({min: 0, max: 10});
+            fermenterLoss = faker.random.number({min: 0, max: 10});
+
+            recipe = {
+                userId,
+                name,
+                batchSize,
+                boilTime,
+                efficiency,
+                boilLoss,
+                fermenterLoss
+            };
         });
 
         after(function() {
@@ -51,31 +67,55 @@ if (Meteor.isServer) {
         describe("collection", function() {
 
             it("Should be able to add recipe", function() {
-                Recipes.insert({userId, name, batchSize, boilTime});
+                Recipes.insert(recipe);
 
                 // Recipe should be added
                 Recipes.find({name}).count().should.equal(1);
             });
 
             it("Should not be able to add recipe without name", function() {
-
-                (() => Recipes.insert({userId, boilTime, batchSize})).should.throw(Error);
+                delete recipe.name;
+                (() => Recipes.insert(recipe)).should.throw(Error);
 
                 //Recipe should not be added
                 Recipes.find({}).count().should.equal(0);
             });
 
             it("Should not be able to add recipe without boil time", function() {
-
-                (() => Recipes.insert({userId, name, batchSize})).should.throw(Error);
+                delete recipe.boilTime;
+                (() => Recipes.insert(recipe)).should.throw(Error);
 
                 //Recipe should not be added
                 Recipes.find({}).count().should.equal(0);
             });
 
             it("Should not be able to add recipe without batch size", function() {
+                delete recipe.batchSize;
+                (() => Recipes.insert(recipe)).should.throw(Error);
 
-                (() => Recipes.insert({userId, name, boilTime})).should.throw(Error);
+                //Recipe should not be added
+                Recipes.find({}).count().should.equal(0);
+            });
+
+            it("Should not be able to add recipe without efficiency", function() {
+                delete recipe.efficiency;
+                (() => Recipes.insert(recipe)).should.throw(Error);
+
+                //Recipe should not be added
+                Recipes.find({}).count().should.equal(0);
+            });
+
+            it("Should not be able to add recipe without boil loss", function() {
+                delete recipe.boilLoss;
+                (() => Recipes.insert(recipe)).should.throw(Error);
+
+                //Recipe should not be added
+                Recipes.find({}).count().should.equal(0);
+            });
+
+            it("Should not be able to add recipe without fermenter loss", function() {
+                delete recipe.fermenterLoss;
+                (() => Recipes.insert(recipe)).should.throw(Error);
 
                 //Recipe should not be added
                 Recipes.find({}).count().should.equal(0);
@@ -86,13 +126,13 @@ if (Meteor.isServer) {
 
             describe("Not authenticated", () => {
                 it("Should not be able to insert new recipe", function() {
-                    (() => insertMethod(name, boilTime, batchSize)).should.throw(Error);
+                    (() => insertMethod(recipe)).should.throw(Error);
 
                     Recipes.find({}).count().should.equal(0);
                 });
 
                 it("Should not be able to remove recipe", function() {
-                    recipeId = Recipes.insert({userId, name, batchSize, boilTime});
+                    recipeId = Recipes.insert(recipe);
 
                     (() => removeMethod(recipeId)).should.throw(Error);
 
@@ -100,7 +140,7 @@ if (Meteor.isServer) {
                 });
 
                 it("Should not be able to update recipe", function() {
-                    recipeId = Recipes.insert({userId, name, batchSize, boilTime});
+                    recipeId = Recipes.insert(recipe);
 
                     (() => updateMethod(recipeId, {name: faker.lorem.words()})).should.throw(Error);
 
@@ -120,13 +160,13 @@ if (Meteor.isServer) {
 
                 it("Should be able to insert new recipe", function() {
 
-                    insertMethod(name, boilTime, batchSize);
+                    insertMethod(recipe);
 
                     Recipes.find({}).count().should.equal(1);
                 });
 
                 it("Should be able to remove recipe", function() {
-                    recipeId = Recipes.insert({userId, name, batchSize, boilTime});
+                    recipeId = Recipes.insert(recipe);
 
                     removeMethod(recipeId);
 
@@ -136,7 +176,7 @@ if (Meteor.isServer) {
                 it("Should be able to update recipe", function() {
                     let newName = faker.lorem.words();
 
-                    recipeId = Recipes.insert({userId, name, batchSize, boilTime});
+                    recipeId = Recipes.insert(recipe);
 
                     updateMethod(recipeId, {name: newName});
 

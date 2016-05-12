@@ -16,6 +16,7 @@ import {
     EVAP_RATE,
     WATER_GRAIN_RATIO,
     BOIL_LOSS,
+    FERMENTER_LOSS,
     LAUTER_DEAD_SPACE,
     GRAIN_TEMP
 } from "../helpers/recipeStandards";
@@ -31,6 +32,7 @@ export function addBrewProfile() {
         evapRate: EVAP_RATE,
         waterGrainRatio: WATER_GRAIN_RATIO,
         boilLoss: BOIL_LOSS,
+        fermenterLoss: FERMENTER_LOSS,
         lauterDeadSpace: LAUTER_DEAD_SPACE,
         grainTemp : GRAIN_TEMP
     };

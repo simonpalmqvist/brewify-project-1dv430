@@ -26,8 +26,17 @@ export function addRecipe() {
         return addBrewProfile();
     }
 
+    let newRecipe = {
+        name,
+        batchSize: brewProfile.batchSize,
+        boilTime: brewProfile.boilTime,
+        efficiency: brewProfile.efficiency,
+        boilLoss: brewProfile.boilLoss,
+        fermenterLoss: brewProfile.fermenterLoss
+    };
+
     Store.dispatch(() => {
-        Meteor.callPromise("recipes.insert", name, brewProfile.batchSize, brewProfile.boilTime)
+        Meteor.callPromise("recipes.insert", newRecipe)
             .then((recipeId) => browserHistory.push(`/recipe/${recipeId}`))
             .catch(errorAction);
     });
