@@ -33,7 +33,6 @@ export function loginUser(email, password) {
                 return errorAction(error);
             }
 
-            removeMessage();
             subscribeAll();
             redirect();
             finishedLoading();
@@ -55,7 +54,6 @@ export function registerUser(email, password) {
                 return errorAction(error);
             }
             //Subscribe to collections, add a brew profile and redirect to dashboard
-            removeMessage();
             subscribeAll();
             addBrewProfile();
             redirect();
@@ -68,7 +66,6 @@ export function registerUser(email, password) {
  */
 export function logoutUser() {
     startedLoading();
-    removeMessage();
     Store.dispatch(() => {
         Meteor.logout(() => {
             browserHistory.push("/");

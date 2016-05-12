@@ -15,6 +15,7 @@ import { syncHistoryWithStore} from "react-router-redux";
 import { alreadyLoggedIn, loggedIn } from "../../ui/actions/AuthActions";
 import { subscribeAll } from "../../ui/actions/SubscribeActions.js";
 import { recipeExists } from "../../ui/actions/RecipeActions";
+import { removeMessage } from "../../ui/actions/StatusActions";
 import Store from "../../ui/store";
 
 //Layouts
@@ -41,9 +42,14 @@ Meteor.startup(() => {
     //Sync route history with store
     const hist = syncHistoryWithStore(browserHistory, Store);
 
+    const onPageChange = () => {
+        window.scrollTo(0, 0);
+        removeMessage();
+    };
+
     ReactDOM.render(
         <Provider store={Store}>
-            <Router onUpdate={() => window.scrollTo(0, 0)} history={hist}>
+            <Router onUpdate={onPageChange} history={hist}>
                 <Route component={AuthContainer}>
                     <Route path="/login" component={Login} onEnter={alreadyLoggedIn}/>
                     <Route path="/register" component={Register} onEnter={alreadyLoggedIn}/>
