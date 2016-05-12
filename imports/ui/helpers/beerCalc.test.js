@@ -12,13 +12,24 @@ import {
     srmToEbc,
     calcBeerEbc,
     ebcToHex,
+    calcExpectedIBU,
     calcExpectedOg,
     calcExpectedFg,
     calcIngredientWeight
 } from "./beerCalc";
 
+import {
+    HOPS
+} from "./recipeStandards";
+
+let recipe;
+
 if (Meteor.isClient) {
     describe("Beer calculations", function() {
+        beforeEach(function() {
+            recipe = {efficiency: 80, batchSize: 8, boilLoss: 2, fermenterLoss: 0.5}
+        });
+
         it("Should be able to convert SRM to EBC", function() {
             const srm = 2;
             const srm2 = 350;
@@ -33,9 +44,19 @@ if (Meteor.isClient) {
                 {amount: 1.9, potential: 1.036},
                 {amount: 0.1, potential: 1.033}
             ];
-            const recipe = {batchSize: 8};
 
             calcExpectedOg(fermentables, recipe).should.equal(1.046);
+        });
+
+        it("Should be able to give an expected IBU", function() {
+            const og = 1.058;
+            const hops = [
+                {amount: 10, alpha: 10.5, time: 60, form: HOPS.FORM.PELLET},
+                {amount: 20, alpha: 10.5, time: 30, form: HOPS.FORM.PELLET},
+                {amount: 30, alpha: 10.5, time: 15, form: HOPS.FORM.PELLET}
+            ];
+
+            calcExpectedIBU(hops, recipe, og).should.equal(99.4);
         });
 
         it("Should be able to give an expected FG", function() {
@@ -61,8 +82,6 @@ if (Meteor.isClient) {
                 {amount: 2.3, ebc: 3},
                 {amount: 0.1, ebc: 5}
             ];
-
-            const recipe = {batchSize: 8};
 
             calcBeerEbc(fermentables, recipe).should.equal(6);
         });

@@ -30,9 +30,8 @@ export function ebcToSrm(ebc) {
  * @returns {number} returns expected ebc for beer
  */
 export function calcBeerEbc(fermentables, recipe) {
-    //TODO: Read these values from brew profile
-    const efficiency = 0.80;
-    const waterAfterBoil = recipe.batchSize + 0.5 + 2;
+    const efficiency = recipe.efficiency / 100;
+    const waterAfterBoil = _waterAfterBoil(recipe);
 
     const totalFermentableEbc = fermentables
         .map(({ebc, amount}) => ebc * amount)
@@ -50,9 +49,8 @@ export function calcBeerEbc(fermentables, recipe) {
  * @returns {number} - returns expected OG
  */
 export function calcExpectedOg(fermentables, recipe) {
-    //TODO: Read these values from brew profile
-    const efficiency = 0.80;
-    const waterAfterBoil = _literToGallon(recipe.batchSize + 0.5 + 2);
+    const efficiency = recipe.efficiency / 100;
+    const waterAfterBoil = _literToGallon(_waterAfterBoil(recipe));
 
     let points = fermentables
         .map(({amount, potential}) => _kgToLbs(amount) * _getPoints(potential))
@@ -71,14 +69,13 @@ export function calcExpectedOg(fermentables, recipe) {
  * @returns {number} - returns expected IBU
  */
 export function calcExpectedIBU(hops, recipe, og) {
-    //TODO: Read these values from brew profile
-    const waterAfterBoil = recipe.batchSize + 0.5 + 2;
+    const waterAfterBoil = _waterAfterBoil(recipe);
 
     const amountOfSugar = 1.65 * Math.pow(0.000125, og - 1);
 
     let result = hops
         .map(({amount, alpha, time, form}) => {
-            return hopEffectivity(form) * amountOfSugar * ((1 - Math.exp(-0.04 * time)) / 4.15) *
+            return _hopEffectivity(form) * amountOfSugar * ((1 - Math.exp(-0.04 * time)) / 4.15) *
                 ((alpha * amount * 10) / waterAfterBoil);
         })
         .reduce(_sum, 0);
@@ -438,6 +435,10 @@ function _round(value, decimals) {
     return Math.round(value * x)/x;
 }
 
-function hopEffectivity(form) {
+function _hopEffectivity(form) {
     return form === HOPS.FORM.PELLET ? 1.15 : 1;
+}
+
+function _waterAfterBoil({batchSize, boilLoss, fermenterLoss}) {
+    return batchSize + boilLoss + fermenterLoss;
 }
