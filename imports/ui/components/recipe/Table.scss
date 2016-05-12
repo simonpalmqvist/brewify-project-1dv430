@@ -100,13 +100,22 @@ table.responsive-table {
     }
 }
 
-
-
 div.responsive-info {
 
     > div {
         display: inline-block;
         width: 20%;
+        margin-bottom: $half-spacing;
+    }
+
+    &.row-3 {
+        > div {
+            width: 33%;
+
+            @media #{$tablet} {
+                width: 100%;
+            }
+        }
     }
 
     &.side {
@@ -138,6 +147,7 @@ div.responsive-info {
             display: block;
             width: 100%;
             border-top: 1px solid $grey;
+            margin-bottom: 0;
 
             label {
                 display: block;

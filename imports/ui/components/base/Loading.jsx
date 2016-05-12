@@ -17,8 +17,6 @@ class Loading extends React.Component {
         let classes = "c-loading";
         let element;
 
-        console.log(loading.status);
-
         if (loading.status) {
             classes = classNames(classes, "active");
             element = (<div><img src={imgSrc}/></div>);

@@ -3,6 +3,7 @@ $main: #54BE68;
 $text-color: #262626;
 $grey: #EBEBEB;
 $dark-grey: #969696;
+$middlegrey: lighten($dark-grey,15%);
 $warning: #f55046;
 $white: #FFF;
 
@@ -88,22 +89,19 @@ label {
 }
 
 body {
-    @media #{$mobile} {
-        margin-top: $header-height;
-    }
+    margin-top: $header-height;
 }
 
 header.main-header {
     background-color: $main;
     height: 60px;
+    border-bottom: solid 1px $middlegrey;
 
-    @media #{$mobile} {
-        position: fixed;
-        left: 0;
-        top: 0;
-        right: 0;
-        z-index: 400;
-    }
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 400;
 
     div.wrapper {
         padding: $spacing $spacing;
@@ -240,6 +238,10 @@ div.modal-wrapper {
     display: block;
 }
 
+p {
+    margin-bottom: $spacing;
+}
+
 h2, .input-header {
     font-size: $h2-size;
     margin-top: -$half-spacing;
@@ -272,5 +274,11 @@ h2 {
 
     &:active {
         background-color: $main;
+    }
+
+    &.center {
+        width: auto;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
