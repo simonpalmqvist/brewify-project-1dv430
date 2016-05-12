@@ -6,7 +6,7 @@
 import { Meteor } from "meteor/meteor";
 import { browserHistory } from "react-router";
 import Store from "../store";
-import { saveAction, savingAction, errorAction } from "./StatusActions";
+import { saveAction, savingAction, errorAction, startedLoading, finishedLoading } from "./StatusActions";
 import { addBrewProfile } from "./BrewProfileActions";
 
 import { Recipes } from "../../api/recipes/Recipes";
@@ -311,12 +311,18 @@ export function recipeExists(nextState, transition, callback) {
         callback();
     }
 
+    startedLoading();
+
     Store.getState().subscriptions.recipes.readyPromise()
         .then(() => {
             if(!Recipes.findOne(nextState.params.id)) {
                 transition("/dashboard");
             }
+            finishedLoading();
             callback();
         })
-        .catch(() => transition("/dashboard"));
+        .catch(() => {
+            transition("/dashboard");
+            finishedLoading();
+        });
 }

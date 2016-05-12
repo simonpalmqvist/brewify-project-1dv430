@@ -7,6 +7,7 @@ import React from "react";
 import { Link } from "react-router";
 
 import StatusMessage from "../components/base/StatusMessage";
+import Loading from "../components/base/Loading";
 
 export default class AuthContainer extends React.Component {
 
@@ -22,6 +23,7 @@ export default class AuthContainer extends React.Component {
                         {this.props.children}
                     </div>
                 </div>
+                <Loading imgSrc="/loading.png"/>
             </div>
         );
     }

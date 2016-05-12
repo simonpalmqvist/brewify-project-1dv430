@@ -25,7 +25,7 @@ import {
  * Action to add a brew profile
  */
 export function addBrewProfile() {
-    brewProfile = {
+    let brewProfile = {
         efficiency: EFFICIENCY,
         batchSize: BATCHSIZE,
         boilTime: BOILTIME,
@@ -39,8 +39,14 @@ export function addBrewProfile() {
 
     Store.dispatch(() => {
         Meteor.callPromise("brew.profiles.insert", brewProfile)
-            .then(() => browserHistory.push("/brew/profile"))
-            .catch(errorAction);
+            .then(() => {
+                browserHistory.push("/brew/profile");
+                finishedLoading();
+            })
+            .catch(() => {
+                errorAction();
+                finishedLoading();
+            });
     });
 }
 

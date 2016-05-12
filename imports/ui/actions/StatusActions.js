@@ -37,8 +37,6 @@ export function removeMessage() {
     Store.dispatch({type: "REMOVE_MESSAGE"});
 }
 
-
-
 /**
  * Dispatches action to show loader but only after one second
  */

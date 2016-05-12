@@ -9,6 +9,7 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import NavigationBar from "../components/navigation/NavigationBar";
 import StatusMessage from "../components/base/StatusMessage";
+import Loading from "../components/base/Loading";
 
 export default class AppContainer extends React.Component {
 
@@ -38,6 +39,7 @@ export default class AppContainer extends React.Component {
                         })}
                     </ReactCSSTransitionGroup>
                 </div>
+                <Loading imgSrc="/loading.png"/>
             </div>
         );
     }
