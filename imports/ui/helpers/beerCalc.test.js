@@ -12,6 +12,7 @@ import {
     srmToEbc,
     calcBeerEbc,
     ebcToHex,
+    calcExpectedABV,
     calcExpectedIBU,
     calcExpectedOg,
     calcExpectedFg,
@@ -39,13 +40,11 @@ if (Meteor.isClient) {
             srmToEbc(srm2).should.equal(690);
         });
 
-        it("Should be able to give an expected OG", function() {
-            const fermentables = [
-                {amount: 1.9, potential: 1.036},
-                {amount: 0.1, potential: 1.033}
-            ];
+        it("Should be able to give an expected ABV", function() {
+            const og = 1.055;
+            const fg = 1.015;
 
-            calcExpectedOg(fermentables, recipe).should.equal(1.046);
+            calcExpectedABV(og, fg).should.equal(5.25);
         });
 
         it("Should be able to give an expected IBU", function() {
@@ -57,6 +56,15 @@ if (Meteor.isClient) {
             ];
 
             calcExpectedIBU(hops, recipe, og).should.equal(99.4);
+        });
+
+        it("Should be able to give an expected OG", function() {
+            const fermentables = [
+                {amount: 1.9, potential: 1.036},
+                {amount: 0.1, potential: 1.033}
+            ];
+
+            calcExpectedOg(fermentables, recipe).should.equal(1.046);
         });
 
         it("Should be able to give an expected FG", function() {

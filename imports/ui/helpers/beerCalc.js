@@ -26,7 +26,7 @@ export function ebcToSrm(ebc) {
 /**
  * Function to calculate beers expected color in EBC
  * @param fermentables - {ebc, amount}
- * @param recipe - {efficiency, batchSize, lossFermentation, lossKettle}
+ * @param recipe - {efficiency, batchSize, lossFermentation, boilLoss}
  * @returns {number} returns expected ebc for beer
  */
 export function calcBeerEbc(fermentables, recipe) {
@@ -45,7 +45,7 @@ export function calcBeerEbc(fermentables, recipe) {
 /**
  * Function to calculate the expected OG
  * @param fermentables - {amount, potential}
- * @param recipe - {efficiency, batchSize, lossFermentation, lossKettle}
+ * @param recipe - {efficiency, batchSize, lossFermentation, boilLoss}
  * @returns {number} - returns expected OG
  */
 export function calcExpectedOg(fermentables, recipe) {
@@ -62,9 +62,21 @@ export function calcExpectedOg(fermentables, recipe) {
 }
 
 /**
+ * Function to calculate the expected ABV
+ * @param og
+ * @param fg
+ * @returns {number} - returns expected og
+ */
+export function calcExpectedABV(og, fg) {
+    const abv = (og - fg) * 131.25;
+
+    return  _round(abv, 2);
+}
+
+/**
  * Function to calculate the expected IBU
  * @param hops - {amount, alpha, time, form}
- * @param recipe - {batchSize, lossFermentation, lossKettle}
+ * @param recipe - {batchSize, lossFermentation, boilLoss}
  * @param og
  * @returns {number} - returns expected IBU
  */
