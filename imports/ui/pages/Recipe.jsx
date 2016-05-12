@@ -61,8 +61,7 @@ class Recipe extends React.Component {
             fermentables,
             hops,
             yeasts,
-            ingredients,
-            mobile } = this.props;
+            ingredients } = this.props;
 
         const attenuation = recipeYeast ? recipeYeast.attenuation : 0;
         const expectedOG = calcExpectedOg(recipeFermentables, recipe);
@@ -123,7 +122,6 @@ class Recipe extends React.Component {
 
                     <div className="content-box extract full-width-mobile col-3-4">
                         <FermentablesList
-                            mobile={mobile}
                             fermentables={fermentables}
                             recipeFermentables={recipeFermentables}
                             fermentableWeight={calcIngredientWeight(recipeFermentables)}
@@ -132,7 +130,6 @@ class Recipe extends React.Component {
 
                     <div className="content-box yeast full-width-mobile col-1-4">
                         <YeastInfo
-                            mobile={mobile}
                             recipeYeast={recipeYeast}
                             yeasts={yeasts}
                             recipeId={this.props.recipe._id} />
@@ -141,7 +138,6 @@ class Recipe extends React.Component {
                 <div className="col-height-wrapper">
                     <div className="content-box hops full-width-mobile col-3-4">
                         <HopsList
-                            mobile={mobile}
                             hops={hops}
                             recipeHops={recipeHops}
                             use={HOPS.USE.BOIL}
@@ -155,7 +151,6 @@ class Recipe extends React.Component {
                 <div className="col-height-wrapper">
                     <div className="content-box other-ingredients full-width-mobile col-3-4">
                         <IngredientsList
-                            mobile={mobile}
                             ingredients={ingredients}
                             recipeIngredients={recipeIngredients}
                             recipeId={this.props.recipe._id}/>
