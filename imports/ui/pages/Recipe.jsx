@@ -24,6 +24,7 @@ import { Ingredients } from "../../api/brewerydb/Ingredients";
 import {
     calcExpectedOg,
     calcExpectedFg,
+    calcExpectedABV,
     calcExpectedIBU,
     calcBeerEbc,
     calcIngredientWeight
@@ -64,8 +65,9 @@ class Recipe extends React.Component {
             ingredients } = this.props;
 
         const attenuation = recipeYeast ? recipeYeast.attenuation : 0;
-        const expectedOG = calcExpectedOg(recipeFermentables, recipe);
-        const expectedFG = calcExpectedFg(attenuation, expectedOG);
+        const expectedOG  = calcExpectedOg(recipeFermentables, recipe);
+        const expectedFG  = calcExpectedFg(attenuation, expectedOG);
+        const expectedABV = calcExpectedABV(expectedOG, expectedFG);
         const expectedIBU = calcExpectedIBU(recipeHops, recipe, expectedOG);
         const expectedEBC = calcBeerEbc(recipeFermentables, recipe);
 
@@ -104,6 +106,11 @@ class Recipe extends React.Component {
                                    name="expextedFG"
                                    label="FG"
                                    value={expectedFG} />
+                            <Input attr={{type: "number", disabled: true}}
+                                   fixedDecimals={2}
+                                   name="expectedABV"
+                                   label="ABV (%)"
+                                   value={expectedABV} />
                             <Input attr={{type: "number", disabled: true}}
                                    name="expectedIBU"
                                    label="IBU"
