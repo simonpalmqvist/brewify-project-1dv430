@@ -69,7 +69,7 @@ export function updateRecipeStyle(id, styleId) {
     savingAction();
 
     Store.dispatch(() => {
-        Meteor.callPromise("recipes.style.update", id, update)
+        Meteor.callPromise("recipes.style.update", id, styleId)
             .then(saveAction)
             .catch(errorAction);
     });

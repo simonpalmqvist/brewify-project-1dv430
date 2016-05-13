@@ -122,6 +122,7 @@ div.responsive-info {
         > div, > form {
             display: block;
             width: 100%;
+            margin-bottom: 0;
 
             input[type=text], input[type=number], select {
                 width: 100%;
@@ -138,6 +139,7 @@ div.responsive-info {
             > div {
                 display: inline-block;
                 width: 20%;
+                margin-bottom: $half-spacing;
             }
         }
     }

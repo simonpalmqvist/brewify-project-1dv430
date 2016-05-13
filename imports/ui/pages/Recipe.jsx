@@ -20,6 +20,7 @@ import { Fermentables } from "../../api/brewerydb/Fermentables";
 import { Hops } from "../../api/brewerydb/Hops";
 import { Yeasts } from "../../api/brewerydb/Yeasts";
 import { Ingredients } from "../../api/brewerydb/Ingredients";
+import { Styles } from "../../api/brewerydb/Styles";
 
 import {
     calcExpectedOg,
@@ -37,6 +38,7 @@ import FermentablesList from "../components/recipe/FermentablesList";
 import HopsList from "../components/recipe/HopsList";
 import YeastInfo from "../components/recipe/YeastInfo";
 import IngredientsList from "../components/recipe/IngredientsList";
+import StyleInfo from "../components/recipe/StyleInfo";
 import EbcInput from "../components/recipe/EbcInput";
 
 class Recipe extends React.Component {
@@ -59,10 +61,12 @@ class Recipe extends React.Component {
             recipeHops,
             recipeYeast,
             recipeIngredients,
+            recipeStyle,
             fermentables,
             hops,
             yeasts,
-            ingredients } = this.props;
+            ingredients,
+            styles } = this.props;
 
         const attenuation = recipeYeast ? recipeYeast.attenuation : 0;
         const expectedOG  = calcExpectedOg(recipeFermentables, recipe);
@@ -120,7 +124,10 @@ class Recipe extends React.Component {
                     </div>
 
                     <div className="content-box full-width-mobile col-1-4">
-                        <h2>Beer style</h2>
+                        <YeastInfo
+                            recipeYeast={recipeYeast}
+                            yeasts={yeasts}
+                            recipeId={this.props.recipe._id} />
                     </div>
 
                 </div>
@@ -136,9 +143,9 @@ class Recipe extends React.Component {
                     </div>
 
                     <div className="content-box yeast full-width-mobile col-1-4">
-                        <YeastInfo
-                            recipeYeast={recipeYeast}
-                            yeasts={yeasts}
+                        <StyleInfo
+                            recipeStyle={recipeStyle}
+                            styles={styles}
                             recipeId={this.props.recipe._id} />
                     </div>
                 </div>
@@ -196,6 +203,7 @@ function getIngredientsForRecipe(list, id) {
 //Creates meteor container to provide subscribed data
 const RecipeContainer = createContainer(({params}) => {
     const { id }          = params;
+    const recipe          = Recipes.findOne(id);
     const allFermentables = RecipeFermentables.find().fetch();
     const allHops         = RecipeHops.find().fetch();
     const allYeasts       = RecipeYeasts.find().fetch();
@@ -209,20 +217,22 @@ const RecipeContainer = createContainer(({params}) => {
     });
 
     return {
-        recipe:             Recipes.findOne(id),
+        recipe:             recipe,
         recipeFermentables: getIngredientsForRecipe(allFermentables, id),
         recipeHops:         getIngredientsForRecipe(allHops, id),
         recipeYeast:        getIngredientsForRecipe(allYeasts, id)[0],
         recipeIngredients:  getIngredientsForRecipe(allIngredients, id),
+        recipeStyle:        Styles.findOne({_id: recipe.styleId}),
         fermentables:       joinArrayUniqByName(allFermentables, Fermentables.find().fetch()),
         hops:               joinArrayUniqByName(allHops, Hops.find().fetch()),
         yeasts:             joinArrayUniqByName(allYeasts, yeasts),
-        ingredients:        joinArrayUniqByName(allIngredients, Ingredients.find().fetch())
+        ingredients:        joinArrayUniqByName(allIngredients, Ingredients.find().fetch()),
+        styles:             Styles.find().fetch()
     };
 }, Recipe);
 
 //Map the current state to the properties in component
-function mappingStateToProps({ flashMessages, browser }) {
+function mappingStateToProps({ flashMessages }) {
     return {
         save: flashMessages.save,
         error: flashMessages.error

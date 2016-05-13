@@ -7,7 +7,9 @@
 import React from "react";
 
 //Actions
-import { updateRecipeStyle, deleteRecipeStyle } from "../../actions/RecipeActions";
+import { updateRecipeStyle } from "../../actions/RecipeActions";
+
+import { srmToEbc } from "../../helpers/beerCalc";
 
 //Components
 import AutoComplete from "../base/AutoComplete";
@@ -20,9 +22,17 @@ export default class StyleInfo extends React.Component {
     }
 
     update(update) {
-        const { _id } = this.props.recipeId;
+        const { recipeId } = this.props;
 
-        updateRecipeStyle(_id, update._id);
+        updateRecipeStyle(recipeId, update._id);
+    }
+
+    formatNumber(string, decimals) {
+        if (!string) {
+            return "";
+        }
+
+        return Number(string).toFixed(decimals).toString().replace(".", ",");
     }
 
     render() {
@@ -40,6 +50,8 @@ export default class StyleInfo extends React.Component {
 
         //If recipe has a yeast override button with yeast information
         if (recipeStyle) {
+            const { ibuMin, ibuMax, abvMin, abvMax, srmMin, srmMax, ogMin, ogMax, fgMin, fgMax } = recipeStyle;
+
             content = (
                 <div className="responsive-info side style-info">
                     <AutoComplete
@@ -47,18 +59,33 @@ export default class StyleInfo extends React.Component {
                         data={styles}
                         onSelected={this.update.bind(this)}
                         value={recipeStyle.name}/>
-                    <Input attr={{type: "number", step: "0.1"}}
-                           fixedDecimals={2}
-                           label="IBU min"
-                           name="minIbu"
-                           value={recipeStyle.minIbu} />
+                    <Input attr={{disabled: true}}
+                           label="OG"
+                           name="og"
+                           value={`${this.formatNumber(ogMin, 3)}–${this.formatNumber(ogMax, 3)}`} />
+                    <Input attr={{disabled: true}}
+                           label="FG"
+                           name="fg"
+                           value={`${this.formatNumber(fgMin, 3)}–${this.formatNumber(fgMax, 3)}`} />
+                    <Input attr={{disabled: true}}
+                           label="ABV (%)"
+                           name="abv"
+                           value={`${this.formatNumber(abvMin, 1)}–${this.formatNumber(abvMax, 1)}`} />
+                    <Input attr={{disabled: true}}
+                           label="IBU"
+                           name="ibu"
+                           value={`${ibuMin}–${ibuMax}`} />
+                    <Input attr={{disabled: true}}
+                           label="EBC"
+                           name="ebc"
+                           value={`${srmToEbc(srmMin)}–${srmToEbc(srmMax)}`} />
                 </div>
             );
         }
 
         return (
             <div>
-                <h2>Beer Style</h2>
+                <h2>Style</h2>
                 {content}
             </div>
         );

@@ -15,5 +15,5 @@ export function getUser() {
 export function belongsToUser(Collection, id) {
     const userId = Meteor.userId();
     const recipe = Collection.findOne(id);
-    if (!recipe || recipe.userId !== userId) { throw Meteor.Error(403, "Not authorized"); }
+    if (!recipe || recipe.userId !== userId) { throw new Meteor.Error(403, "Not authorized"); }
 }

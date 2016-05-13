@@ -36,7 +36,7 @@ Meteor.methods({
             throw new Meteor.Error("Beer style doesn't exist");
         }
 
-        Recipes.update(id, {$set: {styleId}});
+        Recipes.update(id, {$set: {styleId: styleId}});
     },
 
     "recipes.style.remove": (id) => {
