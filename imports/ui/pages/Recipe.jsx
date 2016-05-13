@@ -77,99 +77,96 @@ class Recipe extends React.Component {
 
         return (
             <div>
-                <div className="col-height-wrapper">
-
-                    <div className="content-box full-width-mobile col-3-4">
-                        <Input name="name"
-                               value={recipe.name}
-                               className={["input-header", "glass"]}
-                               attr={{type: "text"}}
-                               validate={this.recipeValidateOne}
-                               onUpdate={update}/>
-
-                        <div className="responsive-info recipe-info">
-                            <Input name="batchSize"
-                                   label="Batch size (l)"
-                                   attr={{type: "number"}}
-                                   value={recipe.batchSize}
+                <div className="col-wrapper">
+                    <div className="col col-1-1">
+                        <div className="content-box full-width-mobile">
+                            <Input name="name"
+                                   value={recipe.name}
+                                   className={["input-header", "glass"]}
+                                   attr={{type: "text"}}
                                    validate={this.recipeValidateOne}
                                    onUpdate={update}/>
-                            <Input name="boilTime"
-                                   label="Boil time (min)"
-                                   attr={{type: "number"}}
-                                   value={recipe.boilTime}
-                                   validate={this.recipeValidateOne}
-                                   onUpdate={update}/>
-                            <Input attr={{type: "number", disabled: true}}
-                                   fixedDecimals={3}
-                                   name="expextedOG"
-                                   label="OG"
-                                   value={expectedOG} />
-                            <Input attr={{type: "number", disabled: true}}
-                                   fixedDecimals={3}
-                                   name="expextedFG"
-                                   label="FG"
-                                   value={expectedFG} />
-                            <Input attr={{type: "number", disabled: true}}
-                                   fixedDecimals={2}
-                                   name="expectedABV"
-                                   label="ABV (%)"
-                                   value={expectedABV} />
-                            <Input attr={{type: "number", disabled: true}}
-                                   name="expectedIBU"
-                                   label="IBU"
-                                   value={expectedIBU} />
-                            <EbcInput ebc={expectedEBC} />
+
+                            <div className="responsive-info recipe-info">
+                                <Input attr={{type: "number", disabled: true}}
+                                       fixedDecimals={3}
+                                       name="expextedOG"
+                                       label="OG"
+                                       value={expectedOG} />
+                                <Input attr={{type: "number", disabled: true}}
+                                       fixedDecimals={3}
+                                       name="expextedFG"
+                                       label="FG"
+                                       value={expectedFG} />
+                                <Input attr={{type: "number", disabled: true}}
+                                       fixedDecimals={2}
+                                       name="expectedABV"
+                                       label="ABV (%)"
+                                       value={expectedABV} />
+                                <Input attr={{type: "number", disabled: true}}
+                                       name="expectedIBU"
+                                       label="IBU"
+                                       value={expectedIBU} />
+                                <EbcInput ebc={expectedEBC} />
+                                <Input name="batchSize"
+                                       label="Batch size (l)"
+                                       attr={{type: "number"}}
+                                       value={recipe.batchSize}
+                                       validate={this.recipeValidateOne}
+                                       onUpdate={update}/>
+                                <Input name="boilTime"
+                                       label="Boil time (min)"
+                                       attr={{type: "number"}}
+                                       value={recipe.boilTime}
+                                       validate={this.recipeValidateOne}
+                                       onUpdate={update}/>
+                            </div>
                         </div>
                     </div>
-
-                    <div className="content-box full-width-mobile col-1-4">
-                        <YeastInfo
-                            recipeYeast={recipeYeast}
-                            yeasts={yeasts}
-                            recipeId={this.props.recipe._id} />
-                    </div>
-
                 </div>
 
-                <div className="col-height-wrapper">
 
-                    <div className="content-box extract full-width-mobile col-3-4">
-                        <FermentablesList
-                            fermentables={fermentables}
-                            recipeFermentables={recipeFermentables}
-                            fermentableWeight={calcIngredientWeight(recipeFermentables)}
-                            recipeId={this.props.recipe._id}/>
+                <div className="col-wrapper">
+                    <div className="col col-3-4">
+                        <div className="content-box extract full-width-mobile">
+                            <FermentablesList
+                                fermentables={fermentables}
+                                recipeFermentables={recipeFermentables}
+                                fermentableWeight={calcIngredientWeight(recipeFermentables)}
+                                recipeId={this.props.recipe._id}/>
+                        </div>
+                        <div className="content-box hops full-width-mobile">
+                            <HopsList
+                                hops={hops}
+                                recipeHops={recipeHops}
+                                use={HOPS.USE.BOIL}
+                                hopWeight={calcIngredientWeight(recipeHops)}
+                                recipeId={this.props.recipe._id}/>
+                        </div>
+                        <div className="content-box other-ingredients full-width-mobile">
+                            <IngredientsList
+                                ingredients={ingredients}
+                                recipeIngredients={recipeIngredients}
+                                recipeId={this.props.recipe._id}/>
+                        </div>
                     </div>
-
-                    <div className="content-box yeast full-width-mobile col-1-4">
-                        <StyleInfo
-                            recipeStyle={recipeStyle}
-                            styles={styles}
-                            recipeId={this.props.recipe._id} />
+                    <div className="col col-1-4">
+                        <div className="content-box yeast full-width-mobile">
+                            <YeastInfo
+                                recipeYeast={recipeYeast}
+                                yeasts={yeasts}
+                                recipeId={this.props.recipe._id} />
+                        </div>
+                        <div className="content-box style full-width-mobile">
+                            <StyleInfo
+                                recipeStyle={recipeStyle}
+                                styles={styles}
+                                recipeId={this.props.recipe._id} />
+                        </div>
+                        <div className="content-box full-width-mobile">
+                            <h2>Settings</h2>
+                        </div>
                     </div>
-                </div>
-                <div className="col-height-wrapper">
-                    <div className="content-box hops full-width-mobile col-3-4">
-                        <HopsList
-                            hops={hops}
-                            recipeHops={recipeHops}
-                            use={HOPS.USE.BOIL}
-                            hopWeight={calcIngredientWeight(recipeHops)}
-                            recipeId={this.props.recipe._id}/>
-                    </div>
-                    <div className="content-box full-width-mobile col-1-4">
-                        <h2>Settings</h2>
-                    </div>
-                </div>
-                <div className="col-height-wrapper">
-                    <div className="content-box other-ingredients full-width-mobile col-3-4">
-                        <IngredientsList
-                            ingredients={ingredients}
-                            recipeIngredients={recipeIngredients}
-                            recipeId={this.props.recipe._id}/>
-                    </div>
-                    <div className="content-box full-width-mobile col-1-4"></div>
                 </div>
             </div>
         );

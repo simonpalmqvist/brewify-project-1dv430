@@ -29,11 +29,11 @@ class Dashboard extends React.Component {
 
         return (
             <div>
-                <div className="col-height-wrapper">
-                    <div className="content-box full-width-mobile col-3-3">
+                <div className="col-wrapper">
+                    <div className="content-box col col-2-3">
                         <h1>News</h1>
                     </div>
-                    <div className="content-box full-width-mobile col-1-3">
+                    <div className="content-box col col-1-3">
                         <button className="main-button" type="text" onClick={this.handle.bind(this)}>
                             Create recipe
                         </button>
