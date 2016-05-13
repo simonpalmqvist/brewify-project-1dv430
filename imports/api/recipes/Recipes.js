@@ -43,6 +43,11 @@ Recipes.schema = new SimpleSchema({
         type: Number,
         min: 0,
         decimal: true
+    },
+    styleId: {
+        type: String,
+        regEx: SimpleSchema.RegEx.Id,
+        optional: true
     }
 });
 

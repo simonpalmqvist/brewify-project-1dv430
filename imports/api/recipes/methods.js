@@ -5,6 +5,7 @@
 
 import { Meteor } from "meteor/meteor";
 import { Recipes } from "./Recipes";
+import { Styles } from "../brewerydb/Styles";
 import {getUser, belongsToUser} from "../collectionHelpers";
 
 Meteor.methods({
@@ -26,5 +27,21 @@ Meteor.methods({
         belongsToUser(Recipes, id);
 
         Recipes.remove(id);
+    },
+
+    "recipes.style.update": (id, styleId) => {
+        belongsToUser(Recipes, id);
+
+        if (!Styles.findOne({_id: styleId})) {
+            throw new Meteor.Error("Beer style doesn't exist");
+        }
+
+        Recipes.update(id, {$set: {styleId}});
+    },
+
+    "recipes.style.remove": (id) => {
+        belongsToUser(Recipes, id);
+
+        Recipes.update(id, {$set: {styleId: undefined}});
     }
 });
