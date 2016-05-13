@@ -21,7 +21,8 @@ export function subscribeAll() {
             "fermentables",
             "hops",
             "yeasts",
-            "ingredients"
+            "ingredients",
+            "styles"
         ].forEach(subscribeAction);
     }
 }

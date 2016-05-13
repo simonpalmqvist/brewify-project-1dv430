@@ -57,6 +57,31 @@ export function updateRecipe(id, update) {
     });
 }
 
+/**
+ * Action to update a recipes style
+ * @param id
+ * @param styleId
+ */
+export function updateRecipeStyle(id, styleId) {
+    if (!styleId) {
+        return errorAction({reason: "Could not find style, please choose one in the list."});
+    }
+    savingAction();
+
+    Store.dispatch(() => {
+        Meteor.callPromise("recipes.style.update", id, update)
+            .then(saveAction)
+            .catch(errorAction);
+    });
+}
+
+/**
+ * Helper function to validate if a collection value is correct
+ * @param Collection - collection that key belongs to
+ * @param key - key to check
+ * @param value - value that should match key specifications
+ * @returns {boolean} - if match is correct
+ */
 export function validateValue(Collection, key, value) {
     let obj = {};
     obj[key] = value;
