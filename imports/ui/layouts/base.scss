@@ -259,10 +259,6 @@ h2 {
     width: 100%;
     margin-top: 0;
 
-    @media #{$mobile} {
-        @include calc-width(100%, "-", $half-spacing);
-    }
-
     @include transition(background-color 0.3s);
 
     &:hover {

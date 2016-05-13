@@ -165,6 +165,29 @@ class Recipe extends React.Component {
                         </div>
                         <div className="content-box full-width-mobile">
                             <h2>Settings</h2>
+                            <div className="responsive-info side settings-info">
+                                <Input name="efficiency"
+                                       label="Mash efficiency (%)"
+                                       attr={{type: "number"}}
+                                       fixedDecimals={2}
+                                       value={recipe.efficiency}
+                                       validate={this.recipeValidateOne}
+                                       onUpdate={update}/>
+                                <Input name="boilLoss"
+                                       label="Loss in brew-kettle (l)"
+                                       fixedDecimals={1}
+                                       attr={{type: "number", step: "0.1"}}
+                                       value={recipe.boilLoss}
+                                       validate={this.recipeValidateOne}
+                                       onUpdate={update}/>
+                                <Input name="fermenterLoss"
+                                       label="Loss in fermenter (l)"
+                                       fixedDecimals={1}
+                                       attr={{type: "number", step: "0.1"}}
+                                       value={recipe.fermenterLoss}
+                                       validate={this.recipeValidateOne}
+                                       onUpdate={update}/>
+                            </div>
                         </div>
                     </div>
                 </div>
