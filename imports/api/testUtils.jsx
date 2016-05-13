@@ -24,6 +24,7 @@ import { Fermentables } from "../api/brewerydb/Fermentables";
 import { Hops } from "../api/brewerydb/Hops";
 import { Yeasts } from "../api/brewerydb/Yeasts";
 import { Ingredients } from "../api/brewerydb/Ingredients";
+import { Styles } from "../api/brewerydb/Styles";
 
 import {
     brewProfile,
@@ -31,7 +32,8 @@ import {
     fermentable,
     hop,
     yeast,
-    ingredient
+    ingredient,
+    style
 
 } from "./fakeData";
 
@@ -61,6 +63,10 @@ Meteor.methods({
 
     "test.generate-ingredients": (numberOfItems) => {
         return _createDataInCollections(Ingredients, ingredient, numberOfItems);
+    },
+
+    "test.generate-styles": (numberOfItems) => {
+        return _createDataInCollections(Styles, style, numberOfItems);
     },
 
     "test.get-recipes": () => {

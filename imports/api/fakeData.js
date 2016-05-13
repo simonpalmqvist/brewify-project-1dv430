@@ -125,3 +125,21 @@ export function ingredient() {
         name: words()
     };
 }
+
+export function style() {
+    return {
+        id: number({min: 1, max: 1000}),
+        name: words(),
+        description: words(),
+        minIbu: number({min: 1, max: 20}),
+        maxIbu: number({min: 21, max: 60}),
+        minAbv: number({min: 1, max: 5}),
+        maxAbv: number({min: 6, max: 10}),
+        srmMin: number({min: 1, max: 20}),
+        srmMax: number({min: 21, max: 60}),
+        ogMin: number({min: 1.040, max: 1.050, precision: 0.001}),
+        ogMax: number({min: 1.051, max: 1.060, precision: 0.001}),
+        fgMin: number({min: 1.006, max: 1.010, precision: 0.001}),
+        fgMax: number({min: 1.011, max: 1.015, precision: 0.001})
+    };
+}

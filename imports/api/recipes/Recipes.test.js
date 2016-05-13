@@ -12,6 +12,9 @@ import faker from "faker";
 import { sinon } from "meteor/practicalmeteor:sinon";
 
 import { Recipes } from "./Recipes";
+import { Styles } from "../brewerydb/Styles";
+
+import { style } from "../fakeData";
 
 import "./methods";
 
@@ -24,6 +27,8 @@ if (Meteor.isServer) {
     const insertMethod = Meteor.server.method_handlers["recipes.insert"];
     const updateMethod = Meteor.server.method_handlers["recipes.update"];
     const removeMethod = Meteor.server.method_handlers["recipes.remove"];
+    const updateStyleMethod = Meteor.server.method_handlers["recipes.style.update"];
+    const removeStyleMethod = Meteor.server.method_handlers["recipes.style.remove"];
 
     let userId;
     let recipeId;
@@ -34,6 +39,8 @@ if (Meteor.isServer) {
     let efficiency;
     let boilLoss;
     let fermenterLoss;
+    let styleId;
+    let styleId2;
 
     describe("Recipes", function() {
         beforeEach(function() {
@@ -48,6 +55,7 @@ if (Meteor.isServer) {
             efficiency = faker.random.number({min: 0, max: 100});
             boilLoss = faker.random.number({min: 0, max: 10});
             fermenterLoss = faker.random.number({min: 0, max: 10});
+            styleId = Random.id();
 
             recipe = {
                 userId,
@@ -56,7 +64,8 @@ if (Meteor.isServer) {
                 boilTime,
                 efficiency,
                 boilLoss,
-                fermenterLoss
+                fermenterLoss,
+                styleId
             };
         });
 
@@ -120,6 +129,16 @@ if (Meteor.isServer) {
                 //Recipe should not be added
                 Recipes.find({}).count().should.equal(0);
             });
+
+            it("Should be able to add recipe without style id", function() {
+                delete recipe.styleId;
+
+                Recipes.insert(recipe);
+
+                // Recipe should be added
+                Recipes.find({name}).count().should.equal(1);
+            });
+
         });
 
         describe("methods", () => {
@@ -153,6 +172,10 @@ if (Meteor.isServer) {
                     stub(Meteor, "userId", () => userId);
                 });
 
+                beforeEach(function() {
+                    styleId = Styles.insert(style());
+                });
+
                 after(function() {
                     Meteor.userId.restore();
                 });
@@ -181,6 +204,37 @@ if (Meteor.isServer) {
                     updateMethod(recipeId, {name: newName});
 
                     Recipes.findOne(recipeId).name.should.equal(newName);
+                });
+
+                it("Should be able to set recipe style", function() {
+                    delete recipe.styleId;
+                    recipeId = Recipes.insert(recipe);
+
+                    updateStyleMethod(recipeId, styleId);
+
+                    Recipes.findOne(recipeId).styleId.should.equal(styleId);
+                    //                    styleId2 = Styles.insert(style());
+                });
+
+                it("Should not be able to set recipe style with style id that doesn't exist", function() {
+                    delete recipe.styleId;
+
+                    recipeId = Recipes.insert(recipe);
+
+                    (() => updateStyleMethod(recipeId, "")).should.throw(Error);
+
+                    should.not.exist(Recipes.findOne(recipeId).styleId);
+                });
+
+                it("Should be able to change recipe style", function() {
+                    delete recipe.styleId;
+                    styleId2 = Styles.insert(style());
+                    recipeId = Recipes.insert(recipe);
+
+                    updateStyleMethod(recipeId, styleId);
+                    updateStyleMethod(recipeId, styleId2);
+
+                    Recipes.findOne(recipeId).styleId.should.equal(styleId2);
                 });
             });
 
