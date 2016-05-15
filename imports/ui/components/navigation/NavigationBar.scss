@@ -29,10 +29,55 @@ header.c-navigation-bar {
         nav {
             float: right;
 
+            a.menu-icon {
+                display: inline-block;
+                position: relative;
+                top: -6px;
+                width: 34px;
+                height: 34px;
+                border-radius: 17px;
+                background-color: white;
+
+                &:hover {
+                    background-color: lighten($main, 40%);
+                }
+
+                &:before {
+                    content: "";
+                    background-color: $main;
+                    position: absolute;
+                    width: 12px;
+                    height: 13px;
+                    border-radius: 10px;
+                    left: 11px;
+                    top: 5px;
+                }
+
+                &:after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 4px;
+                    height: 14px;
+                    width: 26px;
+                    background-color: $main;
+                    border-radius: 14px 14px 0 0;
+                }
+
+                > span.menu-head {
+                    display: inline-block;
+                    position: absolute;
+                    background-color: $main;
+                    width: 10px;
+                    height: 10px;
+
+                }
+            }
+
             ul.expanded-list {
                 position: absolute;
                 display: block;
-                margin-top: $half-spacing;
+                margin-top: 2px;
                 padding: $half-spacing 0;
                 right: $spacing;
                 background-color: $white;
@@ -50,6 +95,7 @@ header.c-navigation-bar {
                         &:hover {
                             background-color: $main;
                             color: $white;
+                            text-decoration: none;
                         }
                     }
                 }
@@ -57,7 +103,7 @@ header.c-navigation-bar {
                 //Box arrow
                 &:before {
                     bottom: 100%;
-                    right: 20%;
+                    right: 7px;
                     border: solid transparent;
                     content: " ";
                     height: 0;
@@ -67,6 +113,29 @@ header.c-navigation-bar {
                     border-bottom-color: $white;
                     border-width: 10px;
                     margin-left: -10px;
+                }
+
+                @media #{$mobile} {
+                    margin-top: 0;
+                    top: $header-height;
+                    left: 0;
+                    right: 0;
+                    border-radius: 0;
+                    padding: 0;
+                    box-shadow: none;
+                    border-bottom: 1px solid $main;
+
+                    > li {
+                        border-top: 1px solid $grey;
+
+                        > a {
+                            padding: $input-spacing * 2;
+                        }
+                    }
+
+                    &:before {
+                        display: none;
+                    }
                 }
 
             }

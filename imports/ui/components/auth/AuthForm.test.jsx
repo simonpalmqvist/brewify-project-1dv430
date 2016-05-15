@@ -9,7 +9,6 @@ import chai from "meteor/practicalmeteor:chai";
 import React from "react";
 import { findDOMNode } from "react-dom";
 import ReactTestUtils from "react-addons-test-utils";
-import { renderIntoDocumentWithMockedStore } from "../../../api/testUtils";
 import faker from "faker";
 import AuthForm from "./AuthForm";
 
@@ -18,7 +17,6 @@ import AuthForm from "./AuthForm";
 if (Meteor.isClient) {
 
     const should = chai.should();
-    const state = {flashMessages: {}};
 
     let authForm;
     let fakeDocument;
@@ -28,7 +26,7 @@ if (Meteor.isClient) {
 
     describe("AuthForm component", function() {
         beforeEach(function() {
-            authForm = renderIntoDocumentWithMockedStore(<AuthForm submit={() => {}}/>, state);
+            authForm = ReactTestUtils.renderIntoDocument(<AuthForm submit={() => {}}/>);
 
             fakeDocument = findDOMNode(authForm);
 

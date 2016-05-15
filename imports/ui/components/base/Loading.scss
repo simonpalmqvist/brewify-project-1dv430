@@ -31,14 +31,14 @@ div.c-loading {
 
 @keyframes loading {
     0% {
-        transform: rotate(0deg) scale(0.7);
+        transform: translate(-50%, -50%) rotate(0deg) scale(0.7);
     }
 
     50% {
-        transform: rotate(180deg) scale(0.9);
+        transform: translate(-50%, -50%) rotate(180deg) scale(0.9);
     }
 
     100% {
-        transform: rotate(360deg) scale(0.7);
+        transform:  translate(-50%, -50%) rotate(360deg) scale(0.7);
     }
 }

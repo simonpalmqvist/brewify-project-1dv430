@@ -6,9 +6,7 @@
 import { Meteor } from "meteor/meteor";
 import React from "react";
 
-import { connect }  from "react-redux";
-
-class AuthForm extends React.Component {
+export default class AuthForm extends React.Component {
 
     constructor() {
         super();
@@ -30,18 +28,11 @@ class AuthForm extends React.Component {
     }
 
     render() {
-        const { error, submit, buttonTitle } = this.props;
+        const { submit, buttonTitle } = this.props;
         const { disabled } = this.state;
-
-        let reason;
-
-        if (error) {
-            reason = error.reason;
-        }
 
         return (
             <form id="auth-form" onSubmit={submit.bind(this)}>
-                <p>{reason}</p>
                 <label htmlFor="email">E-mail:</label>
                 <input id="email"
                        ref="email"
@@ -65,9 +56,6 @@ class AuthForm extends React.Component {
     }
 }
 
-
-//Map the current state to the properties in component
-export default connect(({flashMessages}) => ({error: flashMessages.error}))(AuthForm);
 
 
 

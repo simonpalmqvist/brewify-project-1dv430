@@ -33,7 +33,6 @@ import NotFound from "../../ui/pages/NotFound";
 //Components
 import Register from "../../ui/components/auth/Register";
 import Login from "../../ui/components/auth/Login";
-import Logout from "../../ui/components/auth/Logout";
 
 Meteor.startup(() => {
     function onPageChange() {
@@ -66,7 +65,6 @@ Meteor.startup(() => {
                 <Route component={AuthContainer}>
                     <Route path="/login" component={Login} onEnter={alreadyLoggedIn}/>
                     <Route path="/register" component={Register} onEnter={alreadyLoggedIn}/>
-                    <Route path="/logout" component={Logout}/>
                 </Route>
                 <Route path="/" component={AppContainer}>
                     <IndexRoute component={Main} onEnter={alreadyLoggedIn}/>

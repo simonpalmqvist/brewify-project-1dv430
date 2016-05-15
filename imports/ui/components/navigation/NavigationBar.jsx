@@ -5,15 +5,23 @@
 
 import React from "react";
 
-import NavigationItem from "./NavigationItem";
 import BackButton from "../base/BackButton";
 import { Link } from "react-router";
+
+//Actions
+import { logoutUser } from "../../actions/AuthActions";
+
 
 export default class NavigationBar extends React.Component {
     constructor() {
         super();
 
         this.state = ({listOpen: false});
+    }
+
+    logout() {
+        this.minimizeMenu();
+        logoutUser();
     }
 
     toggleMenu() {
@@ -29,23 +37,25 @@ export default class NavigationBar extends React.Component {
         const { listOpen } = this.state;
 
         //Show menu
-        let nav = (<a href="#" onClick={this.toggleMenu.bind(this)}>Menu</a>);
+        let nav = (<Link to="/login">Login</Link>);
         let list;
 
-        if (!Meteor.userId()) {
-            nav = (<Link to="/login">Login</Link>);
-        } else if(listOpen) {
+        if (Meteor.userId()) {
+            nav = (
+                <a href="#" className="menu-icon" onClick={this.toggleMenu.bind(this)}>
+                    <span className="head"/>
+                    <span className="body"/>
+                </a>);
+        }
+
+        if(listOpen) {
             list = (
                 <ul className="expanded-list">
-                    <li><Link to="/brew/profile">Brew profile</Link></li>
-                    <li><Link to="/logout">Logout</Link></li>
+                    <li><Link to="/brew/profile" onClick={this.minimizeMenu.bind(this)}>Brew profile</Link></li>
+                    <li><a href="#" onClick={this.logout.bind(this)}>Logout</a></li>
                 </ul>
             );
         }
-
-        //links = Meteor.userId() ? [{url: "/logout", title: "Logout"}] : links;
-
-        //links = links.map((props, i) => (<NavigationItem key={i} {...props}/>));
 
         return (
             <header className="c-navigation-bar">

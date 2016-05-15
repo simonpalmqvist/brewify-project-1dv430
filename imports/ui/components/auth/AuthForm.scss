@@ -36,7 +36,7 @@ form#auth-form {
     input[type=submit] {
         @extend .main-button;
 
-        max-width: $width;
+        max-width: inherit;
         margin-top:20px;
 
         &[disabled] {

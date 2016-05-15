@@ -57,7 +57,7 @@ input.c-input {
         width: 30px;
         border-radius: 15px;
         text-align: center;
-        
+
         @media #{$tablet} {
             border-radius: $input-spacing;
         }

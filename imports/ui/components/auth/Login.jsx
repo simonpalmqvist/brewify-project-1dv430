@@ -12,6 +12,7 @@ import { loginUser } from "../../actions/AuthActions";
 
 //Components
 import AuthForm from "./AuthForm";
+import { Link } from "react-router";
 
 export default class Login extends React.Component {
 
@@ -29,6 +30,7 @@ export default class Login extends React.Component {
         return (
             <div className="login">
                 <AuthForm submit={this.login} buttonTitle="Login" />
+                <p>Don't have an account? <Link to="/register">register here</Link></p>
             </div>
         );
     }
