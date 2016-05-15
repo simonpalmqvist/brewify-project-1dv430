@@ -99,7 +99,7 @@ class Recipe extends React.Component {
                                        label="FG"
                                        value={expectedFG} />
                                 <Input attr={{type: "number", disabled: true}}
-                                       fixedDecimals={2}
+                                       fixedDecimals={1}
                                        name="expectedABV"
                                        label="ABV (%)"
                                        value={expectedABV} />

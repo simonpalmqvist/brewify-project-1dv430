@@ -28,7 +28,7 @@ let recipe;
 if (Meteor.isClient) {
     describe("Beer calculations", function() {
         beforeEach(function() {
-            recipe = {efficiency: 80, batchSize: 8, boilLoss: 2, fermenterLoss: 0.5}
+            recipe = {efficiency: 80, batchSize: 8, boilLoss: 2, fermenterLoss: 0.5};
         });
 
         it("Should be able to convert SRM to EBC", function() {

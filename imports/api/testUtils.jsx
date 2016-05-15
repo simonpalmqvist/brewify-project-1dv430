@@ -105,7 +105,7 @@ Meteor.methods({
  * @returns {Array} - array of created items
  */
 function _createDataInCollections(collection, data, times) {
-    let ids = _.times(times, i => _createData(collection, data));
+    let ids = _.times(times, i => _createData(collection, data()));
     return _.map(ids, id => collection.findOne(id));
 }
 

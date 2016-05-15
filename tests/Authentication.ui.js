@@ -26,6 +26,8 @@ describe("Authentication UI", () => {
 
     describe("New user", () => {
         it("Should be able to create a new account", () => {
+            browser.click("a[href=\"/login\"]")
+
             browser.click("a[href=\"/register\"]");
 
             browser.setValue("input[name=email]", faker.internet.email());
@@ -62,7 +64,9 @@ describe("Authentication UI", () => {
 
             browser.url("http://localhost:3000/dashboard");
 
-            browser.click("a[href=\"/logout\"]");
+            browser.click("a.menu-icon");
+
+            browser.click("a.logout-option");
 
             browser.pause(1000);
             browser.getUrl().should.equal("http://localhost:3000/");

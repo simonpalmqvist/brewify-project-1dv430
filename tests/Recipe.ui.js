@@ -107,8 +107,6 @@ describe("Recipe UI", function() {
 
         browser.waitForExist(".yeast-info input.c-autocomplete");
 
-        const elements = browser.elements(".yeast-info input.c-autocomplete");
-
         //Should have one new hop
         browser.getValue(".yeast-info input.c-autocomplete").should.equal(yeasts[5].name);
     });

@@ -51,7 +51,7 @@ export default class HopsList extends React.Component {
         return (
             <div>
                 <h2>Hops</h2>
-                <table className="responsive-table">
+                <table className="recipe-hops responsive-table">
                     <thead>
                     <tr>
                         {headerRow}

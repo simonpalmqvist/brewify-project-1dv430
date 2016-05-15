@@ -54,7 +54,7 @@ export default class IngredientsList extends React.Component {
         return (
             <div>
                 <h2>Other ingredients</h2>
-                <table className="responsive-table">
+                <table className="recipe-ingredients responsive-table">
                     <thead>
                     <tr>
                         {headerRow}

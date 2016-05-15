@@ -56,7 +56,7 @@ export default class FermentablesList extends React.Component {
         return (
             <div>
                 <h2>Fermentables</h2>
-                <table className="responsive-table">
+                <table className="recipe-fermentables responsive-table">
                     <thead>
                         <tr>
                             {headerRow}

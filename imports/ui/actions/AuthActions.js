@@ -57,6 +57,7 @@ export function registerUser(email, password) {
             subscribeAll();
             addBrewProfile();
             redirect();
+            finishedLoading();
         });
     });
 }

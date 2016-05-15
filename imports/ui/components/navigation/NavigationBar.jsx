@@ -52,7 +52,7 @@ export default class NavigationBar extends React.Component {
             list = (
                 <ul className="expanded-list">
                     <li><Link to="/brew/profile" onClick={this.minimizeMenu.bind(this)}>Brew profile</Link></li>
-                    <li><a href="#" onClick={this.logout.bind(this)}>Logout</a></li>
+                    <li><a className="logout-option" href="#" onClick={this.logout.bind(this)}>Logout</a></li>
                 </ul>
             );
         }
