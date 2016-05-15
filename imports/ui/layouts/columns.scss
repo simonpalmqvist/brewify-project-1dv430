@@ -29,7 +29,7 @@
         }
 
         &.col-2-3 {
-            @include calc-width(66%, "-", $spacing);
+            @include calc-width(67%, "-", $spacing);
         }
 
         &.col-3-4 {

@@ -1,6 +1,6 @@
 header.c-navigation-bar {
     background-color: $main;
-    height: 60px;
+    height: $header-height;
     border-bottom: solid 1px $middlegrey;
 
     position: fixed;
@@ -28,6 +28,48 @@ header.c-navigation-bar {
 
         nav {
             float: right;
+
+            ul.expanded-list {
+                position: absolute;
+                display: block;
+                margin-top: $half-spacing;
+                padding: $half-spacing 0;
+                right: $spacing;
+                background-color: $white;
+                box-shadow: 1px 1px 10px rgba($dark-grey, 0.9);
+                border-radius: $border-radius;
+
+                > li {
+                    > a {
+                        text-align: center;
+                        min-width: 200px;
+                        color: $main;
+                        display:block;
+                        padding: $input-spacing;
+
+                        &:hover {
+                            background-color: $main;
+                            color: $white;
+                        }
+                    }
+                }
+
+                //Box arrow
+                &:before {
+                    bottom: 100%;
+                    right: 20%;
+                    border: solid transparent;
+                    content: " ";
+                    height: 0;
+                    width: 0;
+                    position: absolute;
+                    pointer-events: none;
+                    border-bottom-color: $white;
+                    border-width: 10px;
+                    margin-left: -10px;
+                }
+
+            }
         }
 
         @media #{$mobile} {
