@@ -7,11 +7,13 @@ import { combineReducers } from "redux";
 
 import flashMessages from "./flashMessages";
 import loading from "./loading";
+import navigation from "./loading";
 import subscriptions from "./subscriptions";
 import { routerReducer } from "react-router-redux";
 
 export default rootReducer = combineReducers({
     loading,
+    navigation,
     flashMessages,
     subscriptions,
     routing: routerReducer

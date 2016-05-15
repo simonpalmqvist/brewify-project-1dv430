@@ -1,5 +1,5 @@
 /**
- * @description Error reducer for changing the error state, can be picked up by forms or other pages
+ * @description Flash message reducer for displaying and removing error / save messages throughout the application
  * @author simonpalmqvist
  */
 
