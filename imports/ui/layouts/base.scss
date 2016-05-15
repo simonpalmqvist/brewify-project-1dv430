@@ -176,11 +176,12 @@ div.modal-wrapper {
     }
 
     @media #{$mobile} {
+        padding: $spacing $half-spacing;
+
         &.full-width-mobile {
             padding: $spacing  0  0 $half-spacing;
             border-radius: 0;
         }
-
         position: static;
     }
 }
