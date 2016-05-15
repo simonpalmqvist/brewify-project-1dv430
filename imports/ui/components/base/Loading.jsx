@@ -1,5 +1,5 @@
 /**
- * @description AuthForm component for validating user input before trying to create/login user
+ * @description Loading component to show spinner when app is loading
  * @author simonpalmqvist
  */
 
