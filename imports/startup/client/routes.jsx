@@ -43,7 +43,9 @@ Meteor.startup(() => {
         window.scrollTo(0, 0);
 
         if (location.startsWith("/recipe/")) {
-            showBackButton("/dashboard");
+            showBackButton("/dashboard", "Back");
+        } else if (location.startsWith("/brew/profile")) {
+            showBackButton("/dashboard", "Done");
         } else {
             removeBackButton();
         }
@@ -57,6 +59,7 @@ Meteor.startup(() => {
     const hist = syncHistoryWithStore(browserHistory, Store);
 
 
+    //Defined routes and eventual handlers for checking authorization
     ReactDOM.render(
         <Provider store={Store}>
             <Router onUpdate={onPageChange} history={hist}>

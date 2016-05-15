@@ -13,14 +13,14 @@ import { Link } from "react-router";
 class BackButton extends React.Component {
 
     render() {
-        const { backUrl } = this.props.navigation;
+        const { backButton } = this.props.navigation;
 
         let classes = "c-back-button";
         let element;
 
         //Show back arrow if state has a back url
-        if (backUrl) {
-            element = (<Link to={backUrl}>❮</Link>);
+        if (backButton) {
+            element = (<Link to={backButton.url}>{backButton.text}</Link>);
         }
 
         return (

@@ -5,10 +5,15 @@
 
 export default function navigation(state = {}, action = {}) {
     switch (action.type) {
-        case "BACK_URL":
-            return {backUrl: action.url};
+        case "BACK_BUTTON":
+            return {
+                backButton: {
+                    url: action.url,
+                    text: action.text
+                }
+            };
             break;
-        case "REMOVE_BACK_URL":
+        case "REMOVE_BACK_BUTTON":
             return {};
             break;
         default:
