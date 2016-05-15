@@ -16,6 +16,7 @@ import { alreadyLoggedIn, loggedIn } from "../../ui/actions/AuthActions";
 import { subscribeAll } from "../../ui/actions/SubscribeActions.js";
 import { recipeExists } from "../../ui/actions/RecipeActions";
 import { removeMessage } from "../../ui/actions/StatusActions";
+import { showBackButton, removeBackButton } from "../../ui/actions/NavigationActions";
 import Store from "../../ui/store";
 
 //Layouts
@@ -35,6 +36,19 @@ import Login from "../../ui/components/auth/Login";
 import Logout from "../../ui/components/auth/Logout";
 
 Meteor.startup(() => {
+    function onPageChange() {
+        //This refers to Router component in this scope
+        const location = this.state.location.pathname;
+
+        window.scrollTo(0, 0);
+
+        if (location.startsWith("/recipe/")) {
+            showBackButton("/dashboard");
+        } else {
+            removeBackButton();
+        }
+        removeMessage();
+    }
 
     //Subscribe to publications if user is logged in
     subscribeAll();
@@ -42,10 +56,6 @@ Meteor.startup(() => {
     //Sync route history with store
     const hist = syncHistoryWithStore(browserHistory, Store);
 
-    const onPageChange = () => {
-        window.scrollTo(0, 0);
-        removeMessage();
-    };
 
     ReactDOM.render(
         <Provider store={Store}>

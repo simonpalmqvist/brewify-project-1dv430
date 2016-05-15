@@ -8,8 +8,6 @@ import React from "react";
 import classNames from "classNames";
 import { connect }  from "react-redux";
 
-import { removeBackButton } from "../../actions/NavigationActions";
-
 import { Link } from "react-router";
 
 class BackButton extends React.Component {
@@ -22,7 +20,7 @@ class BackButton extends React.Component {
 
         //Show back arrow if state has a back url
         if (backUrl) {
-            element = (<Link to={backUrl} onClick={removeBackButton}>❮</Link>);
+            element = (<Link to={backUrl}>❮</Link>);
         }
 
         return (
@@ -35,6 +33,4 @@ class BackButton extends React.Component {
 
 //Map the current state to the properties in component
 export default connect(({navigation}) => ({navigation}))(BackButton);
-
-
 

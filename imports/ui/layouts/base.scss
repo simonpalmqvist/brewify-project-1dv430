@@ -91,43 +91,6 @@ body {
     margin-top: $header-height;
 }
 
-header.main-header {
-    background-color: $main;
-    height: 60px;
-    border-bottom: solid 1px $middlegrey;
-
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    z-index: 400;
-
-    div.wrapper {
-        padding: $spacing $spacing;
-
-        nav {
-            position: absolute;
-            top: $spacing;
-            right: $spacing;
-        }
-
-        @media #{$mobile} {
-            padding: $spacing $half-spacing;
-
-            nav {
-                right: $half-spacing;
-            }
-        }
-    }
-
-    text-align: center;
-
-    a {
-        color: $white;
-    }
-}
-
-
 .logo {
     width: 100px;
     margin-top: -10px;

@@ -1,0 +1,9 @@
+@import "../../layouts/base";
+
+div.c-back-button {
+    float: left;
+
+    > a {
+        font-size: 24px;
+    }
+}
