@@ -7,6 +7,7 @@ import { Meteor } from "meteor/meteor";
 import { browserHistory } from "react-router";
 import Store from "../store";
 import { saveAction, savingAction, errorAction, startedLoading, finishedLoading } from "./StatusActions";
+import { showBackButton } from "./NavigationActions";
 import { addBrewProfile } from "./BrewProfileActions";
 
 import { Recipes } from "../../api/recipes/Recipes";
@@ -343,6 +344,7 @@ export function recipeExists(nextState, transition, callback) {
             if(!Recipes.findOne(nextState.params.id)) {
                 transition("/dashboard");
             }
+            showBackButton("/dashboard");
             finishedLoading();
             callback();
         })

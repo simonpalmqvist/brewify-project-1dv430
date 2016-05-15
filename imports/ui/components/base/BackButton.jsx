@@ -6,8 +6,11 @@
 import { Meteor } from "meteor/meteor";
 import React from "react";
 import classNames from "classNames";
-
 import { connect }  from "react-redux";
+
+import { removeBackButton } from "../../actions/NavigationActions";
+
+import { Link } from "react-router";
 
 class BackButton extends React.Component {
 
@@ -19,7 +22,7 @@ class BackButton extends React.Component {
 
         //Show back arrow if state has a back url
         if (backUrl) {
-            element = (<a href={backUrl}>❮</a>);
+            element = (<Link to={backUrl} onClick={removeBackButton}>❮</Link>);
         }
 
         return (

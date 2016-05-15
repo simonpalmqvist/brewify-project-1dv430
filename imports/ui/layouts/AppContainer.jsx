@@ -4,12 +4,12 @@
  */
 
 import React from "react";
-import { Link } from "react-router";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 import NavigationBar from "../components/navigation/NavigationBar";
 import StatusMessage from "../components/base/StatusMessage";
 import Loading from "../components/base/Loading";
+import BackButton from "../components/base/BackButton";
 
 export default class AppContainer extends React.Component {
 
@@ -23,7 +23,8 @@ export default class AppContainer extends React.Component {
             <div>
                 <header className="main-header">
                     <div className="wrapper">
-                        <Link to="/"><img className="logo" src="/logo.png" alt="Brewify"/></Link>
+                        <BackButton/>
+                        <img className="logo" src="/logo.png" alt="Brewify"/>
                         <NavigationBar/>
                     </div>
                 </header>
