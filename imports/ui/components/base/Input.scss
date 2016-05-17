@@ -18,16 +18,33 @@ input.c-input {
         width: 100px;
     }
 
+    &.warning {
+        border: solid 1px $warning;
+    }
+
     &:hover {
         border: dashed 1px $dark-grey;
+
+        &.warning {
+            border-color: $warning;
+        }
+
         @media #{$mobile} {
             border-color: transparent;
+
+            &.warning {
+                border-color: transparent;
+            }
         }
     }
 
     &:focus {
         border: solid 1px $dark-grey;
         z-index: 300;
+
+        &.warning {
+            border-color: $warning;
+        }
     }
 
     &[disabled] {

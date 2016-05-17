@@ -86,11 +86,19 @@ export default class Input extends React.Component {
     }
 
     render() {
-        const { label, name, attr, className, style} = this.props;
+        const { label, name, attr, className, style, warning} = this.props;
         const { value } = this.state;
 
         let labelEl;
+        let warningTitle;
+
         let classes = classNames("c-input", className);
+
+        if (warning && warning.value == value) {
+            classes = classNames(classes, "warning");
+            warningTitle = warning.title;
+        }
+
 
 
         //Write out label if needed
@@ -105,6 +113,7 @@ export default class Input extends React.Component {
                        name={name}
                        value={value}
                        style={style}
+                       title={warningTitle}
                        {...attr}
                        onChange={this.handleChange.bind(this)}
                        onKeyPress={this.onEnterKeyPress.bind(this)}

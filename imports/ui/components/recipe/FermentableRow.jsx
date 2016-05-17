@@ -56,6 +56,7 @@ export default class FermentableRow extends React.Component {
                            name="ebc"
                            label={headers[1]}
                            value={fermentable.ebc}
+                           warning={{value: 0, title: "Please set a EBC value for grain"}}
                            onValidate={validate}
                            onUpdate={this.updateFermentable}/>
                 </td>
