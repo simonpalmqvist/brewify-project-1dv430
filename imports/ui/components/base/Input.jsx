@@ -30,7 +30,7 @@ export default class Input extends React.Component {
         //Only update if something actually changes, if no value is present set it back to prop
         if (newValue === "") {
             this.setState({value});
-        } else if (newValue !== value) {
+        } else if (newValue != value) {
             //Connect the value to key
             let update = {};
             update[name] = newValue;
@@ -45,7 +45,7 @@ export default class Input extends React.Component {
         const { attr, fixedDecimals } = this.props;
 
         //If attribute type is number the set to fixed (default 0)
-        if (value !== "" && attr.type === "number") {
+        if (fixedDecimals && value !== "" && attr.type === "number") {
             value = value.toFixed(fixedDecimals);
         }
         return value;
@@ -128,6 +128,5 @@ Input.defaultProps = {
     onUpdate() {},
     validate() {return true;},
     attr: {},
-    value: "",
-    fixedDecimals: 0
+    value: ""
 };

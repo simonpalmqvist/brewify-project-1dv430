@@ -175,15 +175,14 @@ class Recipe extends React.Component {
                                        onUpdate={update}/>
                                 <Input name="boilLoss"
                                        label="Loss in brew-kettle (l)"
-                                       fixedDecimals={1}
-                                       attr={{type: "number", step: "0.1"}}
+                                       attr={{type: "number"}}
                                        value={recipe.boilLoss}
                                        validate={this.recipeValidateOne}
                                        onUpdate={update}/>
                                 <Input name="fermenterLoss"
                                        label="Loss in fermenter (l)"
-                                       fixedDecimals={1}
-                                       attr={{type: "number", step: "0.1"}}
+
+                                       attr={{type: "number"}}
                                        value={recipe.fermenterLoss}
                                        validate={this.recipeValidateOne}
                                        onUpdate={update}/>

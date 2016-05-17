@@ -56,8 +56,8 @@ export default class FermentableRow extends React.Component {
                            name="ebc"
                            label={headers[1]}
                            value={fermentable.ebc}
-                           warning={{value: 0, title: "Please set a EBC value for grain"}}
-                           onValidate={validate}
+                           warning={{value: 0, title: "Please set EBC value for grain"}}
+                           validate={validate}
                            onUpdate={this.updateFermentable}/>
                 </td>
                 <td>
@@ -66,6 +66,7 @@ export default class FermentableRow extends React.Component {
                            name="potential"
                            label={headers[2]}
                            value={fermentable.potential}
+                           warning={{value: 1.000, title: "Please set potential for grain"}}
                            validate={validate}
                            onUpdate={this.updateFermentable}/>
                 </td>
@@ -74,6 +75,7 @@ export default class FermentableRow extends React.Component {
                            fixedDecimals={3}
                            name="amount"
                            label={headers[3]}
+                           warning={{value: 0, title: "Please add grain amount"}}
                            validate={validate}
                            value={fermentable.amount}
                            onUpdate={this.updateFermentable}/>

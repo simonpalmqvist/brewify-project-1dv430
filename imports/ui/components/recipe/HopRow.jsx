@@ -69,6 +69,7 @@ export default class HopRow extends React.Component {
                            fixedDecimals={2}
                            name="alpha"
                            label={headers[2]}
+                           warning={{value: 0, title: "Please add hops alpha-acid percentage"}}
                            validate={validate}
                            value={hop.alpha}
                            onUpdate={this.updateHop} />
@@ -78,6 +79,7 @@ export default class HopRow extends React.Component {
                            name="amount"
                            label={headers[3]}
                            value={hop.amount}
+                           warning={{value: 0, title: "Please add hop amount"}}
                            validate={validate}
                            onUpdate={this.updateHop} />
 
