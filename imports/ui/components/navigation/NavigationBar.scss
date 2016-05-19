@@ -142,7 +142,7 @@ header.c-navigation-bar {
         }
 
         @media #{$mobile} {
-            padding: $spacing $half-spacing;
+            padding: $half-spacing;
 
             nav {
                 right: $half-spacing;
