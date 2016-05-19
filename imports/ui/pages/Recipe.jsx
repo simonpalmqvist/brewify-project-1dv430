@@ -43,6 +43,17 @@ import EbcInput from "../components/recipe/EbcInput";
 
 class Recipe extends React.Component {
 
+    componentDidMount() {
+        const input = this.refs.recipeName.refs.input;
+
+        //If recipe has default name then auto focus on it
+        if (this.props.recipe.name === "Recipe") {
+            console.log(input);
+            input.focus();
+            input.value = "";
+        }
+    }
+
     update(value) {
         updateRecipe(this.props.recipe._id, value);
     }
@@ -82,8 +93,9 @@ class Recipe extends React.Component {
                         <div className="content-box full-width-mobile">
                             <Input name="name"
                                    value={recipe.name}
-                                   className={["input-header", "glass"]}
-                                   attr={{type: "text"}}
+                                   ref="recipeName"
+                                   className="input-header"
+                                   attr={{type: "text", placeholder: "Select a name"}}
                                    validate={this.recipeValidateOne}
                                    onUpdate={update}/>
 

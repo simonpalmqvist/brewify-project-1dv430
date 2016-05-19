@@ -111,6 +111,7 @@ export default class Input extends React.Component {
                 {labelEl}
                 <input className={classes}
                        name={name}
+                       ref="input"
                        value={value}
                        style={style}
                        title={warningTitle}

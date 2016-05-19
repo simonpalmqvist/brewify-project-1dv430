@@ -39,7 +39,7 @@ Meteor.startup(() => {
         //This refers to Router component in this scope
         const location = this.state.location.pathname;
 
-        window.scrollTo(0, 0);
+        window.scrollTo(0, 20);
 
         if (location.startsWith("/recipe/")) {
             showBackButton("/dashboard", "Back");
