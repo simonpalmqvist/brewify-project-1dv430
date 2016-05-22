@@ -105,10 +105,10 @@ describe("Recipe UI", function() {
 
         browser.keys(["Down arrow","Enter"]);
 
-        browser.waitForExist(".yeast-info input.c-autocomplete");
+        browser.waitForExist(".yeast-info form input.c-autocomplete");
 
-        //Should have one new hop
-        browser.getValue(".yeast-info input.c-autocomplete").should.equal(yeasts[5].name);
+        //Should have yeast
+        browser.getValue(".yeast-info form input.c-autocomplete").should.equal(yeasts[5].name);
     });
 
     it("Should be able to add other ingredient", function() {

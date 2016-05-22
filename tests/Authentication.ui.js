@@ -26,7 +26,7 @@ describe("Authentication UI", () => {
 
     describe("New user", () => {
         it("Should be able to create a new account", () => {
-            browser.click("a[href=\"/login\"]")
+            browser.click("a[href=\"/login\"]");
 
             browser.click("a[href=\"/register\"]");
 

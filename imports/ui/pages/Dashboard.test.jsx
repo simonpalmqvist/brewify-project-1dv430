@@ -41,12 +41,12 @@ if (Meteor.isClient) {
 
             const dashboard = renderSmartComponentIntoDocument(<Dashboard />);
 
-            const list = findDOMNode(dashboard).querySelector("ul");
+            const list = findDOMNode(dashboard).querySelectorAll("ul > li > a");
 
-            const listNames = _.compact(_.map(list.children, (el) => el.textContent));
+            const listNames = _.compact(_.map(list, (el) => el.textContent));
             const recipeNames = _.map(recipes, (recipe) => recipe.name);
 
-            list.children.length.should.equal(numberOfRecipes);
+            list.length.should.equal(numberOfRecipes);
             listNames.should.deep.equal(recipeNames);
         });
     });
