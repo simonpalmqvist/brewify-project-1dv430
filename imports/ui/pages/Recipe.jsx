@@ -139,7 +139,7 @@ class Recipe extends React.Component {
 
 
                 <div className="col-wrapper">
-                    <div className="col col-3-4">
+                    <div className="col col-3-4 break-laptop">
                         <div className="content-box extract full-width-mobile">
                             <FermentablesList
                                 fermentables={fermentables}
@@ -162,7 +162,7 @@ class Recipe extends React.Component {
                                 recipeId={this.props.recipe._id}/>
                         </div>
                     </div>
-                    <div className="col col-1-4">
+                    <div className="col col-1-4 break-laptop">
                         <div className="content-box yeast full-width-mobile">
                             <YeastInfo
                                 recipeYeast={recipeYeast}
