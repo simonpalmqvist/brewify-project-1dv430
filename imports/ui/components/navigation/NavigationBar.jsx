@@ -7,6 +7,7 @@ import React from "react";
 
 import BackButton from "../base/BackButton";
 import { Link } from "react-router";
+import classNames from "classNames";
 
 //Actions
 import { logoutUser } from "../../actions/AuthActions";
@@ -39,22 +40,23 @@ export default class NavigationBar extends React.Component {
         //Show menu
         let nav = (<Link to="/login">Login</Link>);
         let list;
-
-        if (Meteor.userId()) {
-            nav = (
-                <a href="#" className="menu-icon" onClick={this.toggleMenu.bind(this)}>
-                    <span className="head"/>
-                    <span className="body"/>
-                </a>);
-        }
+        let menuIconClasses = "menu-icon";
 
         if(listOpen) {
+            menuIconClasses = classNames(menuIconClasses, "active");
             list = (
                 <ul className="expanded-list">
                     <li><Link to="/brew/profile" onClick={this.minimizeMenu.bind(this)}>Brew profile</Link></li>
                     <li><a className="logout-option" href="#" onClick={this.logout.bind(this)}>Logout</a></li>
                 </ul>
             );
+        }
+
+        if (Meteor.userId()) {
+            nav = (
+                <a href="#" className={menuIconClasses} onClick={this.toggleMenu.bind(this)}>
+
+                </a>);
         }
 
         return (

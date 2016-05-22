@@ -32,11 +32,12 @@ header.c-navigation-bar {
             a.menu-icon {
                 display: inline-block;
                 position: relative;
-                top: -4px;
+                top: -5px;
                 width: 34px;
                 height: 34px;
                 border-radius: 17px;
                 background-color: white;
+                @include transition(background-color 0.3s);
 
                 &:hover {
                     background-color: lighten($main, 40%);
@@ -64,20 +65,30 @@ header.c-navigation-bar {
                     border-radius: 14px 14px 0 0;
                 }
 
-                > span.menu-head {
-                    display: inline-block;
-                    position: absolute;
-                    background-color: $main;
-                    width: 10px;
-                    height: 10px;
+                &.active {
+                    background-color: darken($main, 15%);
 
+                    &:before {
+                        display: none;
+                    }
+
+                    &:after {
+                        top: 6px;
+                        left: 8px;
+                        content: "×";
+                        font-size: 31px;
+                        color: $main;
+                        background-color: transparent;
+                        border-radius: 0;
+                    }
                 }
+
             }
 
             ul.expanded-list {
                 position: absolute;
                 display: block;
-                margin-top: 2px;
+                margin-top: 4px;
                 padding: $half-spacing 0;
                 right: $spacing;
                 background-color: $white;
@@ -90,7 +101,10 @@ header.c-navigation-bar {
                         min-width: 200px;
                         color: $main;
                         display:block;
+                        text-decoration: none;
                         padding: $input-spacing;
+                        background-color: transparent;
+                        @include transition(all, 0.3s);
 
                         &:hover {
                             background-color: $main;
