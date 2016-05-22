@@ -176,7 +176,7 @@ class Recipe extends React.Component {
                                 recipeId={this.props.recipe._id} />
                         </div>
                         <div className="content-box full-width-mobile">
-                            <h2>Settings</h2>
+                            <h2 className="symbol settings">Settings</h2>
                             <div className="responsive-info side settings-info">
                                 <Input name="efficiency"
                                        label="Mash efficiency (%)"

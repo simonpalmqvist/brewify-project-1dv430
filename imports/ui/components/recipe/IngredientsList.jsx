@@ -53,7 +53,7 @@ export default class IngredientsList extends React.Component {
 
         return (
             <div>
-                <h2>Other ingredients</h2>
+                <h2 className="symbol ingredient">Other ingredients</h2>
                 <table className="recipe-ingredients responsive-table">
                     <thead>
                     <tr>

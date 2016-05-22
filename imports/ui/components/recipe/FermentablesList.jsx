@@ -55,7 +55,7 @@ export default class FermentablesList extends React.Component {
 
         return (
             <div>
-                <h2>Fermentables</h2>
+                <h2 className="symbol grain">Grains &amp; Extracts</h2>
                 <table className="recipe-fermentables responsive-table">
                     <thead>
                         <tr>

@@ -156,34 +156,6 @@ div.modal-wrapper {
     margin-bottom: 20px;
     position: relative;
 
-    &.extract {
-        background-image: url("/extract.png");
-        background-size: 200px auto;
-        background-position: -30px -30px;
-        background-repeat: no-repeat;
-    }
-
-    &.hops {
-        background-image: url("/hops.png");
-        background-size: 200px auto;
-        background-position: -40px -40px;
-        background-repeat: no-repeat;
-    }
-
-    &.yeast {
-        background-image: url("/yeast.png");
-        background-size: 150px auto;
-        background-position: -20px -30px;
-        background-repeat: no-repeat;
-    }
-
-    &.other-ingredients {
-        background-image: url("/other.png");
-        background-size: 220px auto;
-        background-position: -40px -20px;
-        background-repeat: no-repeat;
-    }
-
     @media #{$mobile} {
         padding: $spacing $half-spacing;
 
@@ -221,6 +193,44 @@ h2, .input-header {
     font-size: $h2-size;
     margin-top: -$half-spacing;
     margin-bottom: $half-spacing;
+
+    &.symbol {
+        padding-left: 40px;
+        background-size: 35px auto;
+        background-position: left top;
+        background-repeat: no-repeat;
+
+        &.grain {
+            background-image: url("/grain-symbol.png");
+        }
+
+        &.hop {
+            background-image: url("/hop-symbol.png");
+        }
+
+        &.yeast {
+            background-image: url("/yeast-symbol.png");
+        }
+
+        &.ingredient {
+            background-image: url("/ingredient-symbol.png");
+        }
+
+        &.settings {
+            background-image: url("/settings-symbol.png");
+        }
+
+        &.beer {
+            background-image: url("/beer-symbol.png");
+        }
+
+        @media #{$mobile} {
+            background-position: center top;
+            padding-top: 40px;
+            padding-left: 0;
+            text-align: center;
+        }
+    }
 }
 
 h2 {

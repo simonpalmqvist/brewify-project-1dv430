@@ -85,7 +85,7 @@ export default class StyleInfo extends React.Component {
 
         return (
             <div>
-                <h2>Style</h2>
+                <h2 className="symbol beer">Style</h2>
                 {content}
             </div>
         );

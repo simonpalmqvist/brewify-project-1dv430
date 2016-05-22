@@ -50,7 +50,7 @@ export default class HopsList extends React.Component {
 
         return (
             <div>
-                <h2>Hops</h2>
+                <h2 className="symbol hop">Hops</h2>
                 <table className="recipe-hops responsive-table">
                     <thead>
                     <tr>

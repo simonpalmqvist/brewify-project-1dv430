@@ -103,7 +103,7 @@ export default class YeastInfo extends React.Component {
 
         return (
             <div>
-                <h2>Yeast</h2>
+                <h2 className="symbol yeast">Yeast</h2>
                 {content}
             </div>
         );
