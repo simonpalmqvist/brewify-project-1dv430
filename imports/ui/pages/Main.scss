@@ -1,0 +1,79 @@
+div.marketing-info {
+
+    max-width: 700px;
+    margin: 0 auto;
+
+    h1 {
+        font-size: 32px;
+        text-align: center;
+        padding-bottom: $spacing * 1.5;
+    }
+
+    a.secondary-button {
+        padding: $half-spacing;
+        text-decoration: none;
+        max-width: 220px;
+        margin-bottom: $spacing * 1.5;
+    }
+
+    div.marketing-content {
+        padding: $half-spacing 0 $half-spacing 30%;
+        background-size: 80px auto;
+        background-position: 9% center;
+        background-repeat: no-repeat;
+
+        &.beer-symbol {
+            background-image: url("/beer-circle-symbol.png");
+        }
+
+        &.ingredient-symbol {
+            background-image: url("/ingredient-circle-symbol.png");
+        }
+
+        &.sync-symbol {
+            background-image: url("/sync-circle-symbol.png");
+        }
+
+        &.right {
+            padding-left: 0;
+            padding-right: 30%;
+            background-position: 91% center;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        @media #{$tablet} {
+            background-position: 2% center;
+
+            &.right {
+                background-position: 98% center;
+            }
+        }
+
+        @media #{$mobile} {
+
+            padding-left: 0;
+            text-align:  center;
+            background-position: center top;
+            padding-top: 90px;
+
+            &.right {
+                padding-right: 0;
+                background-position: center top;
+            }
+        }
+    }
+
+    @media #{$mobile} {
+        @include calc-width(100%, "+", $spacing * 2);
+        margin-right: 0;
+        margin-left: -$spacing;
+        border-radius: 0;
+
+        h1 {
+            font-size: 28px;
+        }
+    }
+}
