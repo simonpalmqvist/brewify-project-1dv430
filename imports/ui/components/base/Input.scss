@@ -19,28 +19,17 @@ input.c-input {
     }
 
     &.warning {
-        border: solid 1px $warning;
-
-        @media #{$mobile} {
-            border-color: $warning transparent;
-        }
+        color: $warning;
+        font-weight: bold;
     }
 
     &:hover {
         border: dashed 1px $dark-grey;
-
-        &.warning {
-            border-color: $warning;
-        }
     }
 
     &:focus {
         border: solid 1px $dark-grey;
         z-index: 300;
-
-        &.warning {
-            border-color: $warning;
-        }
     }
 
     &[disabled] {
@@ -60,13 +49,6 @@ input.c-input {
             position: relative;
             background-color: $white;
             text-align: center !important;
-        }
-
-        &:hover, &:focus {
-            &.warning {
-                border: 1px solid $warning;
-                border-color: $warning transparent;
-            }
         }
     }
 
