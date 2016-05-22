@@ -5,6 +5,10 @@
 
 import { Meteor } from "meteor/meteor";
 import { Recipes } from "./Recipes";
+import { RecipeFermentables } from "./fermentables/RecipeFermentables";
+import { RecipeHops } from "./hops/RecipeHops";
+import { RecipeYeasts } from "./yeasts/RecipeYeasts";
+import { RecipeIngredients } from "./ingredients/RecipeIngredients";
 import { Styles } from "../brewerydb/Styles";
 import {getUser, belongsToUser} from "../collectionHelpers";
 
@@ -27,6 +31,15 @@ Meteor.methods({
         belongsToUser(Recipes, id);
 
         Recipes.remove(id);
+
+        //Remove all ingredients connected to recipe
+        [
+            RecipeFermentables,
+            RecipeHops,
+            RecipeIngredients,
+            RecipeYeasts
+        ].forEach((Collection) => Collection.remove({recipeId: id}));
+
     },
 
     "recipes.style.update": (id, styleId) => {
