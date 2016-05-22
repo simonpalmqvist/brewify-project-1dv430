@@ -27,7 +27,11 @@ export function saveAction() {
  * Dispatches action saving to indicate that data is currently being saved
  */
 export function savingAction() {
-    Store.dispatch({type: "SAVING_MESSAGE"});
+    if (Meteor.status().connected) {
+        Store.dispatch({type: "SAVING_MESSAGE"});
+    } else {
+        errorAction({reason: "No connection, will sync when online"});
+    }
 }
 
 /**

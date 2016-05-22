@@ -45,3 +45,13 @@ Meteor.methods({
         Recipes.update(id, {$set: {styleId: undefined}});
     }
 });
+
+if (Meteor.isClient) {
+    Ground.methodResume([
+        "recipes.insert",
+        "recipes.update",
+        "recipes.remove",
+        "recipes.style.update",
+        "recipes.style.remove"
+    ]);
+}
