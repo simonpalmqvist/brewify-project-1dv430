@@ -345,14 +345,24 @@ export function deleteRecipeIngredient(id) {
  * @param callback
  */
 export function recipeExists(nextState, transition, callback) {
+    let promises = [];
+    const subscriptions = Store.getState().subscriptions;
+
     if (!Meteor.userId()) {
         transition("/login");
         callback();
     }
 
+    //Only check subscription status when connected
+    if (Meteor.status().connected) {
+        promises = [
+            subscriptions.recipes.readyPromise()
+        ];
+    }
+
     startedLoading();
 
-    Store.getState().subscriptions.recipes.readyPromise()
+    Promise.all(promises)
         .then(() => {
             if(!Recipes.findOne(nextState.params.id)) {
                 transition("/dashboard");
