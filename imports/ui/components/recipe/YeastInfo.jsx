@@ -94,6 +94,7 @@ export default class YeastInfo extends React.Component {
                            fixedDecimals={2}
                            label="Attenuation (%)"
                            name="attenuation"
+                           warning={{value: 0, title: "Please add yeasts attenuation"}}
                            validate={this.validate}
                            value={recipeYeast.attenuation}
                            onUpdate={this.update} />

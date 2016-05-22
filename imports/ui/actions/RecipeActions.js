@@ -347,7 +347,7 @@ export function deleteRecipeIngredient(id) {
 export function recipeExists(nextState, transition, callback) {
     if (!Meteor.userId()) {
         transition("/login");
-        callback();
+        return callback();
     }
 
     startedLoading();
