@@ -51,6 +51,23 @@ Meteor.startup(() => {
         removeMessage();
     }
 
+    //Adding so server methods will be resumed when offline
+    if (Meteor.isClient) {
+        Ground.methodResume([
+            "recipes.insert",
+            "recipes.update",
+            "recipes.remove",
+            "recipes.style.update",
+            "recipes.style.remove",
+            "brew.profiles.insert",
+            "brew.profiles.update",
+            "brew.profiles.remove",
+            "hops.insert",
+            "hops.update",
+            "hops.remove"
+        ]);
+    }
+
     //Subscribe to publications if user is logged in
     subscribeAll();
 

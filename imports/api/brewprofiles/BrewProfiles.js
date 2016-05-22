@@ -6,6 +6,7 @@
 import { Meteor } from  "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import { Ground } from "meteor/ground:db";
 
 export const BrewProfiles = new Mongo.Collection("brew.profiles");
 
@@ -65,3 +66,8 @@ BrewProfiles.schema = new SimpleSchema({
 
 //Use schema on writes
 BrewProfiles.attachSchema(BrewProfiles.schema);
+
+//Create ground collection to be able to store and access data offline for client
+if (Meteor.isClient) {
+    Ground.Collection(BrewProfiles);
+}
