@@ -33,11 +33,10 @@ export default class Main extends React.Component {
                 </div>
 
                 <div className="marketing-content sync-symbol">
-                    <h3>Always in sync and available offline</h3>
+                    <h3>Always in sync</h3>
                     <p>
-                        Your changes to a recipe will be instant saved and synced so it will be available on
-                        any device instantly. In newer browsers you will also be able to reach and change any
-                        recipe even offline. Just remember to go online so it can sync with your other devices.
+                        Your changes to a recipe will be saved and synced directly and available on
+                        any of your other devices instantly.
                     </p>
                 </div>
 
