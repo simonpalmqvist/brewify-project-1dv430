@@ -1,0 +1,45 @@
+
+
+ul.recipe-list {
+    > li {
+        border-bottom: 1px solid $grey;
+        position: relative;
+
+        > a {
+            padding: $input-spacing * 2 0;
+            display: block;
+            text-decoration: none;
+
+            &:hover {
+                background-color: $main;
+                color: $white;
+
+                @media #{$mobile} {
+                    color: $main;
+                    background-color: transparent;
+                }
+            }
+
+            &:active {
+                background-color: transparent;
+                color: $main;
+            }
+
+
+        }
+
+
+
+        button.c-confirm-button {
+            position: absolute;
+            top: 6px;
+            right: 1px;
+            float: none;
+
+            @media #{$mobile} {
+                background-color: $warning;
+                color: $white;
+            }
+        }
+    }
+}

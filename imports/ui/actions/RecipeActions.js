@@ -58,6 +58,20 @@ export function updateRecipe(id, update) {
 }
 
 /**
+ * Action to delete a recipe
+ * @param id - id of which recipe to delete
+ */
+export function deleteRecipe(id) {
+    savingAction();
+
+    Store.dispatch(() => {
+        Meteor.callPromise("recipes.remove", id)
+            .then(saveAction)
+            .catch(errorAction);
+    });
+}
+
+/**
  * Action to update a recipes style
  * @param id
  * @param styleId

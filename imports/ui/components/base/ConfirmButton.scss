@@ -13,17 +13,9 @@ button.c-confirm-button {
 
     @include transition(all 0.3s);
 
-    @media #{$tablet} {
-        float: none;
-        display: block;
-        margin: $input-spacing * 2 auto;
-        font-size: 18px;
-        padding: $input-spacing / 4 $input-spacing * 2;
-    }
-
     &.delete {
-        background-color: $white;
-        color: $warning;
+        background-color: transparent;
+        color: $dark-grey;
 
         &:hover {
             background-color: $warning;

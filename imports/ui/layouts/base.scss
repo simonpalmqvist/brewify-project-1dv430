@@ -212,6 +212,11 @@ p {
     margin-bottom: $spacing;
 }
 
+h1 {
+    font-size: 32px;
+    padding-bottom: $spacing * 1.5;
+}
+
 h2, .input-header {
     font-size: $h2-size;
     margin-top: -$half-spacing;

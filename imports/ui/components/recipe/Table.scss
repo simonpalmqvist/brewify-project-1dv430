@@ -62,6 +62,19 @@ table.responsive-table {
                         }
                     }
 
+                    button.c-confirm-button {
+                        float: none;
+                        display: block;
+                        margin: $input-spacing * 2 auto;
+                        font-size: 18px;
+                        padding: $input-spacing / 4 $input-spacing * 2;
+
+                        &.delete {
+                            background-color: $warning;
+                            color: $white;
+                        }
+                    }
+
                     select {
                         direction:rtl;
 

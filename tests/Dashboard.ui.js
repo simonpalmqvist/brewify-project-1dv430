@@ -47,9 +47,9 @@ describe("Dashboard UI", () => {
 
             browser.url("http://localhost:3000/dashboard");
 
-            browser.waitForExist(".list-items li");
+            browser.waitForExist(".recipe-list li");
 
-            const elements = browser.elements(".list-items li");
+            const elements = browser.elements(".recipe-list li");
 
             elements.value.length.should.equal(numOfRecipes);
         });
