@@ -62,9 +62,18 @@ Meteor.startup(() => {
             "brew.profiles.insert",
             "brew.profiles.update",
             "brew.profiles.remove",
-            "hops.insert",
-            "hops.update",
-            "hops.remove"
+            "recipes.fermentables.insert",
+            "recipes.fermentables.update",
+            "recipes.fermentables.remove",
+            "recipes.hops.insert",
+            "recipes.hops.update",
+            "recipes.hops.remove",
+            "recipes.yeasts.insert",
+            "recipes.yeasts.update",
+            "recipes.yeasts.remove",
+            "recipes.ingredients.insert",
+            "recipes.ingredients.update",
+            "recipes.ingredients.remove"
         ]);
     }
 

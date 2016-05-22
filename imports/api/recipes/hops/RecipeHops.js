@@ -6,6 +6,7 @@
 import { Meteor } from  "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import { Ground } from "meteor/ground:db";
 
 export const RecipeHops = new Mongo.Collection("recipes.hops");
 
@@ -53,3 +54,8 @@ RecipeHops.schema = new SimpleSchema({
 
 //Use schema on writes
 RecipeHops.attachSchema(RecipeHops.schema);
+
+//Create ground collection to be able to store and access data offline for client
+if (Meteor.isClient) {
+    Ground.Collection(RecipeHops);
+}

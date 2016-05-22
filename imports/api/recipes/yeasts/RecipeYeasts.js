@@ -6,6 +6,7 @@
 import { Meteor } from  "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import { Ground } from "meteor/ground:db";
 
 export const RecipeYeasts = new Mongo.Collection("recipes.yeasts");
 
@@ -65,24 +66,10 @@ RecipeYeasts.schema = new SimpleSchema({
     }
 });
 
-/*
-    Name:
-    yeastType: lager/ale/wine/wheat/champagne
-    yeastForm: liquid/dry
-
-    attenuation: 75
-
-    minTemperature: default 18
-    maxTemperature: default 23
-
-    minAlcoholTolerance: default 5
-    maxAlcoholTolerance: default 18
-
-//Use for something
-    productId: WLP009
-    supplier: White Labs
-
- */
-
 //Use schema on writes
 RecipeYeasts.attachSchema(RecipeYeasts.schema);
+
+//Create ground collection to be able to store and access data offline for client
+if (Meteor.isClient) {
+    Ground.Collection(RecipeYeasts);
+}
