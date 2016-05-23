@@ -289,61 +289,131 @@ describe("Recipe UI - Create a recipe", function() {
         });
 
     });
+
+    describe("Hops", function() {
+        it("Should be able to add hop", function() {
+            const hopName = hops[5].name;
+            const searchString = hopName.substring(0, hopName.length  -2);
+            query = "form.add-hop input";
+
+            //Focus on field
+            browser.click(query);
+
+            //Type a search
+            browser.setValue(query, searchString);
+
+            //Take first result
+            browser.keys(["Down arrow", "Enter"]);
+
+            //Wait for row
+            browser.waitForExist(".recipe-hops tbody tr");
+
+            //Check so one row exists
+            browser.elements(".recipe-hops tbody tr").value.length.should.equal(1);
+
+            //Validate the name
+            browser.getValue(".recipe-hops tbody tr:nth-Child(1) td input.c-autocomplete")
+                .should.equal(hopName);
+        });
+
+        it("Should be able to change hop form", function() {
+            const PELLETS = 2;
+            query = ".recipe-hops tbody tr:nth-Child(1) select";
+
+            //Set new form to pellets
+            browser.selectByValue(query, PELLETS);
+
+            //ebc should be updated on client
+            browser.getValue(query).should.equal(PELLETS.toString());
+        });
+
+        it("Should be able to change hops alpha acid", function() {
+            const newAlpha = 7.0;
+            query = ".recipe-hops tbody tr:nth-Child(1) input[name=alpha]";
+
+            //Set new alpha acid
+            browser.setValue(query, newAlpha);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //Alpha acid should be updated on client
+            browser.getValue(query).should.equal(newAlpha.toFixed(2));
+        });
+
+        it("Should be able to change hops amount", function() {
+            const newAmount = 30;
+            query = ".recipe-hops tbody tr:nth-Child(1) input[name=amount]";
+
+            //Set new amount
+            browser.setValue(query, newAmount);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //amount should be updated on client
+            browser.getValue(query).should.equal(newAmount.toString());
+        });
+
+        it("Should be able to change hops boil time", function() {
+            const newBoilTime = 15;
+            query = ".recipe-hops tbody tr:nth-Child(1) input[name=time]";
+
+            //Set new boil time
+            browser.setValue(query, newBoilTime);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //Boil time should be updated on client
+            browser.getValue(query).should.equal(newBoilTime.toString());
+        });
+
+        it("Should inherit earlier set alpha acid when adding hop sort again", function() {
+            const hopName = hops[5].name;
+            const searchString = hopName.substring(0, hopName.length  -2);
+            query = "form.add-hop input";
+
+            //Focus on field
+            browser.click(query);
+
+            //Type a search
+            browser.setValue(query, searchString);
+
+            //Take first result
+            browser.keys(["Down arrow", "Enter"]);
+
+            //Wait for row
+            browser.waitForExist(".recipe-hops tbody tr");
+
+            //Check so two rows exists
+            browser.elements(".recipe-hops tbody tr").value.length.should.equal(2);
+
+            //Validate so alpha acid has been inherited
+            browser.getValue(".recipe-hops tbody tr:nth-Child(1) input[name=alpha]")
+                .should.equal("7.00");
+        });
+
+        it("Should sort table descending on boil time when value changes", function() {
+            //Set values for row 2
+            [
+                {field: "amount", value: 50},
+                {field: "time", value: 60}
+            ].forEach(({field, value}) => {
+                    browser.setValue(`.recipe-hops tbody tr:nth-Child(2) input[name=${field}]`, value);
+                    browser.keys(["Enter"]);
+                });
+
+            //Row 2 should now be placed as row 1 because of a longer boil time
+            browser.getValue(".recipe-hops tbody tr:nth-Child(1) input[name=amount]")
+                .should.equal("50");
+            //Row 1 = Row 2
+            browser.getValue(".recipe-hops tbody tr:nth-Child(2) input[name=amount]")
+                .should.equal("30");
+        });
+
+    });
 /*
-    it("Should be able to change name", function() {
-        const newName = faker.lorem.words();
-
-        browser.waitForExist("input[name=name]");
-
-        browser.setValue("input[name=name]", newName);
-
-        //Press enter
-        browser.keys(["Enter"]);
-
-        server.call("test.get-recipes")[0].name.should.equal(newName);
-    });
-
-    it("Should be able to add fermentable", function() {
-        const searchString = fermentables[5].name.split(" ")[0];
-
-        browser.waitForExist("form.add-fermentable input");
-
-        browser.click("form.add-fermentable input");
-
-        browser.setValue("form.add-fermentable input", searchString);
-
-        browser.keys(["Down arrow","Enter"]);
-
-        browser.waitForExist(".recipe-fermentables tbody tr");
-
-        const elements = browser.elements(".recipe-fermentables tbody tr");
-
-        //Should have one new fermentable
-        elements.value.length.should.equal(1);
-    });
-
-    //TODO: TEST Change fermentable value, See so same fermentable has new value
-    //TODO: TEST Create own fermentable
-
-    it("Should be able to add hop", function() {
-        const searchString = hops[5].name.split(" ")[0];
-
-        browser.waitForExist("form.add-hop input");
-
-        browser.click("form.add-hop input");
-
-        browser.setValue("form.add-hop input", searchString);
-
-        browser.keys(["Down arrow", "Enter"]);
-
-        browser.waitForExist(".recipe-hops tbody tr");
-
-        const elements = browser.elements(".recipe-hops tbody tr");
-
-        //Should have one new hop
-        elements.value.length.should.equal(1);
-    });
-
     it("Should be able to add yeast", function() {
         const searchString = yeasts[5].name.split(" ")[0];
 
@@ -427,7 +497,7 @@ HOPS
 
 17. Amount 30
 
-18. Boiltime
+18. Boiltime 15
 
 19. Add same hop should inherit alpha acid (change amount 50)
 
