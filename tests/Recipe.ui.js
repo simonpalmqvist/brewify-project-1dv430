@@ -72,18 +72,16 @@ describe("Recipe UI - Create a recipe", function() {
 
             query = ".main-settings input[name=batchSize]";
 
-            browser.waitForExist(query);
-
             //Set new batch size
             browser.setValue(query, newBatchSize);
 
             //Press enter and save
             browser.keys(["Enter"]);
 
-            //Name should be updated on client
+            //Batch size should be updated on client
             browser.getValue(query).should.equal(newBatchSize.toString());
 
-            //Name should be updated on server
+            //Batch size should be updated on server
             server.call("test.get-recipes")[0].batchSize.should.equal(newBatchSize);
         });
 
@@ -92,18 +90,16 @@ describe("Recipe UI - Create a recipe", function() {
 
             query = ".main-settings input[name=boilTime]";
 
-            browser.waitForExist(query);
-
             //Set new boil time
             browser.setValue(query, newBoilTime);
 
             //Press enter and save
             browser.keys(["Enter"]);
 
-            //Name should be updated on client
+            //Boil time should be updated on client
             browser.getValue(query).should.equal(newBoilTime.toString());
 
-            //Name should be updated on server
+            //Boil time should be updated on server
             server.call("test.get-recipes")[0].boilTime.should.equal(newBoilTime);
         });
     });
@@ -116,18 +112,16 @@ describe("Recipe UI - Create a recipe", function() {
 
             query = ".settings-info input[name=efficiency]";
 
-            browser.waitForExist(query);
-
             //Set new efficiency
             browser.setValue(query, newEfficiency);
 
             //Press enter and save
             browser.keys(["Enter"]);
 
-            //Name should be updated on client
+            //Efficiency should be updated on client
             browser.getValue(query).should.equal(newEfficiency.toFixed(2));
 
-            //Name should be updated on server
+            //Efficiency should be updated on server
             server.call("test.get-recipes")[0].efficiency.should.equal(newEfficiency);
         });
 
@@ -137,18 +131,16 @@ describe("Recipe UI - Create a recipe", function() {
 
             query = ".settings-info input[name=boilLoss]";
 
-            browser.waitForExist(query);
-
             //Set new loss
             browser.setValue(query, newLoss);
 
             //Press enter and save
             browser.keys(["Enter"]);
 
-            //Name should be updated on client
+            //loss should be updated on client
             browser.getValue(query).should.equal(newLoss.toString());
 
-            //Name should be updated on server
+            //loss should be updated on server
             server.call("test.get-recipes")[0].boilLoss.should.equal(newLoss);
         });
 
@@ -158,18 +150,16 @@ describe("Recipe UI - Create a recipe", function() {
 
             query = ".settings-info input[name=fermenterLoss]";
 
-            browser.waitForExist(query);
-
             //Set new loss
             browser.setValue(query, newLoss);
 
             //Press enter and save
             browser.keys(["Enter"]);
 
-            //Name should be updated on client
+            //loss should be updated on client
             browser.getValue(query).should.equal(newLoss.toString());
 
-            //Name should be updated on server
+            //loss should be updated on server
             server.call("test.get-recipes")[0].fermenterLoss.should.equal(newLoss);
         });
 
@@ -178,10 +168,9 @@ describe("Recipe UI - Create a recipe", function() {
     describe("Fermentables", function() {
 
         it("Should be able to add an fermentable from list", function() {
-            const searchString = fermentables[5].name.split(" ")[0];
+            const fermentableName = fermentables[5].name;
+            const searchString = fermentableName.substring(0, fermentableName.length  -2);
             query = "form.add-fermentable input";
-
-            browser.waitForExist(query);
 
             //Focus on search/add field
             browser.click(query);
@@ -199,15 +188,55 @@ describe("Recipe UI - Create a recipe", function() {
             browser.elements(".recipe-fermentables tbody tr").value.length.should.equal(1);
 
             //Validate the name
-            browser.getValue(".recipe-fermentables tbody tr td input.c-autocomplete")
-                .should.equal(fermentables[5].name);
+            browser.getValue(".recipe-fermentables tbody tr:nth-Child(1) td input.c-autocomplete")
+                .should.equal(fermentableName);
+        });
+
+        it("Should be able to change fermentables expected EBC", function() {
+            const newEBC = 591;
+            query = ".recipe-fermentables tbody tr:nth-Child(1) input[name=ebc]";
+
+            //Set new EBC
+            browser.setValue(query, newEBC);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //ebc should be updated on client
+            browser.getValue(query).should.equal(newEBC.toString());
+        });
+
+        it("Should be able to change fermentables expected potential", function() {
+            const newPotential = 1.025;
+            query = ".recipe-fermentables tbody tr:nth-Child(1) input[name=potential]";
+
+            //Set new Potential
+            browser.setValue(query, newPotential);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //potential should be updated on client
+            browser.getValue(query).should.equal(newPotential.toFixed(3));
+        });
+
+        it("Should be able to change fermentables amount", function() {
+            const newAmount = 0.2;
+            query = ".recipe-fermentables tbody tr:nth-Child(1) input[name=amount]";
+
+            //Set new amount
+            browser.setValue(query, newAmount);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //amount should be updated on client
+            browser.getValue(query).should.equal(newAmount.toFixed(3));
         });
 
         it("Should be able to add a custom fermentable", function() {
             const searchString = faker.lorem.words();
             query = "form.add-fermentable input";
-
-            browser.waitForExist(query);
 
             //Focus on search/add field
             browser.click(query);
@@ -227,6 +256,36 @@ describe("Recipe UI - Create a recipe", function() {
             //Validate the name
             browser.getValue(".recipe-fermentables tbody tr:nth-Child(2) td input.c-autocomplete")
                 .should.equal(searchString);
+
+            //Set fermentable values for testing of calculations
+            [
+                {field: "ebc", value: 5},
+                {field: "potential", value: 1.035},
+                {field: "amount", value: 4.8}
+            ].forEach(({field, value}) => {
+                browser.setValue(`.recipe-fermentables tbody tr:nth-Child(2) input[name=${field}]`, value);
+                browser.keys(["Enter"]);
+            });
+
+        });
+
+        it("Should have correct amount percentage for each fermentable", function() {
+
+            //Check so first row have 4 % of the total fermentable amount
+            browser.getValue(".recipe-fermentables tbody tr:nth-Child(1) input[name=totalFermentables]")
+                .should.equal("4.00");
+
+            //Check so second row have 96 % of the total fermentable amount
+            browser.getValue(".recipe-fermentables tbody tr:nth-Child(2) input[name=totalFermentables]")
+                .should.equal("96.00");
+        });
+
+        it("Should have correct total amount of fermentables in recipe", function() {
+
+            //Check so totalt weight of fermentables is 5 kg
+            browser.getValue(".recipe-fermentables tfoot input[name=fermentableWeight]")
+                .should.equal("5.000");
+
         });
 
     });
