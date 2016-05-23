@@ -20,6 +20,10 @@ let ingredients;
 let query;
 
 describe("Recipe UI - Create a recipe", function() {
+
+    //increase timeout
+    this.timeout(5000);
+
     before(function() {
         server.call("test.resetdb");
         user = server.call("test.create-user");
@@ -167,6 +171,62 @@ describe("Recipe UI - Create a recipe", function() {
 
             //Name should be updated on server
             server.call("test.get-recipes")[0].fermenterLoss.should.equal(newLoss);
+        });
+
+    });
+
+    describe("Fermentables", function() {
+
+        it("Should be able to add an fermentable from list", function() {
+            const searchString = fermentables[5].name.split(" ")[0];
+            query = "form.add-fermentable input";
+
+            browser.waitForExist(query);
+
+            //Focus on search/add field
+            browser.click(query);
+
+            //Set a search
+            browser.setValue(query, searchString);
+
+            //Take first result
+            browser.keys(["Down arrow","Enter"]);
+
+            //Wait for row
+            browser.waitForExist(".recipe-fermentables tbody tr");
+
+            //Check so one row exists
+            browser.elements(".recipe-fermentables tbody tr").value.length.should.equal(1);
+
+            //Validate the name
+            browser.getValue(".recipe-fermentables tbody tr td input.c-autocomplete")
+                .should.equal(fermentables[5].name);
+        });
+
+        it("Should be able to add a custom fermentable", function() {
+            const searchString = faker.lorem.words();
+            query = "form.add-fermentable input";
+
+            browser.waitForExist(query);
+
+            //Focus on search/add field
+            browser.click(query);
+
+            //Set a search
+            browser.setValue(query, searchString);
+
+            //Add custom fermentable
+            browser.keys(["Enter"]);
+
+            //Wait for row
+            browser.waitForExist(".recipe-fermentables tbody tr:nth-Child(2)");
+
+            //Check so two rows exists
+            browser.elements(".recipe-fermentables tbody tr").value.length.should.equal(2);
+
+            //Validate the name
+            browser.getValue(".recipe-fermentables tbody tr:nth-Child(2) td input.c-autocomplete")
+                .should.equal(searchString);
         });
 
     });
