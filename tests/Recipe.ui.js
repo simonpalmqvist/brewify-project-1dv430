@@ -17,9 +17,10 @@ let fermentables;
 let hops;
 let yeasts;
 let ingredients;
+let query;
 
-describe("Recipe UI", function() {
-    beforeEach(function() {
+describe("Recipe UI - Create a recipe", function() {
+    before(function() {
         server.call("test.resetdb");
         user = server.call("test.create-user");
 
@@ -36,10 +37,73 @@ describe("Recipe UI", function() {
 
     });
 
-    afterEach(function() {
+    after(function() {
         logout();
     });
 
+    describe("Main settings", function() {
+        it("Should be able to change name", function() {
+            const newName = faker.lorem.words();
+
+            query = ".main-settings input[name=name]";
+
+            browser.waitForExist(query);
+
+            //Set new name
+            browser.setValue(query, newName);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //Name should be updated on client
+            browser.getValue(query).should.equal(newName);
+
+            //Name should be updated on server
+            server.call("test.get-recipes")[0].name.should.equal(newName);
+        });
+
+        it("Should be able to set batch size", function() {
+            //Hardcoded to in later test cases test calculations
+            const newBatchSize = 17;
+
+            query = ".main-settings input[name=batchSize]";
+
+            browser.waitForExist(query);
+
+            //Set new batch size
+            browser.setValue(query, newBatchSize);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //Name should be updated on client
+            browser.getValue(query).should.equal(newBatchSize.toString());
+
+            //Name should be updated on server
+            server.call("test.get-recipes")[0].batchSize.should.equal(newBatchSize);
+        });
+
+        it("Should be able to set boil time", function() {
+            const newBoilTime = faker.random.number({min: 30, max: 1000});
+
+            query = ".main-settings input[name=boilTime]";
+
+            browser.waitForExist(query);
+
+            //Set new boil time
+            browser.setValue(query, newBoilTime);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //Name should be updated on client
+            browser.getValue(query).should.equal(newBoilTime.toString());
+
+            //Name should be updated on server
+            server.call("test.get-recipes")[0].boilTime.should.equal(newBoilTime);
+        });
+    });
+/*
     it("Should be able to change name", function() {
         const newName = faker.lorem.words();
 
@@ -129,4 +193,90 @@ describe("Recipe UI", function() {
         //Should have one new hop
         elements.value.length.should.equal(1);
     });
+    */
 });
+
+/*
+Test scope
+
+MAIN
+
+1. Should be able to set name
+
+2. Should be able to set batch size
+
+3. Should be able to set boil time
+
+SETTINGS
+
+4. Should be able to change mash efficiency 80%
+
+5. Should be able to change loss in brew-kettle 2
+
+6. Should be able to change loss in fermenter 1
+
+FERMENTABLE
+
+7. Add fermentable
+
+8. Change ebc to 591.
+
+9. Change Potential 1,025
+
+10. Change amount 0,200
+
+11. Add another fermentable 5, 1,035 4,8
+
+12. Should have correct amount (%) 4,00 96,00
+
+13. Should have correct total amount of kg
+
+HOPS
+
+14. Add hop
+
+15. Change form PELLETS.
+
+16. Alpha acid 7,00
+
+17. Amount 30
+
+18. Boiltime
+
+19. Add same hop should inherit alpha acid (change amount 50)
+
+20. Should be sorted first with higher boil time (60)
+
+21. Should have correct total amount of kg
+
+OTHER INGREDIENTS
+
+22. Should be able to add ingredient
+
+YEAST
+
+23. Add yeast
+
+24. Change form to dry yeast
+
+25. Change type to ale yeast
+
+26. Change attenuation
+
+STYLE
+
+27. Should be able to add a style
+
+FINAL
+
+28. Recipe should have OG of 1,058
+
+29. Recipe should have FG of 1,015
+
+30. Recipe should have ABV of 5,6
+
+31. Recipe should have IBU of 56,1
+
+32. Recipe should have EBC of 57
+
+ */

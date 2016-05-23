@@ -90,7 +90,7 @@ class Recipe extends React.Component {
             <div>
                 <div className="col-wrapper">
                     <div className="col col-1-1">
-                        <div className="content-box full-width-mobile">
+                        <div className="content-box full-width-mobile main-settings">
                             <Input name="name"
                                    value={recipe.name}
                                    ref="recipeName"

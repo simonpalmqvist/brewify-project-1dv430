@@ -15,7 +15,6 @@ import { Accounts } from "meteor/accounts-base";
 //Meteors testing flag is currently broken, so using a
 Meteor.isTest = process.env.TEST === "true";
 if (Meteor.isTest) {
-    console.log("test");
     require("../imports/api/testUtils");
 }
 
