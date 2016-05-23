@@ -41,7 +41,7 @@ describe("Recipe UI - Create a recipe", function() {
         logout();
     });
 
-    describe("Main settings", function() {
+    describe("Main", function() {
         it("Should be able to change name", function() {
             const newName = faker.lorem.words();
 
@@ -63,7 +63,7 @@ describe("Recipe UI - Create a recipe", function() {
         });
 
         it("Should be able to set batch size", function() {
-            //Hardcoded to in later test cases test calculations
+            //Hardcoded to in later test case be able to test calculations
             const newBatchSize = 17;
 
             query = ".main-settings input[name=batchSize]";
@@ -102,6 +102,73 @@ describe("Recipe UI - Create a recipe", function() {
             //Name should be updated on server
             server.call("test.get-recipes")[0].boilTime.should.equal(newBoilTime);
         });
+    });
+
+    describe("Settings", function() {
+
+        it("Should be able to set mash efficiency", function() {
+            //Hardcoded to in later test case be able to test calculations
+            const newEfficiency = 80;
+
+            query = ".settings-info input[name=efficiency]";
+
+            browser.waitForExist(query);
+
+            //Set new efficiency
+            browser.setValue(query, newEfficiency);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //Name should be updated on client
+            browser.getValue(query).should.equal(newEfficiency.toFixed(2));
+
+            //Name should be updated on server
+            server.call("test.get-recipes")[0].efficiency.should.equal(newEfficiency);
+        });
+
+        it("Should be able to set expected loss in brew kettle", function() {
+            //Hardcoded to in later test case be able to test calculations
+            const newLoss = 2;
+
+            query = ".settings-info input[name=boilLoss]";
+
+            browser.waitForExist(query);
+
+            //Set new loss
+            browser.setValue(query, newLoss);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //Name should be updated on client
+            browser.getValue(query).should.equal(newLoss.toString());
+
+            //Name should be updated on server
+            server.call("test.get-recipes")[0].boilLoss.should.equal(newLoss);
+        });
+
+        it("Should be able to set expected loss in fermenter", function() {
+            //Hardcoded to in later test case be able to test calculations
+            const newLoss = 1;
+
+            query = ".settings-info input[name=fermenterLoss]";
+
+            browser.waitForExist(query);
+
+            //Set new loss
+            browser.setValue(query, newLoss);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //Name should be updated on client
+            browser.getValue(query).should.equal(newLoss.toString());
+
+            //Name should be updated on server
+            server.call("test.get-recipes")[0].fermenterLoss.should.equal(newLoss);
+        });
+
     });
 /*
     it("Should be able to change name", function() {
