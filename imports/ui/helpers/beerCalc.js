@@ -120,6 +120,18 @@ export function calcIngredientWeight(ingredients) {
 }
 
 /**
+ * Function to calculate a beers bitterness ratio
+ * @param og
+ * @param ibu
+ * @returns {number} - Beers bitterness ratio
+ */
+export function calcBitternessRatio(og, ibu) {
+    const gravityUnits = (1 - og) * 1000;
+
+    return _round(ibu / gravityUnits, 2);
+}
+
+/**
  * Function to get text representation of hop form
  * @param form - number representation of hop form
  * @returns {String}
