@@ -573,90 +573,12 @@ describe("Recipe UI - Create a recipe", function() {
             browser.getValue(query).should.equal(expectedEBC.toString());
         });
 
+        it("Should give correct calculations on expected bitterness ratio", function() {
+            const bitternessRatio = 0.97;
+            query = ".recipe-info input[name=bitternessRatio]";
+
+            browser.getValue(query).should.equal(bitternessRatio.toString());
+        });
+
     });
 });
-
-/*
-Test scope
-
-MAIN
-
-1. Should be able to set name
-
-2. Should be able to set batch size
-
-3. Should be able to set boil time
-
-SETTINGS
-
-4. Should be able to change mash efficiency 80%
-
-5. Should be able to change loss in brew-kettle 2
-
-6. Should be able to change loss in fermenter 1
-
-FERMENTABLE
-
-7. Add fermentable
-
-8. Change ebc to 591.
-
-9. Change Potential 1,025
-
-10. Change amount 0,200
-
-11. Add another fermentable 5, 1,035 4,8
-
-12. Should have correct amount (%) 4,00 96,00
-
-13. Should have correct total amount of kg
-
-HOPS
-
-14. Add hop
-
-15. Change form PELLETS.
-
-16. Alpha acid 7,00
-
-17. Amount 30
-
-18. Boiltime 15
-
-19. Add same hop should inherit alpha acid (change amount 50)
-
-20. Should be sorted first with higher boil time (60)
-
-21. Should have correct total amount of kg
-
-OTHER INGREDIENTS
-
-22. Should be able to add ingredient
-
-YEAST
-
-23. Add yeast
-
-24. Change form to dry yeast
-
-25. Change type to ale yeast
-
-26. Change attenuation
-
-STYLE
-
-27. Should be able to add a style
-
-FINAL
-
-28. Recipe should have OG of 1,058
-
-29. Recipe should have FG of 1,015
-
-30. Recipe should have ABV of 5,6
-
-31. Recipe should have IBU of 56,1
-
-32. Recipe should have EBC of 57
-
- */
