@@ -15,7 +15,9 @@ div.marketing-info {
     }
 
     div.marketing-content {
-        padding: $half-spacing 0 $half-spacing 30%;
+
+        border-top: 1px solid $grey;
+        padding: $spacing 0 $half-spacing 30%;
         background-size: 80px auto;
         background-position: 9% center;
         background-repeat: no-repeat;
@@ -56,6 +58,7 @@ div.marketing-info {
             text-align:  center;
             background-position: center top;
             padding-top: 90px;
+            border: 0;
 
             &.right {
                 padding-right: 0;

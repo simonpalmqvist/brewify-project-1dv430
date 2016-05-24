@@ -402,9 +402,9 @@ describe("Recipe UI - Create a recipe", function() {
                 {field: "amount", value: 50},
                 {field: "time", value: 60}
             ].forEach(({field, value}) => {
-                    browser.setValue(`.recipe-hops tbody tr:nth-Child(2) input[name=${field}]`, value);
-                    browser.keys(["Enter"]);
-                });
+                browser.setValue(`.recipe-hops tbody tr:nth-Child(2) input[name=${field}]`, value);
+                browser.keys(["Enter"]);
+            });
 
             //Row 2 should now be placed as row 1 because of a longer boil time
             browser.getValue(".recipe-hops tbody tr:nth-Child(1) input[name=amount]")
@@ -580,5 +580,11 @@ describe("Recipe UI - Create a recipe", function() {
             browser.getValue(query).should.equal(bitternessRatio.toString());
         });
 
+        it("Should show expected wort after boil", function() {
+            const wortAfterBoil = 20;
+            query = ".recipe-info input[name=wortAfterBoil]";
+
+            browser.getValue(query).should.equal(wortAfterBoil.toString());
+        });
     });
 });

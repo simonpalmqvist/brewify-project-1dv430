@@ -40,19 +40,7 @@ import SettingsInfo from "../components/recipe/SettingsInfo";
 
 class Recipe extends React.Component {
 
-    update(value) {
-        updateRecipe(this.props.recipe._id, value);
-    }
-
-    recipeValidateOne(key, value) {
-        let obj = {};
-        obj[key] = value;
-        return Recipes.schema.newContext().validateOne(obj, key);
-    }
-
     render() {
-        const update = this.update.bind(this);
-
         const {
             recipe,
             recipeFermentables,
@@ -156,7 +144,7 @@ function getIngredientsForRecipe(list, id) {
 //Creates meteor container to provide subscribed data
 const RecipeContainer = createContainer(({params}) => {
     const { id }          = params;
-    const recipe          = Recipes.findOne(id);
+    const recipe          = Recipes.findOne(id) || {};
     const allFermentables = RecipeFermentables.find().fetch();
     const allHops         = RecipeHops.find().fetch();
     const allYeasts       = RecipeYeasts.find().fetch();

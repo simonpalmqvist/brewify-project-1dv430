@@ -15,9 +15,9 @@ export default class Main extends React.Component {
                 <Link className="secondary-button center" to="/register">Register here</Link>
 
                 <div className="marketing-content beer-symbol">
-                    <h3>Beer recipe creation made simple</h3>
+                    <h3>Beer recipe design made simple</h3>
                     <p>
-                        With this tool you can easily create recipes and get all calculations for expected
+                        With this tool you can easily design recipes and get expected
                         OG, FG, IBU and ABV automatically calculated as you pick and choose different
                         ingredients.
                     </p>
@@ -27,8 +27,8 @@ export default class Main extends React.Component {
                     <h3>A large selection of ingredients</h3>
                     <p>
                         You can easily search for standard grains, hops, yeasts and other ingredients and simply
-                        add them to you recipe. Is an ingredient missing? Just add it and your account will
-                        remember it along with changes to an hops alpha-acid or a grains color or potential.
+                        add them to your recipe. Is an ingredient missing? Just add it and your account will
+                        remember it along with changes to an hops alpha-acid or a grains color for example.
                     </p>
                 </div>
 

@@ -107,7 +107,7 @@ export default class RecipeInfo extends React.Component {
                            value={bitternessRatio} />
                     <EbcInput ebc={expectedEBC} />
                     <Input attr={{type: "number", disabled: true}}
-                           name="totalSize"
+                           name="wortAfterBoil"
                            label="Wort after boil (l)"
                            value={wortAfterBoil(recipe)} />
                     <Input name="batchSize"
