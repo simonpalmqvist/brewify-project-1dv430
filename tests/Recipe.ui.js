@@ -17,6 +17,7 @@ let fermentables;
 let hops;
 let yeasts;
 let ingredients;
+let styles;
 let query;
 
 describe("Recipe UI - Create a recipe", function() {
@@ -35,6 +36,7 @@ describe("Recipe UI - Create a recipe", function() {
         hops = server.call("test.generate-hops", 30);
         yeasts = server.call("test.generate-yeasts", 30);
         ingredients = server.call("test.generate-ingredients", 30);
+        styles = server.call("test.generate-styles", 30);
 
         //Go to url
         browser.url(`http://localhost:3000/recipe/${recipe._id}`);
@@ -413,6 +415,35 @@ describe("Recipe UI - Create a recipe", function() {
         });
 
     });
+
+    describe("Other ingredients", function() {
+
+        it("Should be able to add other ingredient", function() {
+            const ingredientName = ingredients[5].name;
+            const searchString = ingredientName.substring(0, ingredientName.length  -2);
+            query = "form.add-ingredient input";
+
+            //Focus on field
+            browser.click(query);
+
+            //Input search string
+            browser.setValue(query, searchString);
+
+            //Choose first selection
+            browser.keys(["Down arrow", "Enter"]);
+
+            //Wait so row gets created
+            browser.waitForExist(".recipe-ingredients tbody tr");
+
+            //Should have one new ingredient
+            browser.elements(".recipe-ingredients tbody tr").value.length.should.equal(1);
+
+            //Validate the name
+            browser.getValue(".recipe-ingredients tbody tr:nth-Child(1) td input.c-autocomplete")
+                .should.equal(ingredientName);
+        });
+    });
+
 /*
     it("Should be able to add yeast", function() {
         const searchString = yeasts[5].name.split(" ")[0];

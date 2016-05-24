@@ -122,7 +122,8 @@ export function yeast() {
 export function ingredient() {
     return {
         id: number({min: 1, max: 1000}),
-        name: words()
+        name: words(),
+        category: "misc"
     };
 }
 
