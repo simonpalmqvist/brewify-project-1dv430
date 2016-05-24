@@ -1,6 +1,6 @@
 @import "../../layouts/base";
 
-div.c-status-message.wrapper {
+div.c-status-message {
     padding: 0;
     transform: scale(0.0);
     transition: transform 500ms;
@@ -18,7 +18,6 @@ div.c-status-message.wrapper {
         border-radius: $border-radius;
         position: fixed;
         box-shadow: 0 0 5px $dark-grey;
-        left: 10%;
         bottom: 10%;
 
         p {
@@ -58,10 +57,6 @@ div.c-status-message.wrapper {
             button {
                 color: darken($sync, 20%);
             }
-        }
-
-        @media #{$laptop} {
-            left: $spacing;
         }
 
         @media #{$mobile} {

@@ -21,8 +21,8 @@ export default class AppContainer extends React.Component {
         return (
             <div>
                 <NavigationBar/>
-                <StatusMessage/>
                 <div className="wrapper">
+                    <StatusMessage/>
                     <ReactCSSTransitionGroup
                         component="div"
                         transitionName={transitionName}

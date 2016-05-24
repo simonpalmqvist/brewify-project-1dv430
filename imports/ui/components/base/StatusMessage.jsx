@@ -22,7 +22,7 @@ class StatusMessage extends React.Component {
 
         let flashMessage;
         let content;
-        let classes = "wrapper c-status-message";
+        let classes = "c-status-message";
 
         if (flashMessages.save) {
             classes = classNames(classes, "save");
