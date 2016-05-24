@@ -28,7 +28,8 @@ import {
     calcExpectedABV,
     calcExpectedIBU,
     calcBeerEbc,
-    calcIngredientWeight
+    calcIngredientWeight,
+    calcBitternessRatio
 } from "../helpers/beerCalc";
 
 import { HOPS } from "../helpers/recipeStandards";
@@ -79,12 +80,13 @@ class Recipe extends React.Component {
             ingredients,
             styles } = this.props;
 
-        const attenuation = recipeYeast ? recipeYeast.attenuation : 0;
-        const expectedOG  = calcExpectedOg(recipeFermentables, recipe);
-        const expectedFG  = calcExpectedFg(attenuation, expectedOG);
-        const expectedABV = calcExpectedABV(expectedOG, expectedFG);
-        const expectedIBU = calcExpectedIBU(recipeHops, recipe, expectedOG);
-        const expectedEBC = calcBeerEbc(recipeFermentables, recipe);
+        const attenuation       = recipeYeast ? recipeYeast.attenuation : 0;
+        const expectedOG        = calcExpectedOg(recipeFermentables, recipe);
+        const expectedFG        = calcExpectedFg(attenuation, expectedOG);
+        const expectedABV       = calcExpectedABV(expectedOG, expectedFG);
+        const expectedIBU       = calcExpectedIBU(recipeHops, recipe, expectedOG);
+        const bitternessRatio   = calcBitternessRatio(expectedOG, expectedIBU) || 0;
+        const expectedEBC       = calcBeerEbc(recipeFermentables, recipe);
 
         return (
             <div>
@@ -119,6 +121,11 @@ class Recipe extends React.Component {
                                        name="expectedIBU"
                                        label="IBU"
                                        value={expectedIBU} />
+                                <Input attr={{type: "number", disabled: true}}
+                                       fixedDecimals={2}
+                                       name="bitternessRatio"
+                                       label="BU/GU"
+                                       value={bitternessRatio} />
                                 <EbcInput ebc={expectedEBC} />
                                 <Input name="batchSize"
                                        label="Batch size (l)"

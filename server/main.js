@@ -1,3 +1,5 @@
+
+//Import server dependencies
 import "../imports/api/server/publications";
 import "../imports/api/recipes/methods";
 import "../imports/api/recipes/fermentables/methods";
@@ -12,15 +14,16 @@ import { Accounts } from "meteor/accounts-base";
 
 
 
-//Meteors testing flag is currently broken, so using a
+//Meteors testing flag is currently broken, so using an environment variable to load test utils for acceptance tests
 Meteor.isTest = process.env.TEST === "true";
 if (Meteor.isTest) {
     require("../imports/api/testUtils");
 }
 
-
+//Start up configs
 Meteor.startup(() => {
 
+    //Login expires after 90 days
     Accounts.config({
         loginExpirationInDays: 90
     });

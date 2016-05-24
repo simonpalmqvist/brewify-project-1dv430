@@ -18,6 +18,7 @@ import "./methods";
 const should = chai.should();
 const { stub } = sinon;
 
+//Run tests in server environment
 if (Meteor.isServer) {
 
     //Getting the exposed methods
