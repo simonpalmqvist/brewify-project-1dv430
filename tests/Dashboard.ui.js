@@ -91,5 +91,27 @@ describe("Dashboard UI", function() {
             browser.getUrl().should.equal(`http://localhost:3000/recipe/${recipe._id}`);
         });
 
+        it("Should be able to delete a recipe", function() {
+            const numOfRecipes = 3;
+
+            //Generate new recipes connected to logged in user
+            server.call("test.generate-recipes", numOfRecipes, userId);
+
+            //Go to dashboard
+            browser.url("http://localhost:3000/dashboard");
+
+            //Wait for page to load
+            browser.waitForExist(".recipe-list li");
+
+            //delete recipe
+            browser.click(".recipe-list li button.delete");
+
+            //Confirm
+            browser.click(".recipe-list li button.delete");
+
+            //Should have one less recipe
+            browser.elements(".recipe-list li").value.length.should.equal(numOfRecipes -1);
+        });
+
     });
 });
