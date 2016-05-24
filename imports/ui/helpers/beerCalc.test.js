@@ -16,7 +16,8 @@ import {
     calcExpectedIBU,
     calcExpectedOg,
     calcExpectedFg,
-    calcIngredientWeight
+    calcIngredientWeight,
+    calcBitternessRatio
 } from "./beerCalc";
 
 import {
@@ -96,6 +97,13 @@ if (Meteor.isClient) {
 
         it("Should be able to return black as color for ebc over 80", function() {
             ebcToHex(Math.floor(Math.random() * 20) + 81).should.equal("#000000");
+        });
+
+        it("Should be able to calculate a beers bitterness ratio", function() {
+            const og = 1.048;
+            const ibu = 30;
+
+            calcBitternessRatio(og, ibu).should.equal(0.62);
         });
     });
 }

@@ -126,7 +126,7 @@ export function calcIngredientWeight(ingredients) {
  * @returns {number} - Beers bitterness ratio
  */
 export function calcBitternessRatio(og, ibu) {
-    const gravityUnits = (1 - og) * 1000;
+    const gravityUnits = (og - 1) * 1000;
 
     return _round(ibu / gravityUnits, 2);
 }
