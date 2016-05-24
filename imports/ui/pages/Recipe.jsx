@@ -102,12 +102,12 @@ class Recipe extends React.Component {
                             <div className="responsive-info recipe-info">
                                 <Input attr={{type: "number", disabled: true}}
                                        fixedDecimals={3}
-                                       name="expextedOG"
+                                       name="expectedOG"
                                        label="OG"
                                        value={expectedOG} />
                                 <Input attr={{type: "number", disabled: true}}
                                        fixedDecimals={3}
-                                       name="expextedFG"
+                                       name="expectedFG"
                                        label="FG"
                                        value={expectedFG} />
                                 <Input attr={{type: "number", disabled: true}}

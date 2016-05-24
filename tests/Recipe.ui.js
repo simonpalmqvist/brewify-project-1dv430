@@ -494,7 +494,7 @@ describe("Recipe UI - Create a recipe", function() {
         });
 
         it("Should be able to change yeasts attenuation", function() {
-            const newAttenuation = 30;
+            const newAttenuation = 75;
             query = ".yeast-info input[name=attenuation]";
 
             //Set new amount
@@ -536,43 +536,44 @@ describe("Recipe UI - Create a recipe", function() {
         });
     });
 
-/*
-    it("Should be able to add yeast", function() {
-        const searchString = yeasts[5].name.split(" ")[0];
+    describe("Calculations", function() {
 
-        browser.waitForExist("form.add-yeast input");
+        it("Should give correct calculations on expected OG", function() {
+            const expectedOG = 1.058;
+            query = ".recipe-info input[name=expectedOG]";
 
-        browser.click("form.add-yeast input");
+            browser.getValue(query).should.equal(expectedOG.toFixed(3));
+        });
 
-        browser.setValue("form.add-yeast input", searchString);
+        it("Should give correct calculations on expected FG", function() {
+            const expectedFG = 1.015;
+            query = ".recipe-info input[name=expectedFG]";
 
-        browser.keys(["Down arrow","Enter"]);
+            browser.getValue(query).should.equal(expectedFG.toFixed(3));
+        });
 
-        browser.waitForExist(".yeast-info form input.c-autocomplete");
+        it("Should give correct calculations on expected ABV", function() {
+            const expectedABV = 5.6;
+            query = ".recipe-info input[name=expectedABV]";
 
-        //Should have yeast
-        browser.getValue(".yeast-info form input.c-autocomplete").should.equal(yeasts[5].name);
+            browser.getValue(query).should.equal(expectedABV.toFixed(1));
+        });
+
+        it("Should give correct calculations on expected IBU", function() {
+            const expectedIBU = 56.1;
+            query = ".recipe-info input[name=expectedIBU]";
+
+            browser.getValue(query).should.equal(expectedIBU.toString());
+        });
+
+        it("Should give correct calculations on expected EBC", function() {
+            const expectedEBC = 57;
+            query = ".recipe-info input[name=expectedEBC]";
+
+            browser.getValue(query).should.equal(expectedEBC.toString());
+        });
+
     });
-
-    it("Should be able to add other ingredient", function() {
-        const searchString = ingredients[5].name.split(" ")[0];
-
-        browser.waitForExist("form.add-ingredient input");
-
-        browser.click("form.add-ingredient input");
-
-        browser.setValue("form.add-ingredient input", searchString);
-
-        browser.keys(["Down arrow", "Enter"]);
-
-        browser.waitForExist(".recipe-ingredients tbody tr");
-
-        const elements = browser.elements(".recipe-ingredients tbody tr");
-
-        //Should have one new hop
-        elements.value.length.should.equal(1);
-    });
-    */
 });
 
 /*
