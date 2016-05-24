@@ -22,15 +22,18 @@ export function errorAction(error) {
  * Dispatches action save to indicate that last call to the server saved the current progress
  */
 export function saveAction() {
-    //First remove message to get the animation
-    removeMessage();
-    _dispatchLater({type: "SAVE_MESSAGE"}, 100);
+    //Don't remove earlier message since save always comes after saving
+    Store.dispatch({type: "SAVE_MESSAGE"});
+
+    //Remove save message after five seconds
+    _dispatchLater({type: "REMOVE_MESSAGE"}, 4000);
 }
 
 /**
  * Dispatches action saving to indicate that data is currently being saved
  */
 export function savingAction() {
+    //First remove message to get the animation
     removeMessage();
     _dispatchLater({type: "SAVING_MESSAGE"}, 100);
 }
