@@ -7,21 +7,21 @@ import { login, logout} from "./lib";
 let user;
 let userId;
 
-describe("Dashboard UI", () => {
-    beforeEach(() => {
+describe("Dashboard UI", function() {
+    beforeEach(function() {
         server.call("test.resetdb");
     });
 
-    describe("User not logged in", () => {
-        it("Should be redirected to login", () => {
+    describe("User not logged in", function() {
+        it("Should be redirected to login", function() {
             browser.url("http://localhost:3000/dashboard");
             browser.getUrl().should.equal("http://localhost:3000/login");
         });
 
     });
 
-    describe("User logged in", () => {
-        beforeEach(() => {
+    describe("User logged in", function() {
+        beforeEach(function() {
             //Store user credentials
             user = server.call("test.create-user");
 
@@ -32,36 +32,64 @@ describe("Dashboard UI", () => {
 
         });
 
-        afterEach(() => {
+        afterEach(function() {
             logout();
         });
 
-        it("Should not be redirected to login", () => {
+        it("Should not be redirected to login", function() {
             browser.getUrl().should.equal("http://localhost:3000/dashboard");
         });
 
-        it("Should be able to see list of recipes", () => {
+        it("Should be able to see list of recipes", function() {
             const numOfRecipes = 3;
 
-            let recipes = server.call("test.generate-recipes", numOfRecipes, userId);
+            //Generate new recipes connected to logged in user
+            server.call("test.generate-recipes", numOfRecipes, userId);
+
+            //Go to dashboard
+            browser.url("http://localhost:3000/dashboard");
+
+            //Wait for page to load
+            browser.waitForExist(".recipe-list li");
+
+            //Should see all recipes in list
+            browser.elements(".recipe-list li").value.length.should.equal(numOfRecipes);
+        });
+
+        it("Should not see or access other users recipes", function() {
+            const numOfRecipes = 3;
+
+            let recipes = server.call("test.generate-recipes", numOfRecipes);
 
             browser.url("http://localhost:3000/dashboard");
 
-            browser.waitForExist(".recipe-list li");
+            //Wait for page load
+            browser.waitForExist(".recipe-list");
 
-            const elements = browser.elements(".recipe-list li");
+            //Check so no recipe is visible
+            browser.elements(".recipe-list li").value.length.should.equal(0);
 
-            elements.value.length.should.equal(numOfRecipes);
+            //Try to go to another users recipe
+            browser.url(`http://localhost:3000/recipe/${recipes[0]._id}`);
+            browser.pause(1000);
+
+            //Make sure user ends up on dashboard page
+            browser.getUrl().should.equal("http://localhost:3000/dashboard");
         });
 
-        it("Should be able to add recipe", () => {
-            browser.waitForExist("button");
+        it("Should be able to add recipe and get redirected to recipe page", function() {
+            //Wait for page load
+            browser.waitForExist("button.create-recipe");
 
-            browser.click("button");
+            //Add new recipe
+            browser.click("button.create-recipe");
 
+            //Get information about added recipe
             let recipe = server.call("test.get-recipes")[0];
 
+            //Should be on recipe page with correct recipe id
             browser.getUrl().should.equal(`http://localhost:3000/recipe/${recipe._id}`);
         });
+
     });
 });

@@ -41,7 +41,7 @@ class Dashboard extends React.Component {
                 <div className="col-wrapper">
                     <div className="col col-1-3 col-1-2-tablet right">
                         <div className="content-box">
-                            <button className="main-button" type="text" onClick={this.handle.bind(this)}>
+                            <button className="main-button create-recipe" type="text" onClick={this.handle.bind(this)}>
                                 Create recipe
                             </button>
                             <ul className="recipe-list">{listEl}</ul>
