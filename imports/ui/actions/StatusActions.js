@@ -13,21 +13,27 @@ let timeOut;
  * @param error
  */
 export function errorAction(error) {
-    Store.dispatch({type: "ERROR_MESSAGE", error});
+    //First remove message to get the animation
+    removeMessage();
+    _dispatchLater({type: "ERROR_MESSAGE", error}, 100);
 }
 
 /**
  * Dispatches action save to indicate that last call to the server saved the current progress
  */
 export function saveAction() {
-    Store.dispatch({type: "SAVE_MESSAGE"});
+    //First remove message to get the animation
+    removeMessage();
+    _dispatchLater({type: "SAVE_MESSAGE"}, 100);
 }
 
 /**
  * Dispatches action saving to indicate that data is currently being saved
  */
 export function savingAction() {
-    Store.dispatch({type: "SAVING_MESSAGE"});
+    //First remove message to get the animation
+    removeMessage();
+    _dispatchLater({type: "SAVING_MESSAGE"}, 100);
 }
 
 /**
@@ -52,4 +58,10 @@ export function startedLoading() {
 export function finishedLoading() {
     clearTimeout(timeOut);
     Store.dispatch({type: "LOADING", status: false});
+}
+
+function _dispatchLater(action, delay) {
+    setTimeout(() => {
+        Store.dispatch(action);
+    }, delay);
 }
