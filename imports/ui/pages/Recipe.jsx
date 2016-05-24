@@ -29,7 +29,8 @@ import {
     calcExpectedIBU,
     calcBeerEbc,
     calcIngredientWeight,
-    calcBitternessRatio
+    calcBitternessRatio,
+    wortAfterBoil
 } from "../helpers/beerCalc";
 
 import { HOPS } from "../helpers/recipeStandards";
@@ -127,6 +128,10 @@ class Recipe extends React.Component {
                                        label="BU/GU"
                                        value={bitternessRatio} />
                                 <EbcInput ebc={expectedEBC} />
+                                <Input attr={{type: "number", disabled: true}}
+                                       name="totalSize"
+                                       label="Wort after boil (l)"
+                                       value={wortAfterBoil(recipe)} />
                                 <Input name="batchSize"
                                        label="Batch size (l)"
                                        attr={{type: "number"}}
@@ -254,6 +259,7 @@ const RecipeContainer = createContainer(({params}) => {
         return yeast;
     });
 
+    //Return all the necessary information for rendering recipe and using autocomplete functionality
     return {
         recipe:             recipe,
         recipeFermentables: getIngredientsForRecipe(allFermentables, id),

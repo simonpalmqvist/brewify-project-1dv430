@@ -31,7 +31,7 @@ export function ebcToSrm(ebc) {
  */
 export function calcBeerEbc(fermentables, recipe) {
     const efficiency = recipe.efficiency / 100;
-    const waterAfterBoil = _waterAfterBoil(recipe);
+    const waterAfterBoil = wortAfterBoil(recipe);
 
     const totalFermentableEbc = fermentables
         .map(({ebc, amount}) => ebc * amount)
@@ -50,7 +50,7 @@ export function calcBeerEbc(fermentables, recipe) {
  */
 export function calcExpectedOg(fermentables, recipe) {
     const efficiency = recipe.efficiency / 100;
-    const waterAfterBoil = _literToGallon(_waterAfterBoil(recipe));
+    const waterAfterBoil = _literToGallon(wortAfterBoil(recipe));
 
     let points = fermentables
         .map(({amount, potential}) => _kgToLbs(amount) * _getPoints(potential))
@@ -81,7 +81,7 @@ export function calcExpectedABV(og, fg) {
  * @returns {number} - returns expected IBU
  */
 export function calcExpectedIBU(hops, recipe, og) {
-    const waterAfterBoil = _waterAfterBoil(recipe);
+    const waterAfterBoil = wortAfterBoil(recipe);
 
     const amountOfSugar = 1.65 * Math.pow(0.000125, og - 1);
 
@@ -129,6 +129,17 @@ export function calcBitternessRatio(og, ibu) {
     const gravityUnits = (og - 1) * 1000;
 
     return _round(ibu / gravityUnits, 2);
+}
+
+/**
+ * Function to return total wort after boil
+ * @param batchSize
+ * @param boilLoss
+ * @param fermenterLoss
+ * @returns {number} total wort after boil
+ */
+export function wortAfterBoil({batchSize, boilLoss, fermenterLoss}) {
+    return batchSize + boilLoss + fermenterLoss;
 }
 
 /**
@@ -461,8 +472,4 @@ function _round(value, decimals) {
 
 function _hopEffectivity(form) {
     return form === HOPS.FORM.PELLET ? 1.15 : 1;
-}
-
-function _waterAfterBoil({batchSize, boilLoss, fermenterLoss}) {
-    return batchSize + boilLoss + fermenterLoss;
 }
