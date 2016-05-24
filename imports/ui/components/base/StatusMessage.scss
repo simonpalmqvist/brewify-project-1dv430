@@ -2,33 +2,82 @@
 
 div.c-status-message.wrapper {
     padding: 0;
-    transform: translateY(-100%);
+    transform: scale(0.0);
     transition: transform 500ms;
 
+    @media #{$mobile} {
+        transform: translateY(100px);
+    }
+
     &.active {
-        transform: translateY(0%);
+        transform: scale(1.0);
         z-index: 390;
+        background-color: $dark-grey;
         box-sizing: border-box;
-        width: 100%;
-        max-width: 100%;
-        padding: $half-spacing / 2;
+        padding: $half-spacing;
+        border-radius: $border-radius;
         position: fixed;
-        background-color: rgba($grey, 0.95);
-        border-bottom: 1px solid $middlegrey;
-        border-top: 0;
-        top: $header-height;
-        left: 0;
-        right: 0;
+        box-shadow: 0 0 5px $dark-grey;
+        left: 10%;
+        bottom: 10%;
+
+        p {
+            color: $white;
+            float: left;
+            margin-top: 2px;
+            margin-bottom: 0;
+            padding: 0 $half-spacing;
+        }
+
+        button {
+            color: darken($dark-grey, 20%);
+            background-color: transparent;
+            cursor: pointer;
+            float:right;
+        }
+
+
+
+        &.error {
+            background-color: $warning;
+
+            button {
+                color: darken($warning, 20%);
+            }
+        }
+
+        &.save {
+            background-color: $main;
+
+            button {
+                color: darken($main, 20%);
+            }
+        }
+
+        &.saving {
+            background-color: $sync;
+
+            button {
+                color: darken($sync, 20%);
+            }
+        }
+
+
+        @media #{$laptop} {
+            left: $spacing;
+        }
+
+        @media #{$mobile} {
+            box-shadow: none;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            border-radius: 0;
+            transform: translateY(0);
+        }
 
         > div {
-            max-width: 1140px;
-            margin: 0 auto;
-
             p {
-                margin-top: 3px;
-                color: $dark-grey;
-                float: left;
-                margin-bottom: 0;
 
                 &.save::before {
                     display: inline-block;
@@ -44,24 +93,9 @@ div.c-status-message.wrapper {
                     margin-right: 10px;
                     vertical-align: bottom;
                 }
-
-                &.error::before {
-                    display: inline-block;
-                    background-color: $warning;
-                    color: $white;
-                    content: "×";
-                    width: 15px;
-                    height: 19px;
-                    padding: 0 2px;
-                    font-size: 12px;
-                    text-align: center;
-                    border-radius: 35px;
-                    margin-right: 10px;
-                    vertical-align: bottom;
-                }
             }
 
-            button {
+           /* button {
                 display: inline-block;
                 float: right;
                 margin-top: 0;
@@ -71,7 +105,7 @@ div.c-status-message.wrapper {
                 text-align: center;
                 background-color: transparent;
                 color: $middlegrey;
-            }
+            }*/
         }
     }
 }

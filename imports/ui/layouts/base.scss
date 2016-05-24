@@ -5,6 +5,7 @@ $grey: #EBEBEB;
 $dark-grey: #969696;
 $middlegrey: lighten($dark-grey,15%);
 $warning: #f55046;
+$sync: #61B9E8;
 $white: #FFF;
 
 //Dimensions
@@ -136,10 +137,6 @@ div.modal-wrapper {
             transform: none;
         }
 
-    }
-
-    > div.c-status-message {
-        top: 0 !important;
     }
 
     img.logo {

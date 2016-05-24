@@ -25,11 +25,14 @@ class StatusMessage extends React.Component {
         let classes = "wrapper c-status-message";
 
         if (flashMessages.save) {
-            flashMessage = (<p className="save">Saved</p>);
+            classes = classNames(classes, "save");
+            flashMessage = (<p>Updates are saved</p>);
         } else if (flashMessages.saving) {
-            flashMessage = (<p>Saving</p>);
+            classes = classNames(classes, "saving");
+            flashMessage = (<p>Saving updates</p>);
         } else if (flashMessages.error) {
-            flashMessage = (<p className="error">{flashMessages.error.reason}</p>);
+            classes = classNames(classes, "error");
+            flashMessage = (<p>{flashMessages.error.reason}</p>);
         }
 
         if (flashMessage) {

@@ -31,7 +31,6 @@ export function saveAction() {
  * Dispatches action saving to indicate that data is currently being saved
  */
 export function savingAction() {
-    //First remove message to get the animation
     removeMessage();
     _dispatchLater({type: "SAVING_MESSAGE"}, 100);
 }
@@ -61,7 +60,8 @@ export function finishedLoading() {
 }
 
 function _dispatchLater(action, delay) {
-    setTimeout(() => {
+    clearTimeout(timeOut);
+    timeOut = setTimeout(() => {
         Store.dispatch(action);
     }, delay);
 }
