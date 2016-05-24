@@ -444,6 +444,34 @@ describe("Recipe UI - Create a recipe", function() {
         });
     });
 
+    describe("Beer style", function() {
+
+        it("Should be able to add style", function() {
+            const styleName = styles[5].name;
+            const searchString = styleName.substring(0, styleName.length  -2);
+            query = "form.add-style input";
+
+            //Focus on field
+            browser.click(query);
+
+            //Input search string
+            browser.setValue(query, searchString);
+
+            //Choose first selection
+            browser.keys(["Down arrow", "Enter"]);
+
+            //Wait so style is added
+            browser.waitForExist(".style-info");
+
+            //Should not show add input
+            browser.isExisting(query).should.be.false;
+
+            //Validate the name
+            browser.getValue(".style-info form input.c-autocomplete")
+                .should.equal(styleName);
+        });
+    });
+
 /*
     it("Should be able to add yeast", function() {
         const searchString = yeasts[5].name.split(" ")[0];

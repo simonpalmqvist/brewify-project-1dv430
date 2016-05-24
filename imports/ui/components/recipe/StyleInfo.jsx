@@ -41,7 +41,7 @@ export default class StyleInfo extends React.Component {
         //Show button to add yeast if recipe has no yeast
         let content = (
             <AutoComplete
-                className="add-yeast add-button center"
+                className="add-style add-button center"
                 ref="autocomplete"
                 data={styles}
                 placeholder="Add"
