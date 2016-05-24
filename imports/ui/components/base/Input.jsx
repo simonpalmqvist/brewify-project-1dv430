@@ -39,6 +39,8 @@ export default class Input extends React.Component {
             onUpdate(update);
         }
 
+        //Blur input for ios
+        this.refs.input.blur();
     }
 
     maybeToFixed(value) {

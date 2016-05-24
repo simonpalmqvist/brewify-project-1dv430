@@ -36,8 +36,6 @@ div.c-status-message.wrapper {
             float:right;
         }
 
-
-
         &.error {
             background-color: $warning;
 
@@ -62,7 +60,6 @@ div.c-status-message.wrapper {
             }
         }
 
-
         @media #{$laptop} {
             left: $spacing;
         }
@@ -74,38 +71,6 @@ div.c-status-message.wrapper {
             left: 0;
             border-radius: 0;
             transform: translateY(0);
-        }
-
-        > div {
-            p {
-
-                &.save::before {
-                    display: inline-block;
-                    background-color: $main;
-                    color: $white;
-                    content: "✓";
-                    width: 14px;
-                    height: 18px;
-                    padding: 0 2px;
-                    font-size: 12px;
-                    text-align: center;
-                    border-radius: 35px;
-                    margin-right: 10px;
-                    vertical-align: bottom;
-                }
-            }
-
-           /* button {
-                display: inline-block;
-                float: right;
-                margin-top: 0;
-                padding: 0;
-                font-size: 18px;
-                font-weight: bold;
-                text-align: center;
-                background-color: transparent;
-                color: $middlegrey;
-            }*/
         }
     }
 }
