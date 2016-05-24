@@ -325,7 +325,7 @@ describe("Recipe UI - Create a recipe", function() {
             //Set new form to pellets
             browser.selectByValue(query, PELLETS);
 
-            //ebc should be updated on client
+            //Form should be updated on client
             browser.getValue(query).should.equal(PELLETS.toString());
         });
 
@@ -441,6 +441,70 @@ describe("Recipe UI - Create a recipe", function() {
             //Validate the name
             browser.getValue(".recipe-ingredients tbody tr:nth-Child(1) td input.c-autocomplete")
                 .should.equal(ingredientName);
+        });
+    });
+
+    describe("Yeast", function() {
+
+        it("Should be able to add yeast", function() {
+            const yeastName = yeasts[5].name;
+            const searchString = yeastName.substring(0, yeastName.length  -2);
+            query = "form.add-yeast input";
+
+            //Focus on field
+            browser.click(query);
+
+            //Input search string
+            browser.setValue(query, searchString);
+
+            //Choose first selection
+            browser.keys(["Down arrow", "Enter"]);
+
+            //Wait so yeast is added
+            browser.waitForExist(".yeast-info");
+
+            //Should not show add input
+            browser.isExisting(query).should.be.false;
+
+            //Validate the name
+            browser.getValue(".yeast-info form input.c-autocomplete")
+                .should.equal(yeastName);
+        });
+
+        it("Should be able to change yeast form", function() {
+            const DRY = 2;
+            query = ".yeast-info select[name=form]";
+
+            //Set new form to dry yeast
+            browser.selectByValue(query, DRY);
+
+            //form should be updated on client
+            browser.getValue(query).should.equal(DRY.toString());
+        });
+
+        it("Should be able to change yeast type", function() {
+            const ALE = 1;
+            query = ".yeast-info select[name=type]";
+
+            //Set new type to ale yeast
+            browser.selectByValue(query, ALE);
+
+            //type should be updated on client
+            browser.getValue(query).should.equal(ALE.toString());
+        });
+
+        it("Should be able to change yeasts attenuation", function() {
+            const newAttenuation = 30;
+            query = ".yeast-info input[name=attenuation]";
+
+            //Set new amount
+            browser.setValue(query, newAttenuation);
+
+            //Press enter and save
+            browser.keys(["Enter"]);
+
+            //amount should be updated on client
+            browser.getValue(query).should.equal(newAttenuation.toFixed(2));
         });
     });
 
