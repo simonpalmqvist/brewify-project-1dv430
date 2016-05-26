@@ -34,10 +34,9 @@
   },
   "keywords": [
     "meteor",
-    "flux",
+    "redux",
     "react",
-    "home-brewing",
-    "offline"
+    "home-brewing"
   ],
   "author": "Simon Palmqvist",
   "license": "ISC",
