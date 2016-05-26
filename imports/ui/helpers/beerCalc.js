@@ -139,7 +139,7 @@ export function calcBitternessRatio(og, ibu) {
  * @returns {number} total wort after boil
  */
 export function wortAfterBoil({batchSize, boilLoss, fermenterLoss}) {
-    return batchSize + boilLoss + fermenterLoss;
+    return _round(batchSize + boilLoss + fermenterLoss, 3);
 }
 
 /**

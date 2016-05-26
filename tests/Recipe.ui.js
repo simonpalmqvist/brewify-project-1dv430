@@ -451,6 +451,9 @@ describe("Recipe UI - Create a recipe", function() {
             const searchString = yeastName.substring(0, yeastName.length  -2);
             query = "form.add-yeast input";
 
+            //fix since it might be hidden behind fixed navbar
+            browser.scroll(0,0);
+
             //Focus on field
             browser.click(query);
 
