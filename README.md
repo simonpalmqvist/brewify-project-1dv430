@@ -1,6 +1,6 @@
 # Brewify
 
-Online on brewify.xyz
+A web application for beer recipe design done as project in course 1dv430 at Linneus university. Built with Meteor, React and Redux.
 
 ## Setting up dev environment
 
